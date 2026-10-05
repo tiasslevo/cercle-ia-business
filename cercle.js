@@ -1,4 +1,4 @@
-// Le Cercle IA Business : anneau du héros, apparitions, phrase encrée, chemin des étapes, bandeau, formulaire WhatsApp.
+// Le Cercle IA Business : globe du héros, fond réseau, apparitions, phrase encrée, chemin des étapes, bandeau, formulaire WhatsApp.
 (() => {
   const doc = document.documentElement;
   doc.classList.add('js');
@@ -28,43 +28,155 @@
     requestAnimationFrame(() => setTimeout(() => el.classList.add('in'), 60));
   });
 
-  // Anneau du héros : membres autour du cercle, liens vers le centre, lumière qui fait le tour
-  const ring = document.querySelector('.ring');
-  const nodes = [];
-  if (ring) {
-    const gN = ring.querySelector('.ring-nodes'), gC = ring.querySelector('.ring-chords');
-    const N = 9, R = 276, C = 300;
-    for (let k = 0; k < N; k++) {
-      const a = (k / N) * Math.PI * 2 - Math.PI / 2 + 0.2;
-      const x = C + R * Math.cos(a), y = C + R * Math.sin(a);
-      const line = document.createElementNS(NS, 'line');
-      line.setAttribute('x1', x); line.setAttribute('y1', y);
-      line.setAttribute('x2', C + 222 * Math.cos(a)); line.setAttribute('y2', C + 222 * Math.sin(a));
-      gC.append(line);
-      const c = document.createElementNS(NS, 'circle');
-      c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', k % 3 === 0 ? 7 : 5);
-      c.style.transitionDelay = `${0.6 + k * 0.08}s`;
-      gN.append(c);
-      nodes.push({ a, c, line });
-    }
-  }
-  const runner = ring && ring.querySelector('.ring-runner');
-  let t0 = performance.now();
-  const spinRing = (t) => {
-    const a = ((t - t0) / 14000) * Math.PI * 2 - Math.PI / 2;
-    runner.setAttribute('transform', `translate(${300 + 276 * Math.cos(a)} ${300 + 276 * Math.sin(a)})`);
-    const norm = ((a % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-    nodes.forEach((n) => {
-      const na = ((n.a % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-      const d = Math.abs(Math.atan2(Math.sin(norm - na), Math.cos(norm - na)));
-      const on = d < 0.5;
-      n.c.classList.toggle('lit', on);
-      n.line.classList.toggle('on', d < 1.2);
+  // Globe en points : continents, membres reliés, rotation douce (glisser pour tourner)
+  const globe = document.querySelector('.globe');
+  if (globe && window.GLOBE_LAND) {
+    const ctx = globe.getContext('2d');
+    const RAD = Math.PI / 180;
+    const L = window.GLOBE_LAND, land = [];
+    for (let i = 0; i < L.length; i += 2) land.push([L[i] * RAD, L[i + 1] * RAD]);
+    const HUBS = {
+      paris: [48.85, 2.35], bruxelles: [50.85, 4.35], geneve: [46.2, 6.14], montreal: [45.5, -73.57],
+      casablanca: [33.57, -7.59], dakar: [14.7, -17.45], abidjan: [5.36, -4.0], lome: [6.13, 1.22],
+      douala: [4.05, 9.7], kinshasa: [-4.32, 15.3], libreville: [0.42, 9.47],
+    };
+    const hubs = Object.values(HUBS).map(([a, b]) => [a * RAD, b * RAD]);
+    const LINKS = [['paris', 'lome'], ['paris', 'abidjan'], ['paris', 'montreal'], ['bruxelles', 'kinshasa'], ['paris', 'dakar'],
+      ['lome', 'abidjan'], ['douala', 'libreville'], ['geneve', 'casablanca'], ['casablanca', 'dakar'], ['lome', 'douala'], ['montreal', 'abidjan']];
+    const vec = ([la, lo]) => [Math.cos(la) * Math.cos(lo), Math.cos(la) * Math.sin(lo), Math.sin(la)];
+    const arcs = LINKS.map(([a, b], i) => {
+      const A = vec([HUBS[a][0] * RAD, HUBS[a][1] * RAD]), B = vec([HUBS[b][0] * RAD, HUBS[b][1] * RAD]);
+      const om = Math.acos(Math.min(1, A[0] * B[0] + A[1] * B[1] + A[2] * B[2]));
+      const pts = [];
+      for (let k = 0; k <= 48; k++) {
+        const t = k / 48, s1 = Math.sin((1 - t) * om) / Math.sin(om), s2 = Math.sin(t * om) / Math.sin(om);
+        const h = 1 + Math.min(0.32, om * 0.22) * Math.sin(Math.PI * t);
+        pts.push([(A[0] * s1 + B[0] * s2) * h, (A[1] * s1 + B[1] * s2) * h, (A[2] * s1 + B[2] * s2) * h]);
+      }
+      return { pts, off: i * 0.37 };
     });
-    requestAnimationFrame(spinRing);
-  };
-  if (runner && !reduce) requestAnimationFrame(spinRing);
-  else if (runner) runner.style.display = 'none';
+    let W = 0, H = 0, dpr = 1, lon0 = 0, lat0 = 22 * RAD, drag = null, spinV = 0, visible = true;
+    const size = () => {
+      dpr = Math.min(2, devicePixelRatio || 1);
+      W = globe.clientWidth; H = globe.clientHeight;
+      globe.width = W * dpr; globe.height = H * dpr;
+    };
+    size(); addEventListener('resize', size);
+    new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(globe);
+    globe.addEventListener('pointerdown', (e) => { drag = { x: e.clientX, lon: lon0 }; globe.setPointerCapture(e.pointerId); });
+    globe.addEventListener('pointermove', (e) => { if (drag) lon0 = drag.lon - (e.clientX - drag.x) * 0.006; });
+    globe.addEventListener('pointerup', () => (drag = null));
+    // rotation de 3D vers 2D (repère : x vers l'écran droit, y vers le haut, z vers l'écran)
+    const proj = (v) => {
+      const cl = Math.cos(lon0), sl = Math.sin(lon0), ct = Math.cos(lat0), st = Math.sin(lat0);
+      const x1 = v[0] * cl + v[1] * sl, y1 = -v[0] * sl + v[1] * cl, z1 = v[2];
+      return [y1, z1 * ct - x1 * st, x1 * ct + z1 * st];
+    };
+    const ll = ([la, lo]) => [Math.cos(la) * Math.cos(lo), Math.cos(la) * Math.sin(lo), Math.sin(la)];
+    const landV = land.map(ll), hubV = hubs.map(ll);
+    let base = -8 * RAD, t0 = performance.now();
+    const draw = (now) => {
+      requestAnimationFrame(draw);
+      if (!visible || document.hidden) return;
+      const t = Math.max(0, now - t0) / 1000;
+      if (!drag) { base += 0.0009; lon0 += (base + Math.sin(t * 0.18) * 0.5 - lon0) * 0.02; } else base = lon0;
+      const R = Math.min(W, H) * 0.44 * dpr, cx = (W * dpr) / 2, cy = (H * dpr) / 2;
+      ctx.clearRect(0, 0, globe.width, globe.height);
+      // sphère : léger volume
+      const g = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.4, R * 0.1, cx, cy, R * 1.05);
+      g.addColorStop(0, 'rgba(255,253,249,0.95)'); g.addColorStop(0.7, 'rgba(244,238,226,0.6)'); g.addColorStop(1, 'rgba(233,211,161,0.18)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = 'rgba(169,124,51,0.35)'; ctx.lineWidth = 1 * dpr; ctx.stroke();
+      ctx.setLineDash([1 * dpr, 7 * dpr]); ctx.strokeStyle = 'rgba(20,28,44,0.25)';
+      ctx.beginPath(); ctx.arc(cx, cy, R * 1.12, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+      // continents
+      for (const v of landV) {
+        const [x, y, z] = proj(v);
+        if (z <= 0.02) continue;
+        ctx.fillStyle = `rgba(20,28,44,${(0.12 + 0.6 * z).toFixed(3)})`;
+        const r = (0.7 + 0.75 * z) * dpr;
+        ctx.beginPath(); ctx.arc(cx + x * R, cy - y * R, r, 0, 6.2832); ctx.fill();
+      }
+      // liaisons
+      ctx.lineCap = 'round';
+      for (const a of arcs) {
+        const P = a.pts.map(proj);
+        ctx.beginPath();
+        let started = false;
+        P.forEach(([x, y, z]) => {
+          const ok = z > 0 || x * x + y * y > 1;
+          if (!ok) { started = false; return; }
+          const X = cx + x * R, Y = cy - y * R;
+          started ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); started = true;
+        });
+        ctx.strokeStyle = 'rgba(169,124,51,0.45)'; ctx.lineWidth = 1.1 * dpr; ctx.stroke();
+        const head = ((t * 0.32 + a.off) % 1.4);
+        if (head <= 1) {
+          const k = Math.floor(head * 48), [x, y, z] = P[k];
+          if (z > 0 || x * x + y * y > 1) {
+            const X = cx + x * R, Y = cy - y * R;
+            const sg = ctx.createRadialGradient(X, Y, 0, X, Y, 9 * dpr);
+            sg.addColorStop(0, 'rgba(255,246,223,1)'); sg.addColorStop(0.4, 'rgba(226,194,127,0.8)'); sg.addColorStop(1, 'rgba(226,194,127,0)');
+            ctx.fillStyle = sg; ctx.beginPath(); ctx.arc(X, Y, 9 * dpr, 0, Math.PI * 2); ctx.fill();
+          }
+        }
+      }
+      // membres
+      hubV.forEach((v, i) => {
+        const [x, y, z] = proj(v);
+        if (z <= 0.05) return;
+        const X = cx + x * R, Y = cy - y * R, p = (t * 0.6 + i * 0.13) % 1;
+        ctx.strokeStyle = `rgba(169,124,51,${(0.6 * (1 - p) * z).toFixed(3)})`; ctx.lineWidth = 1.2 * dpr;
+        ctx.beginPath(); ctx.arc(X, Y, (4 + p * 14) * dpr, 0, Math.PI * 2); ctx.stroke();
+        ctx.fillStyle = '#FFFDF9'; ctx.beginPath(); ctx.arc(X, Y, 4.2 * dpr, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#A97C33'; ctx.beginPath(); ctx.arc(X, Y, 2.8 * dpr, 0, Math.PI * 2); ctx.fill();
+      });
+    };
+    if (reduce) { requestAnimationFrame((n) => { draw(n); }); } else requestAnimationFrame(draw);
+  }
+
+  // Fond réseau : points qui dérivent et se relient
+  const net = document.querySelector('.net');
+  if (net && !reduce) {
+    const c = net.getContext('2d');
+    let w = 0, h = 0, r = 1, pts = [], mouse = null;
+    const init = () => {
+      r = Math.min(2, devicePixelRatio || 1);
+      w = innerWidth; h = innerHeight; net.width = w * r; net.height = h * r;
+      const n = Math.min(90, Math.round((w * h) / 17000));
+      pts = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.18, vy: (Math.random() - 0.5) * 0.18, s: Math.random() < 0.12 }));
+    };
+    init(); addEventListener('resize', init);
+    addEventListener('pointermove', (e) => (mouse = { x: e.clientX, y: e.clientY }), { passive: true });
+    const D = 150;
+    const loop = () => {
+      requestAnimationFrame(loop);
+      if (document.hidden) return;
+      c.setTransform(r, 0, 0, r, 0, 0); c.clearRect(0, 0, w, h);
+      for (const p of pts) {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < -20) p.x = w + 20; if (p.x > w + 20) p.x = -20;
+        if (p.y < -20) p.y = h + 20; if (p.y > h + 20) p.y = -20;
+      }
+      c.lineWidth = 1;
+      for (let i = 0; i < pts.length; i++) {
+        const a = pts[i];
+        for (let j = i + 1; j < pts.length; j++) {
+          const b = pts[j], dx = a.x - b.x, dy = a.y - b.y, d = Math.hypot(dx, dy);
+          if (d < D) { c.strokeStyle = `rgba(20,28,44,${(0.09 * (1 - d / D)).toFixed(3)})`; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.stroke(); }
+        }
+        if (mouse) {
+          const d = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+          if (d < 200) { c.strokeStyle = `rgba(169,124,51,${(0.35 * (1 - d / 200)).toFixed(3)})`; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(mouse.x, mouse.y); c.stroke(); }
+        }
+      }
+      for (const p of pts) {
+        c.fillStyle = p.s ? 'rgba(169,124,51,0.55)' : 'rgba(20,28,44,0.22)';
+        c.beginPath(); c.arc(p.x, p.y, p.s ? 2.2 : 1.4, 0, Math.PI * 2); c.fill();
+      }
+    };
+    requestAnimationFrame(loop);
+  }
 
   // Phrase qui s'encre au fil du scroll
   const scrub = document.querySelector('[data-scrub]');

@@ -12,11 +12,12 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141C2C'/%3E%3Ccircle cx='32' cy='32' r='15' fill='none' stroke='%23C9A15A' stroke-width='3'/%3E%3Ccircle cx='32' cy='17' r='4' fill='%23C9A15A'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=gambetta@300,400,500,600,301,401,501&f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./cercle.css?v=4">
+  <link rel="stylesheet" href="./cercle.css?v=5">
 </head>
 <body>
   <div class="progress" aria-hidden="true"><span></span></div>
   <div class="grain" aria-hidden="true"></div>
+  <canvas class="net" aria-hidden="true"></canvas>
 
   <header class="top">
     <a href="#top" class="brand" aria-label="Le Cercle IA Business, retour en haut">
@@ -38,8 +39,7 @@
   <main id="top">
     <!-- ================= HÉROS ================= -->
     <section class="hero">
-      <div class="hero-guilloche" aria-hidden="true"></div>
-      <div class="wrap hero-grid">
+            <div class="wrap hero-grid">
         <div class="hero-copy">
           <p class="overline" data-reveal><span class="rule"></span>Cercle privé · gratuit, sur candidature</p>
           <h1 class="split" data-split>Fais de l’IA ton meilleur <i>associé.</i></h1>
@@ -56,22 +56,7 @@
         </div>
 
         <div class="hero-visual" data-reveal="zoom" style="--d:.15s">
-          <svg class="ring" viewBox="0 0 600 600" aria-hidden="true">
-            <defs>
-              <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E9D3A1"/><stop offset=".55" stop-color="#B98B3E"/><stop offset="1" stop-color="#D9B56E"/></linearGradient>
-              <radialGradient id="spark"><stop offset="0" stop-color="#FFF6DF"/><stop offset=".45" stop-color="#E2C27F"/><stop offset="1" stop-color="#E2C27F" stop-opacity="0"/></radialGradient>
-            </defs>
-            <circle class="ring-ticks" cx="300" cy="300" r="292"/>
-            <circle class="ring-line" cx="300" cy="300" r="276" pathLength="1"/>
-            <g class="ring-chords"></g>
-            <g class="ring-nodes"></g>
-            <g class="ring-runner"><circle r="16" fill="url(#spark)"/><circle r="3.2" fill="#FFF8E8"/></g>
-          </svg>
-          <figure class="disc" data-parallax="-0.05">
-            <picture>
-              <img src="./img/hero-desktop.jpg" alt="Des professionnels réunis autour d’une table ronde" fetchpriority="high">
-            </picture>
-          </figure>
+          <canvas class="globe" aria-label="Globe en points : les membres du Cercle reliés entre l’Afrique, l’Europe et l’Amérique" role="img"></canvas>
         </div>
       </div>
     </section>
@@ -324,7 +309,6 @@
   </main>
 
   <footer class="foot">
-    <div class="foot-guilloche" aria-hidden="true"></div>
     <div class="wrap">
       <p class="foot-big" data-reveal>Fais de l’IA<br>ton meilleur <i>associé.</i></p>
       <div class="foot-row">
@@ -335,6 +319,7 @@
     </div>
   </footer>
 
-  <script src="./cercle.js?v=4"></script>
+  <script src="./globe-land.js?v=5"></script>
+  <script src="./cercle.js?v=5"></script>
 </body>
 </html>
