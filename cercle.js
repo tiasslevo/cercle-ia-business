@@ -86,13 +86,13 @@
       const R = Math.min(W, H) * 0.44 * dpr, cx = (W * dpr) / 2, cy = (H * dpr) / 2;
       ctx.clearRect(0, 0, globe.width, globe.height);
       // contour très léger
-      ctx.strokeStyle = 'rgba(169,124,51,0.16)'; ctx.lineWidth = 1 * dpr;
+      ctx.strokeStyle = 'rgba(169,124,51,0.26)'; ctx.lineWidth = 1 * dpr;
       ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.stroke();
       // continents
       for (const v of landV) {
         const [x, y, z] = proj(v);
         if (z <= 0.02) continue;
-        ctx.fillStyle = `rgba(20,28,44,${(0.05 + 0.3 * z).toFixed(3)})`;
+        ctx.fillStyle = `rgba(20,28,44,${(0.07 + 0.42 * z).toFixed(3)})`;
         const r = (0.6 + 0.6 * z) * dpr;
         ctx.beginPath(); ctx.arc(cx + x * R, cy - y * R, r, 0, 6.2832); ctx.fill();
       }
@@ -107,7 +107,7 @@
           const X = cx + x * R, Y = cy - y * R;
           started ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); started = true;
         });
-        ctx.strokeStyle = 'rgba(20,28,44,0.16)'; ctx.lineWidth = 1 * dpr; ctx.stroke();
+        ctx.strokeStyle = 'rgba(20,28,44,0.24)'; ctx.lineWidth = 1 * dpr; ctx.stroke();
         const head = ((t * 0.18 + a.off) % 1.6);
         if (head <= 1) {
           const k = Math.min(48, Math.floor(head * 48));
@@ -118,7 +118,7 @@
             const X = cx + x * R, Y = cy - y * R;
             started ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); started = true;
           }
-          ctx.strokeStyle = 'rgba(169,124,51,0.55)'; ctx.lineWidth = 1.3 * dpr; ctx.stroke();
+          ctx.strokeStyle = 'rgba(169,124,51,0.75)'; ctx.lineWidth = 1.5 * dpr; ctx.stroke();
         }
       }
       // membres : petits points
@@ -127,7 +127,7 @@
         if (z <= 0.05) return;
         const X = cx + x * R, Y = cy - y * R;
         ctx.fillStyle = `rgba(169,124,51,${(0.35 + 0.55 * z).toFixed(3)})`;
-        ctx.beginPath(); ctx.arc(X, Y, 2.2 * dpr, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(X, Y, 2.6 * dpr, 0, Math.PI * 2); ctx.fill();
         ctx.strokeStyle = `rgba(169,124,51,${(0.25 * z).toFixed(3)})`; ctx.lineWidth = 1 * dpr;
         ctx.beginPath(); ctx.arc(X, Y, 5 * dpr, 0, Math.PI * 2); ctx.stroke();
       });

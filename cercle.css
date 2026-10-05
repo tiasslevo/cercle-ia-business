@@ -263,9 +263,9 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 /* ---------- adaptatif ---------- */
 @media (max-width: 1080px) {
   .hero-grid, .team-grid, .apply-grid, .how-grid, .faq-grid { grid-template-columns: 1fr; }
-  /* le globe passe en fond, en partie derrière le texte */
-  .hero-visual { position: absolute; z-index: 0; width: min(110vw, 720px); right: -38%; top: -6%; pointer-events: none; }
-  .hero-visual .globe { opacity: .7; }
+  /* le globe devient un horizon qui se lève sous le texte */
+  .hero { padding-bottom: min(52vw, 420px); }
+  .hero-visual { position: absolute; z-index: 0; width: min(118vw, 900px); left: 50%; margin-left: max(-59vw, -450px); top: auto; bottom: calc(-1 * min(118vw, 900px) + 10px); pointer-events: none; }
   .hero-copy { position: relative; z-index: 1; }
   .how-side { position: static; }
   .head { grid-template-columns: 1fr; gap: 0; }
@@ -282,9 +282,7 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
   .top nav a:not(.btn) { display: none; }
   .brand-name { font-size: 17px; }
   .brand-mark { width: 28px; height: 28px; }
-  .hero { padding: 88px 0 64px; }
-  .hero-visual { width: 120vw; right: -62vw; top: -50px; }
-  .hero-visual .globe { opacity: .35; }
+  .hero { padding: 88px 0 62vw; }
   .hero h1 { font-size: 48px; }
   .hero-grid { gap: 0; }
   .actions .btn { flex: 1 1 100%; }
