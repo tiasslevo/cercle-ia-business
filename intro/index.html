@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le Cercle IA Business · intro</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #F7F3EC; font-family: "DM Mono", ui-monospace, monospace; }
+    iframe.site { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
+    .intro { position: fixed; inset: 0; z-index: 10; background: #F7F3EC; overflow: hidden; }
+    .intro::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle, rgba(20,28,44,.12) 1px, transparent 1.3px) 0 0 / 24px 24px; -webkit-mask: radial-gradient(70% 60% at 50% 50%, #000, transparent); mask: radial-gradient(70% 60% at 50% 50%, #000, transparent); }
+    .intro.out { transform: translateY(-100%); }
+    canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .logo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(560px, 78vw); }
+    .logo svg { width: 100%; height: auto; display: block; overflow: visible; }
+    .logo [data-part]:not([data-part="word"]):not([data-part="tag"]), .logo [data-part="tag"] { opacity: 0; }
+    .logo [data-part="word"] { clip-path: inset(0 100% 0 0); }
+    .words { position: absolute; left: 0; right: 0; bottom: 16vh; text-align: center; font-size: 13px; letter-spacing: .32em; text-transform: uppercase; color: #4F5664; height: 1.4em; }
+    .words span { position: absolute; left: 0; right: 0; opacity: 0; }
+    .words span.on { opacity: 1; transform: none; }
+    .words span b { color: #A97C33; font-weight: 500; }
+    .bar { position: fixed; z-index: 20; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; padding: 6px; background: rgba(20,28,44,.92); border-radius: 12px; }
+    .bar button { font: 500 11px "DM Mono", monospace; letter-spacing: .08em; color: #F3ECDD; background: transparent; border: 1px solid rgba(243,236,221,.18); border-radius: 8px; padding: 8px 10px; cursor: pointer; }
+    .bar button.on { background: #E9D3A1; color: #141C2C; border-color: #E9D3A1; }
+    .bar.hide { display: none; }
+  </style>
+</head>
+<body>
+  <iframe class="site" src="../index.html" title="Le Cercle IA Business" tabindex="-1"></iframe>
+  <div class="intro" id="intro">
+    <canvas id="cv"></canvas>
+    <div class="logo" id="logo"></div>
+    <div class="words"><span>Des <b>entrepreneurs</b></span><span>Des <b>agents IA</b></span><span>Du <b>business</b></span></div>
+  </div>
+  <div class="bar" id="bar">
+    <button data-logo="ruche-grotesque">1 ruche grotesque</button>
+    <button data-logo="ruche-geometrique">2 ruche géométrique</button>
+    <button data-logo="seuil-grotesque">3 seuil grotesque</button>
+    <button data-logo="seuil-geometrique">4 seuil géométrique</button>
+    <button data-logo="sous-arche-marches">5 arche marches</button>
+    <button data-logo="sous-arche-colonnes">6 arche colonnes</button>
+  </div>
+  <script src="./intro.js?v=2"></script>
+</body>
+</html>
