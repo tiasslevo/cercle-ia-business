@@ -17,6 +17,9 @@
     .cap { position: absolute; transform: translate(-50%, -50%); white-space: nowrap; font-size: 12.5px; letter-spacing: .3em; text-transform: uppercase; color: #4F5664; }
     .cap b { color: #A97C33; font-weight: 500; }
     .cap.light { color: rgba(243,236,221,.8); }
+    .cap.step-lbl { font-size: 11px; letter-spacing: .2em; }
+    .cap.on-gold { color: #141C2C; font-weight: 500; }
+    .cap.side { transform: translate(-100%,-50%); text-align: right; }
     .door { position: absolute; top: 0; bottom: 0; width: 50%; background: #141C2C; }
     .door.l { left: 0; } .door.r { right: 0; }
     .slit { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: #E9D3A1; box-shadow: 0 0 24px 6px rgba(233,211,161,.55); }
@@ -30,13 +33,17 @@
   <iframe class="site" src="../index.html" title="Le Cercle IA Business" tabindex="-1"></iframe>
   <div class="intro" id="intro"><div class="logo" id="logo"></div></div>
   <div class="bar" id="bar">
-    <button data-logo="ruche-grotesque">1 ruche · l’essaim</button>
-    <button data-logo="ruche-geometrique">2 ruche · la chaîne</button>
-    <button data-logo="seuil-grotesque">3 seuil · la porte</button>
-    <button data-logo="seuil-geometrique">4 seuil · la courbe</button>
-    <button data-logo="sous-arche-marches">5 arche · le travelling</button>
-    <button data-logo="sous-arche-colonnes">6 arche · l’édifice</button>
+    <button data-logo="ruche-grotesque" data-scene="essaim">Ruche · l’essaim</button>
+    <button data-logo="ruche-geometrique" data-scene="essaim">Ruche géo · l’essaim</button>
+    <button data-logo="seuil-grotesque" data-scene="marches">Seuil A · les marches</button>
+    <button data-logo="seuil-grotesque" data-scene="montee">Seuil B · la montée</button>
+    <button data-logo="seuil-grotesque" data-scene="graphique">Seuil C · le graphique</button>
+    <button data-logo="seuil-geometrique" data-scene="marches">Seuil géo A</button>
+    <button data-logo="seuil-geometrique" data-scene="montee">Seuil géo B</button>
+    <button data-logo="seuil-geometrique" data-scene="graphique">Seuil géo C</button>
+    <button data-logo="sous-arche-colonnes" data-scene="edifice">Arche · l’édifice</button>
+    <button data-logo="sous-arche-marches" data-scene="travelling">Arche · le travelling</button>
   </div>
-  <script src="./intro.js?v=3"></script>
+  <script src="./intro.js?v=8"></script>
 </body>
 </html>

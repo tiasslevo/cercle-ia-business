@@ -27,7 +27,7 @@
     return c;
   }
   const hideUntil = (el, t, dur = 400, extra = {}) => A(el, [{ opacity: 0, ...(extra.from || {}) }, { opacity: 1, ...(extra.to || {}) }], { delay: t, duration: dur, easing: extra.easing || E.out });
-  const drawStroke = (el, t, dur, easing = E.io) => { el.setAttribute('pathLength', 100); return A(el, [{ strokeDasharray: '100 100', strokeDashoffset: 100 }, { strokeDasharray: '100 100', strokeDashoffset: 0 }], { delay: t, duration: dur, easing }); };
+  const drawStroke = (el, t, dur, easing = E.io) => { el.setAttribute('pathLength', 100); A(el, [{ opacity: 0 }, { opacity: 1 }], { delay: t, duration: 60, easing: E.lin }); return A(el, [{ strokeDasharray: '100 100', strokeDashoffset: 100 }, { strokeDasharray: '100 100', strokeDashoffset: 0 }], { delay: t, duration: dur, easing }); };
   const wipe = (el, t, dur, from) => {
     const start = { left: 'inset(0 100% 0 0)', type: 'inset(0 100% 0 0)', center: 'inset(0 50% 0 50%)', top: 'inset(0 0 100% 0)', bottom: 'inset(100% 0 0 0)' }[from];
     return A(el, [{ clipPath: start }, { clipPath: 'inset(0 0 0 0)' }], { delay: t, duration: dur, easing: from === 'type' ? 'steps(9, end)' : E.io });
@@ -108,7 +108,7 @@
     const sym = svg.querySelector('[data-part="symbol"]'), steps = [...svg.querySelectorAll('[data-part="step"]')];
     const spark = svg.querySelector('[data-part="spark"]'), inner = svg.querySelector('[data-part="inner"]');
     const word = svg.querySelector('[data-part="word"]'), tag = svg.querySelector('[data-part="tag"]');
-    const sb = box(sym), dx = W / 2 - sb.cx, dy = H / 2 - sb.cy + 20;
+    const f0 = svg.getBoundingClientRect().width / svg.viewBox.baseVal.width, sb = box(sym), dx = (W / 2 - sb.cx) / f0, dy = (H / 2 - sb.cy + 20) / f0;
     // l'arche géante derrière la porte, qui se réduit au logo
     A(sym, [{ transform: `translate(${dx}px,${dy}px) scale(3.4)` }, { transform: `translate(${dx}px,${dy}px) scale(3.4)`, offset: .45 }, { transform: 'none' }], { delay: 0, duration: 2700, easing: E.io });
     caption(layer, 'Des <b>entrepreneurs</b>', W / 2, H * 0.66, 1000, 1750);
@@ -193,21 +193,121 @@
     wipe(word, 2850, 800, 'top'); tagIn(tag, 3250);
   }
 
-  const SCENES = { 'ruche-grotesque': rucheEssaim, 'ruche-geometrique': rucheChaine, 'seuil-grotesque': seuilPorte, 'seuil-geometrique': seuilCourbe, 'sous-arche-marches': archeTravelling, 'sous-arche-colonnes': archeEdifice };
+  // ---------- seuil : outils de mise à l'échelle ----------
+  // Le symbole est d'abord montré en grand au centre (échelle S), puis il revient à sa place dans le logo.
+  function seuilBig(svg, scale = 0.6) {
+    const W = innerWidth, H = innerHeight, sym = svg.querySelector('[data-part="symbol"]');
+    const vb = svg.viewBox.baseVal, f = svg.getBoundingClientRect().width / vb.width; // pixels écran par unité SVG
+    const sb = box(sym), S = (H * scale) / sb.h, dx = W / 2 - sb.cx, dy = H * 0.47 - sb.cy, ux = dx / f, uy = dy / f;
+    const map = (x, y) => [sb.cx + (x - sb.cx) * S + dx, sb.cy + (y - sb.cy) * S + dy];
+    const steps = [...svg.querySelectorAll('[data-part="step"]')].map((el) => ({ el, b: box(el) })).sort((a, b) => b.b.cy - a.b.cy); // du bas vers le haut
+    return { W, H, sym, sb, S, dx, dy, map, steps,
+      arch: svg.querySelector('[data-part="arch"]'), inner: svg.querySelector('[data-part="inner"]'), spark: svg.querySelector('[data-part="spark"]'),
+      word: svg.querySelector('[data-part="word"]'), tag: svg.querySelector('[data-part="tag"]'),
+      // fige le symbole en grand, mesure ses pièces à cet état, puis lance l'animation
+      hold(until, back = 800) {
+        const a = A(sym, [{ transform: `translate(${ux}px,${uy}px) scale(${S})` }, { transform: `translate(${ux}px,${uy}px) scale(${S})`, offset: until / (until + back) }, { transform: 'none' }], { delay: 0, duration: until + back, easing: E.io });
+        a.pause(); a.currentTime = 10;
+        this.big = { steps: this.steps.map((s) => box(s.el)), spark: box(this.spark), arch: box(this.arch) };
+        a.currentTime = 0; a.play(); return a;
+      } };
+  }
+  const sparkDrop = (spark, t) => A(spark, [{ opacity: 0, transform: 'translateY(-160px) rotate(-180deg) scale(.5)' }, { opacity: 1, transform: 'none' }], { delay: t, duration: 800, easing: E.back });
+  const WORDS = ['Entrepreneurs', 'Agents IA', 'Business'];
+  function stepLabel(layer, text, x, y, t0, t1, cls = '') {
+    const c = document.createElement('div'); c.className = 'cap step-lbl ' + cls; c.textContent = text; c.style.left = x + 'px'; c.style.top = y + 'px'; layer.append(c);
+    A(c, [{ opacity: 0, transform: 'translate(-50%,-50%) scale(.9)' }, { opacity: 1, transform: 'translate(-50%,-50%)' }], { delay: t0, duration: 350, easing: E.out });
+    AF(c, [{ opacity: 1 }, { opacity: 0 }], { delay: t1, duration: 250 });
+  }
 
-  async function play(name) {
+  // repère local du symbole : 1 px écran à l'état agrandi = u unités SVG
+  const local = (g) => {
+    const f = g.sym.ownerSVGElement.getBoundingClientRect().width / g.sym.ownerSVGElement.viewBox.baseVal.width;
+    const u = 1 / (g.S * f);
+    const bb = (el) => { const r = el.getBBox(); return { x: r.x, y: r.y, w: r.width, h: r.height, cx: r.x + r.width / 2, cy: r.y + r.height / 2 }; };
+    const text = (str, x, y, px, fill, anchor = 'middle', weight = 500) => { const t = mk('text', { x, y, 'font-size': px * u, fill, 'text-anchor': anchor, 'dominant-baseline': 'central', 'font-family': 'DM Mono, monospace', 'font-weight': weight, 'letter-spacing': px * u * 0.18 }, g.sym); t.textContent = str.toUpperCase(); return t; };
+    return { u, bb, text, steps: g.steps.map((s) => bb(s.el)), spark: bb(g.spark) };
+  };
+
+  // A. les marches portent les mots, l'arche se pose dessus
+  function seuilMarches(svg) {
+    stage(); const g = seuilBig(svg); g.hold(2700, 850); const L = local(g);
+    g.steps.forEach((s, i) => {
+      A(s.el, [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { delay: 200 + i * 380, duration: 600, easing: E.back });
+      const b = L.steps[i], t = L.text(WORDS[i], b.cx, b.cy + 0.3, 12, INK);
+      A(t, [{ opacity: 0 }, { opacity: 1 }], { delay: 450 + i * 380, duration: 350 }); AF(t, [{ opacity: 1 }, { opacity: 0 }], { delay: 1750, duration: 250 });
+    });
+    A(g.arch, [{ opacity: 0, transform: 'translateY(-40px)' }, { opacity: 1, transform: 'none' }], { delay: 1750, duration: 750, easing: E.back });
+    A(g.inner, [{ opacity: 0 }, { opacity: 1 }], { delay: 2150, duration: 400 });
+    sparkDrop(g.spark, 2150);
+    wipe(g.word, 3300, 700, 'bottom'); tagIn(g.tag, 3650);
+  }
+
+  // B. un membre gravit les marches et devient l'étincelle
+  function seuilMontee(svg) {
+    stage(); const g = seuilBig(svg); g.hold(2800, 850); const L = local(g), u = L.u;
+    g.steps.forEach((s) => A(s.el, [{ fill: 'rgba(185,139,62,.16)' }, { fill: 'rgba(185,139,62,.16)' }], { duration: 1 }));
+    const r = 8 * u, b0 = L.steps[0];
+    const P = [[b0.x - 130 * u, b0.y + b0.h - r], ...L.steps.map((b) => [b.cx, b.y - r]), [L.spark.cx, L.spark.cy]];
+    const dot = mk('circle', { cx: 0, cy: 0, r, fill: INK }, g.sym); dot.style.transformBox = 'view-box'; dot.style.transformOrigin = '0 0';
+    const kf = [];
+    P.forEach((p, i) => {
+      if (i) { const q = P[i - 1]; kf.push({ transform: `translate(${(q[0] + p[0]) / 2}px,${Math.min(q[1], p[1]) - 26 * u}px)`, offset: (i - 0.5) / (P.length - 1) }); }
+      kf.push({ transform: `translate(${p[0]}px,${p[1]}px)`, offset: i / (P.length - 1) });
+    });
+    A(dot, kf, { delay: 300, duration: 2000, easing: 'cubic-bezier(.45,0,.55,1)' });
+    A(dot, [{ opacity: 0 }, { opacity: 1, offset: .1 }, { opacity: 1, offset: .95 }, { opacity: 0 }], { delay: 150, duration: 2200, easing: E.lin });
+    g.steps.forEach((s, i) => {
+      const t = 300 + ((i + 1) / (P.length - 1)) * 2000, b = L.steps[i];
+      AF(s.el, [{ fill: 'rgba(185,139,62,.16)' }, { fill: GOLD }], { delay: t - 60, duration: 260 });
+      const lab = L.text(WORDS[i], b.x - 16 * u, b.cy, 10.5, '#4F5664', 'end', 400);
+      A(lab, [{ opacity: 0, transform: 'translateX(6px)' }, { opacity: 1, transform: 'none' }], { delay: t, duration: 350, easing: E.out }); AF(lab, [{ opacity: 1 }, { opacity: 0 }], { delay: 2500, duration: 250 });
+    });
+    A(g.spark, [{ opacity: 0, transform: 'scale(0)' }, { opacity: 1, transform: 'scale(1.6) rotate(45deg)', offset: .55 }, { opacity: 1, transform: 'none' }], { delay: 2280, duration: 650, easing: E.out });
+    drawStroke(g.arch, 2300, 900); A(g.inner, [{ opacity: 0 }, { opacity: 1 }], { delay: 2800, duration: 400 });
+    wipe(g.word, 3450, 650, 'left'); tagIn(g.tag, 3750);
+  }
+
+  // C. trois barres de croissance pivotent et deviennent les marches
+  function seuilGraphique(svg) {
+    stage(); const g = seuilBig(svg, 0.56); g.hold(2900, 850); const L = local(g), u = L.u;
+    g.steps.forEach((s) => A(s.el, [{ opacity: 0 }, { opacity: 0 }], { duration: 1 }));
+    const bw = 40 * u, gap = 120 * u, b0 = L.steps[0], base = b0.y + b0.h + 40 * u, cx0 = L.spark.cx;
+    [2, 1, 0].forEach((i, k) => {
+      const d = L.steps[i], bh = d.w, bx = cx0 + (k - 1) * (bw + gap);
+      const rect = mk('rect', { x: bx - bw / 2, y: base - bh, width: bw, height: bh, rx: 2 * u, fill: GOLD }, g.sym);
+      rect.style.transformBox = 'fill-box'; rect.style.transformOrigin = 'center bottom';
+      A(rect, [{ transform: 'scaleY(0)' }, { transform: 'scaleY(1)' }], { delay: 250 + k * 260, duration: 700, easing: E.out });
+      const mv = mk('g', {}, g.sym); mv.append(rect); mv.style.transformBox = 'view-box'; mv.style.transformOrigin = `${bx}px ${base - bh / 2}px`;
+      A(mv, [{ transform: 'none' }, { transform: 'none', offset: .3 }, { transform: `translate(${d.cx - bx}px,${d.cy - (base - bh / 2)}px) rotate(-90deg) scaleX(${d.h / bw})` }], { delay: 600, duration: 1700, easing: E.io });
+      AF(mv, [{ opacity: 1 }, { opacity: 0 }], { delay: 2300, duration: 120 });
+      const lab = L.text(WORDS[k], bx, base + 16 * u, 10, '#4F5664', 'middle', 400);
+      A(lab, [{ opacity: 0 }, { opacity: 1 }], { delay: 450 + k * 260, duration: 350 }); AF(lab, [{ opacity: 1 }, { opacity: 0 }], { delay: 1150, duration: 250 });
+    });
+    g.steps.forEach((s) => AF(s.el, [{ opacity: 0 }, { opacity: 1 }], { delay: 2280, duration: 120 }));
+    A(g.arch, [{ opacity: 0, transform: 'translateY(-40px)' }, { opacity: 1, transform: 'none' }], { delay: 2200, duration: 750, easing: E.back });
+    A(g.inner, [{ opacity: 0 }, { opacity: 1 }], { delay: 2550, duration: 400 });
+    sparkDrop(g.spark, 2500);
+    wipe(g.word, 3500, 650, 'left'); tagIn(g.tag, 3800);
+  }
+
+  const SCENES = { essaim: rucheEssaim, chaine: rucheChaine, porte: seuilPorte, courbe: seuilCourbe, travelling: archeTravelling, edifice: archeEdifice, marches: seuilMarches, montee: seuilMontee, graphique: seuilGraphique };
+  const DEFAULT = { 'ruche-grotesque': 'essaim', 'ruche-geometrique': 'essaim', 'seuil-grotesque': 'marches', 'seuil-geometrique': 'montee', 'sous-arche-marches': 'travelling', 'sous-arche-colonnes': 'edifice' };
+
+  async function play(name, scene) {
+    scene = scene || DEFAULT[name];
     document.getAnimations().forEach((a) => a.cancel());
     intro.querySelectorAll('.layer').forEach((l) => l.remove());
     window.__ready = false; rnd = 7;
-    bar.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.dataset.logo === name));
+    bar.querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.dataset.logo === name && b.dataset.scene === scene));
     holder.innerHTML = await (await fetch(`../brand/logos/${name}.svg`)).text();
     const svg = holder.querySelector('svg'); prep(svg);
-    SCENES[name](svg);
+    SCENES[scene](svg);
     if (!qs.has('stay')) A(intro, [{ transform: 'none' }, { transform: 'translateY(-100%)' }], { delay: 4500, duration: 850, easing: 'cubic-bezier(.76,0,.24,1)' });
     window.__render = (t) => document.getAnimations().forEach((a) => { a.pause(); a.currentTime = t * 1000; });
     window.__ready = true;
     if (qs.has('frames')) document.getAnimations().forEach((a) => a.pause());
   }
-  bar.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { history.replaceState(null, '', `?logo=${b.dataset.logo}`); play(b.dataset.logo); } });
-  play(qs.get('logo') || 'seuil-grotesque');
+  bar.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { history.replaceState(null, '', `?logo=${b.dataset.logo}&scene=${b.dataset.scene}`); play(b.dataset.logo, b.dataset.scene); } });
+  play(qs.get('logo') || 'seuil-grotesque', qs.get('scene'));
 })();
