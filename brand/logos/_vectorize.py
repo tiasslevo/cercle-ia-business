@@ -108,3 +108,18 @@ def sous_arche(name, variant):
 sous_arche('sous-arche-marches','marches')
 sous_arche('sous-arche-colonnes','colonnes')
 print('ok')
+
+# ---- en-tête du site : seuil simple + nom en Montserrat, sur une ligne ----
+def header_lockup(name, ink=INK, gold=GOLD):
+    d1,w1=text('Montserrat',600,'LE CERCLE',40,0.06); d2,w2=text('Montserrat',600,'IA BUSINESS',13.5,0.42)
+    c1=capH('Montserrat',600,40); c2=capH('Montserrat',600,13.5)
+    sh=64; sw=sh*100/110; x0=sw+16; block=c1+9+c2; top=(sh-block)/2
+    sym=seuil(0,0,sh,False,ink,gold)
+    y1=top+c1; y2=y1+9+c2
+    body=f'<g data-part="symbol">{sym}</g>{tpath(d1,x0,y1,ink)}{tpath(d2,x0+1,y2,gold)}'
+    open(OUT+name+'.svg','w').write(svgdoc(body,x0+max(w1,w2),sh,2))
+header_lockup('entete'); header_lockup('entete-clair','#F3ECDD','#E2C27F')
+# favicon : seuil simple sur pastille encre
+fav=f'<rect x="0" y="0" width="64" height="64" rx="14" fill="{INK}"/>'+seuil(14.5,10,44,False,'#F3ECDD','#E2C27F')
+open(OUT+'favicon.svg','w').write(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">{fav}</svg>')
+print('entete ok')

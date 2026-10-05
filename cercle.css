@@ -330,3 +330,8 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 .free-band p:not(.free-big) { margin: 0 0 22px; color: rgba(243, 236, 221, .78); max-width: 30em; }
 .free-band .btn-ink { background: var(--gold-3); color: var(--ink); }
 @media (max-width: 760px) { .free-band { grid-template-columns: 1fr; gap: 20px; padding: 32px 26px; margin-top: 64px; } }
+
+/* logo du Cercle */
+.brand-logo { display: block; height: 42px; width: auto; }
+.foot-logo { height: 38px; }
+@media (max-width: 760px) { .brand-logo { height: 34px; } }
