@@ -1,4 +1,4 @@
-// Le Cercle IA Business : globe du héros, fond réseau, apparitions, phrase encrée, chemin des étapes, bandeau, formulaire WhatsApp.
+// Le Cercle IA Business : globe du héros, apparitions, phrase encrée, chemin des étapes, bandeau, formulaire WhatsApp.
 (() => {
   const doc = document.documentElement;
   doc.classList.add('js');
@@ -82,19 +82,15 @@
       if (!drag) { base += 0.0009; lon0 += (base + Math.sin(t * 0.18) * 0.5 - lon0) * 0.02; } else base = lon0;
       const R = Math.min(W, H) * 0.44 * dpr, cx = (W * dpr) / 2, cy = (H * dpr) / 2;
       ctx.clearRect(0, 0, globe.width, globe.height);
-      // sphère : léger volume
-      const g = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.4, R * 0.1, cx, cy, R * 1.05);
-      g.addColorStop(0, 'rgba(255,253,249,0.95)'); g.addColorStop(0.7, 'rgba(244,238,226,0.6)'); g.addColorStop(1, 'rgba(233,211,161,0.18)');
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = 'rgba(169,124,51,0.35)'; ctx.lineWidth = 1 * dpr; ctx.stroke();
-      ctx.setLineDash([1 * dpr, 7 * dpr]); ctx.strokeStyle = 'rgba(20,28,44,0.25)';
-      ctx.beginPath(); ctx.arc(cx, cy, R * 1.12, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+      // contour très léger
+      ctx.strokeStyle = 'rgba(169,124,51,0.16)'; ctx.lineWidth = 1 * dpr;
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.stroke();
       // continents
       for (const v of landV) {
         const [x, y, z] = proj(v);
         if (z <= 0.02) continue;
-        ctx.fillStyle = `rgba(20,28,44,${(0.12 + 0.6 * z).toFixed(3)})`;
-        const r = (0.7 + 0.75 * z) * dpr;
+        ctx.fillStyle = `rgba(20,28,44,${(0.05 + 0.3 * z).toFixed(3)})`;
+        const r = (0.6 + 0.6 * z) * dpr;
         ctx.beginPath(); ctx.arc(cx + x * R, cy - y * R, r, 0, 6.2832); ctx.fill();
       }
       // liaisons
@@ -109,7 +105,7 @@
           const X = cx + x * R, Y = cy - y * R;
           started ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); started = true;
         });
-        ctx.strokeStyle = 'rgba(169,124,51,0.45)'; ctx.lineWidth = 1.1 * dpr; ctx.stroke();
+        ctx.strokeStyle = 'rgba(169,124,51,0.78)'; ctx.lineWidth = 1.5 * dpr; ctx.stroke();
         const head = ((t * 0.32 + a.off) % 1.4);
         if (head <= 1) {
           const k = Math.floor(head * 48), [x, y, z] = P[k];
@@ -133,49 +129,6 @@
       });
     };
     if (reduce) { requestAnimationFrame((n) => { draw(n); }); } else requestAnimationFrame(draw);
-  }
-
-  // Fond réseau : points qui dérivent et se relient
-  const net = document.querySelector('.net');
-  if (net && !reduce) {
-    const c = net.getContext('2d');
-    let w = 0, h = 0, r = 1, pts = [], mouse = null;
-    const init = () => {
-      r = Math.min(2, devicePixelRatio || 1);
-      w = innerWidth; h = innerHeight; net.width = w * r; net.height = h * r;
-      const n = Math.min(90, Math.round((w * h) / 17000));
-      pts = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.18, vy: (Math.random() - 0.5) * 0.18, s: Math.random() < 0.12 }));
-    };
-    init(); addEventListener('resize', init);
-    addEventListener('pointermove', (e) => (mouse = { x: e.clientX, y: e.clientY }), { passive: true });
-    const D = 150;
-    const loop = () => {
-      requestAnimationFrame(loop);
-      if (document.hidden) return;
-      c.setTransform(r, 0, 0, r, 0, 0); c.clearRect(0, 0, w, h);
-      for (const p of pts) {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < -20) p.x = w + 20; if (p.x > w + 20) p.x = -20;
-        if (p.y < -20) p.y = h + 20; if (p.y > h + 20) p.y = -20;
-      }
-      c.lineWidth = 1;
-      for (let i = 0; i < pts.length; i++) {
-        const a = pts[i];
-        for (let j = i + 1; j < pts.length; j++) {
-          const b = pts[j], dx = a.x - b.x, dy = a.y - b.y, d = Math.hypot(dx, dy);
-          if (d < D) { c.strokeStyle = `rgba(20,28,44,${(0.09 * (1 - d / D)).toFixed(3)})`; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(b.x, b.y); c.stroke(); }
-        }
-        if (mouse) {
-          const d = Math.hypot(a.x - mouse.x, a.y - mouse.y);
-          if (d < 200) { c.strokeStyle = `rgba(169,124,51,${(0.35 * (1 - d / 200)).toFixed(3)})`; c.beginPath(); c.moveTo(a.x, a.y); c.lineTo(mouse.x, mouse.y); c.stroke(); }
-        }
-      }
-      for (const p of pts) {
-        c.fillStyle = p.s ? 'rgba(169,124,51,0.55)' : 'rgba(20,28,44,0.22)';
-        c.beginPath(); c.arc(p.x, p.y, p.s ? 2.2 : 1.4, 0, Math.PI * 2); c.fill();
-      }
-    };
-    requestAnimationFrame(loop);
   }
 
   // Phrase qui s'encre au fil du scroll
