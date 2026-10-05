@@ -60,7 +60,16 @@
     const fn = DRAW[svg.dataset.iso]; if (!fn) return;
     const f = Fig(); const html = fn(f);
     svg.setAttribute('viewBox', f.view()); svg.innerHTML = html;
+    [...svg.children].forEach((c, i) => {
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      g.setAttribute('class', 'blk'); g.style.setProperty('--i', i);
+      c.replaceWith(g); g.append(c);
+    });
   });
+
+  // construction au scroll : les volumes se posent un par un
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('built'); io.unobserve(e.target); } }), { threshold: 0.35 });
+  document.querySelectorAll('.iso-illu, .o-ico.iso-ico').forEach((el) => io.observe(el));
 
   const blinks = [...document.querySelectorAll('[data-blink]')];
   if (!reduce && blinks.length) setInterval(() => blinks[Math.floor(Math.random() * blinks.length)].classList.toggle('on'), 450);

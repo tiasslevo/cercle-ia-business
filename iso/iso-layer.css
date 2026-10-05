@@ -70,3 +70,14 @@
   .node .iso-ico { width: 52px; height: 52px; }
 }
 @media (prefers-reduced-motion: reduce) { .flow { animation: none; } }
+
+/* construction au scroll */
+.blk { opacity: 0; transform: translateY(-14px); transition: opacity .5s var(--ease), transform .7s var(--ease); transition-delay: calc(var(--i) * 45ms); }
+.built .blk { opacity: 1; transform: none; }
+.node .blk { opacity: .28; transform: translateY(-8px); transition-delay: calc(var(--i) * 70ms); }
+.step.lit .node .blk { opacity: 1; transform: none; }
+/* le chemin passe au centre des icônes, qui le masquent proprement */
+.path { width: 78px; }
+.node { background: radial-gradient(circle, var(--bg) 58%, transparent 60%) !important; }
+@media (max-width: 760px) { .path { width: 54px; } }
+@media (prefers-reduced-motion: reduce) { .blk, .node .blk { opacity: 1; transform: none; } }

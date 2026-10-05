@@ -126,8 +126,8 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 /* ---------- dans le cercle ---------- */
 .inside { padding: 140px 0; background: rgba(240, 234, 223, .78); }
 .textured { position: relative; isolation: isolate; }
-.head { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: end; margin-bottom: 60px; }
-.head .label { margin-bottom: 14px; }
+.head { display: block; margin-bottom: 56px; }
+.head .label { margin-bottom: 22px; }
 .bento { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 280px 280px; gap: 16px; }
 .tile { position: relative; border-radius: var(--r); overflow: hidden; background: var(--ink); isolation: isolate; box-shadow: var(--shadow); }
 .tile-xl { grid-row: span 2; }
