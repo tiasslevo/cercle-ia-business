@@ -74,7 +74,11 @@
     arch.setAttribute('pathLength', 100);
     A(arch, [{ opacity: 0 }, { opacity: 1 }], { delay: 2300, duration: 60, easing: E.lin });
     A(arch, [{ strokeDasharray: '0 50 0 50' }, { strokeDasharray: '0 0 100 0' }], { delay: 2300, duration: 900 }); // part du sommet, descend des deux côtés
-    const inner = svg.querySelector('[data-part="inner"]'); if (inner) A(inner, [{ opacity: 0 }, { opacity: 1 }], { delay: 2800, duration: 400 });
+    // en redescendant, le symbole devient le logo simple : marches et contour s'effacent, l'étincelle prend sa place
+    const inner = svg.querySelector('[data-part="inner"]'); if (inner) A(inner, [{ opacity: 0 }, { opacity: 0 }], { duration: 1 });
+    const k = bb(arch).h / 101;
+    steps.forEach((st) => AF(st, [{ opacity: 1 }, { opacity: 0 }], { delay: 2850, duration: 600 }));
+    AF(spark, [{ transform: 'none' }, { transform: `translateY(${6 * k}px) scale(${17 / 14})` }], { delay: 2900, duration: 750, easing: E.io });
 
     A(word, [{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], { delay: 3450, duration: 650 });
     A(tag, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { delay: 3750, duration: 650, easing: E.out });

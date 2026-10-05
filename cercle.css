@@ -223,7 +223,7 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 .tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 11px; }
 .tabs label { position: relative; cursor: pointer; }
 .tabs input { position: absolute; opacity: 0; }
-.tabs span { display: block; padding: 10px 12px; border-radius: 8px; text-align: center; font-size: 14.5px; font-weight: 600; color: var(--ink-2); transition: background .35s var(--ease), color .35s, box-shadow .35s; }
+.tabs span { display: block; padding: 10px 8px; border-radius: 8px; text-align: center; white-space: nowrap; font-size: 14px; font-weight: 600; color: var(--ink-2); transition: background .35s var(--ease), color .35s, box-shadow .35s; }
 .tabs input:checked + span { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(20, 28, 44, .08), 0 0 0 1px var(--border); }
 .tabs input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 1px; }
 .check { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; color: var(--ink-2); cursor: pointer; }
