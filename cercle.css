@@ -263,7 +263,10 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 /* ---------- adaptatif ---------- */
 @media (max-width: 1080px) {
   .hero-grid, .team-grid, .apply-grid, .how-grid, .faq-grid { grid-template-columns: 1fr; }
-  .hero-visual { max-width: 520px; width: 100%; margin: 0 auto; order: -1; }
+  /* le globe passe en fond, en partie derrière le texte */
+  .hero-visual { position: absolute; z-index: 0; width: min(110vw, 720px); right: -38%; top: -6%; pointer-events: none; }
+  .hero-visual .globe { opacity: .7; }
+  .hero-copy { position: relative; z-index: 1; }
   .how-side { position: static; }
   .head { grid-template-columns: 1fr; gap: 0; }
   .bento { grid-template-columns: 1fr 1fr; grid-template-rows: 380px 260px 260px; }
@@ -280,9 +283,10 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
   .brand-name { font-size: 17px; }
   .brand-mark { width: 28px; height: 28px; }
   .hero { padding: 88px 0 64px; }
-  .hero-visual { max-width: 340px; }
+  .hero-visual { width: 120vw; right: -62vw; top: -50px; }
+  .hero-visual .globe { opacity: .35; }
   .hero h1 { font-size: 48px; }
-  .hero-grid { gap: 20px; }
+  .hero-grid { gap: 0; }
   .actions .btn { flex: 1 1 100%; }
   .facts { grid-template-columns: 1fr; margin-top: 36px; }
   .facts div, .facts div + div { padding: 14px 0; border-left: 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }

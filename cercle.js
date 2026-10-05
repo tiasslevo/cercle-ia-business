@@ -36,13 +36,15 @@
     const L = window.GLOBE_LAND, land = [];
     for (let i = 0; i < L.length; i += 2) land.push([L[i] * RAD, L[i + 1] * RAD]);
     const HUBS = {
-      paris: [48.85, 2.35], bruxelles: [50.85, 4.35], geneve: [46.2, 6.14], montreal: [45.5, -73.57],
-      casablanca: [33.57, -7.59], dakar: [14.7, -17.45], abidjan: [5.36, -4.0], lome: [6.13, 1.22],
-      douala: [4.05, 9.7], kinshasa: [-4.32, 15.3], libreville: [0.42, 9.47],
+      paris: [48.85, 2.35], londres: [51.5, -0.12], montreal: [45.5, -73.57], newyork: [40.71, -74.0],
+      saopaulo: [-23.55, -46.63], dakar: [14.7, -17.45], abidjan: [5.36, -4.0], lome: [6.13, 1.22],
+      nairobi: [-1.29, 36.82], johannesburg: [-26.2, 28.05], dubai: [25.2, 55.27], bombay: [19.07, 72.88],
+      singapour: [1.35, 103.82], tokyo: [35.68, 139.69], sydney: [-33.87, 151.2],
     };
     const hubs = Object.values(HUBS).map(([a, b]) => [a * RAD, b * RAD]);
-    const LINKS = [['paris', 'lome'], ['paris', 'abidjan'], ['paris', 'montreal'], ['bruxelles', 'kinshasa'], ['paris', 'dakar'],
-      ['lome', 'abidjan'], ['douala', 'libreville'], ['geneve', 'casablanca'], ['casablanca', 'dakar'], ['lome', 'douala'], ['montreal', 'abidjan']];
+    const LINKS = [['paris', 'montreal'], ['londres', 'newyork'], ['paris', 'lome'], ['abidjan', 'dakar'], ['lome', 'johannesburg'],
+      ['nairobi', 'dubai'], ['paris', 'dubai'], ['dubai', 'bombay'], ['bombay', 'singapour'], ['singapour', 'tokyo'], ['singapour', 'sydney'],
+      ['newyork', 'saopaulo'], ['saopaulo', 'abidjan'], ['johannesburg', 'nairobi']];
     const vec = ([la, lo]) => [Math.cos(la) * Math.cos(lo), Math.cos(la) * Math.sin(lo), Math.sin(la)];
     const arcs = LINKS.map(([a, b], i) => {
       const A = vec([HUBS[a][0] * RAD, HUBS[a][1] * RAD]), B = vec([HUBS[b][0] * RAD, HUBS[b][1] * RAD]);
@@ -50,12 +52,12 @@
       const pts = [];
       for (let k = 0; k <= 48; k++) {
         const t = k / 48, s1 = Math.sin((1 - t) * om) / Math.sin(om), s2 = Math.sin(t * om) / Math.sin(om);
-        const h = 1 + Math.min(0.32, om * 0.22) * Math.sin(Math.PI * t);
+        const h = 1 + Math.min(0.16, om * 0.12) * Math.sin(Math.PI * t);
         pts.push([(A[0] * s1 + B[0] * s2) * h, (A[1] * s1 + B[1] * s2) * h, (A[2] * s1 + B[2] * s2) * h]);
       }
       return { pts, off: i * 0.37 };
     });
-    let W = 0, H = 0, dpr = 1, lon0 = 0, lat0 = 22 * RAD, drag = null, spinV = 0, visible = true;
+    let W = 0, H = 0, dpr = 1, lon0 = 0, lat0 = 16 * RAD, drag = null, spinV = 0, visible = true;
     const size = () => {
       dpr = Math.min(2, devicePixelRatio || 1);
       W = globe.clientWidth; H = globe.clientHeight;
@@ -74,12 +76,13 @@
     };
     const ll = ([la, lo]) => [Math.cos(la) * Math.cos(lo), Math.cos(la) * Math.sin(lo), Math.sin(la)];
     const landV = land.map(ll), hubV = hubs.map(ll);
-    let base = -8 * RAD, t0 = performance.now();
+    let t0 = performance.now();
+    lon0 = 5 * RAD;
     const draw = (now) => {
       requestAnimationFrame(draw);
       if (!visible || document.hidden) return;
       const t = Math.max(0, now - t0) / 1000;
-      if (!drag) { base += 0.0009; lon0 += (base + Math.sin(t * 0.18) * 0.5 - lon0) * 0.02; } else base = lon0;
+      if (!drag) lon0 += 0.0016;
       const R = Math.min(W, H) * 0.44 * dpr, cx = (W * dpr) / 2, cy = (H * dpr) / 2;
       ctx.clearRect(0, 0, globe.width, globe.height);
       // contour très léger
@@ -93,39 +96,40 @@
         const r = (0.6 + 0.6 * z) * dpr;
         ctx.beginPath(); ctx.arc(cx + x * R, cy - y * R, r, 0, 6.2832); ctx.fill();
       }
-      // liaisons
+      // liaisons : traits fins, une lueur discrète qui circule
       ctx.lineCap = 'round';
       for (const a of arcs) {
         const P = a.pts.map(proj);
         ctx.beginPath();
         let started = false;
         P.forEach(([x, y, z]) => {
-          const ok = z > 0 || x * x + y * y > 1;
-          if (!ok) { started = false; return; }
+          if (z <= 0.04 || x * x + y * y > 1) { started = false; return; }
           const X = cx + x * R, Y = cy - y * R;
           started ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); started = true;
         });
-        ctx.strokeStyle = 'rgba(169,124,51,0.78)'; ctx.lineWidth = 1.5 * dpr; ctx.stroke();
-        const head = ((t * 0.32 + a.off) % 1.4);
+        ctx.strokeStyle = 'rgba(20,28,44,0.16)'; ctx.lineWidth = 1 * dpr; ctx.stroke();
+        const head = ((t * 0.18 + a.off) % 1.6);
         if (head <= 1) {
-          const k = Math.floor(head * 48), [x, y, z] = P[k];
-          if (z > 0 || x * x + y * y > 1) {
+          const k = Math.min(48, Math.floor(head * 48));
+          ctx.beginPath(); started = false;
+          for (let j = Math.max(0, k - 7); j <= k; j++) {
+            const [x, y, z] = P[j];
+            if (z <= 0.04 || x * x + y * y > 1) { started = false; continue; }
             const X = cx + x * R, Y = cy - y * R;
-            const sg = ctx.createRadialGradient(X, Y, 0, X, Y, 9 * dpr);
-            sg.addColorStop(0, 'rgba(255,246,223,1)'); sg.addColorStop(0.4, 'rgba(226,194,127,0.8)'); sg.addColorStop(1, 'rgba(226,194,127,0)');
-            ctx.fillStyle = sg; ctx.beginPath(); ctx.arc(X, Y, 9 * dpr, 0, Math.PI * 2); ctx.fill();
+            started ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); started = true;
           }
+          ctx.strokeStyle = 'rgba(169,124,51,0.55)'; ctx.lineWidth = 1.3 * dpr; ctx.stroke();
         }
       }
-      // membres
-      hubV.forEach((v, i) => {
+      // membres : petits points
+      hubV.forEach((v) => {
         const [x, y, z] = proj(v);
         if (z <= 0.05) return;
-        const X = cx + x * R, Y = cy - y * R, p = (t * 0.6 + i * 0.13) % 1;
-        ctx.strokeStyle = `rgba(169,124,51,${(0.6 * (1 - p) * z).toFixed(3)})`; ctx.lineWidth = 1.2 * dpr;
-        ctx.beginPath(); ctx.arc(X, Y, (4 + p * 14) * dpr, 0, Math.PI * 2); ctx.stroke();
-        ctx.fillStyle = '#FFFDF9'; ctx.beginPath(); ctx.arc(X, Y, 4.2 * dpr, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#A97C33'; ctx.beginPath(); ctx.arc(X, Y, 2.8 * dpr, 0, Math.PI * 2); ctx.fill();
+        const X = cx + x * R, Y = cy - y * R;
+        ctx.fillStyle = `rgba(169,124,51,${(0.35 + 0.55 * z).toFixed(3)})`;
+        ctx.beginPath(); ctx.arc(X, Y, 2.2 * dpr, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = `rgba(169,124,51,${(0.25 * z).toFixed(3)})`; ctx.lineWidth = 1 * dpr;
+        ctx.beginPath(); ctx.arc(X, Y, 5 * dpr, 0, Math.PI * 2); ctx.stroke();
       });
     };
     if (reduce) { requestAnimationFrame((n) => { draw(n); }); } else requestAnimationFrame(draw);
