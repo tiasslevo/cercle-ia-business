@@ -9,7 +9,7 @@
   <link rel="icon" href="../brand/logos/favicon.svg?v=2" type="image/svg+xml">
   <link rel="preconnect" href="https://api.fontshare.com">
   <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./v4.css?v=5">
+  <link rel="stylesheet" href="./v4.css?v=6">
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -24,6 +24,7 @@
     <symbol id="check" viewBox="0 0 16 16"><path d="m4.2 8.3 2.5 2.5 5.1-5.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   </svg>
 
+  <i class="progress" aria-hidden="true"></i>
   <header class="nav">
     <a class="brand" href="#top" aria-label="Le Cercle IA Business">
       <span class="brand-tile"><svg><use href="#seuil"/></svg></span>
@@ -159,6 +160,17 @@
           <span class="ex"><i style="--c:#00c9ad"></i>Créer des visuels produits</span>
           <span class="ex"><i style="--c:#1d6bff"></i>Gérer les prises de rendez-vous</span>
           <span class="ex"><i style="--c:#8b5cf6"></i>Préparer tes devis</span>
+        </div>
+      </div>
+      <div class="rail rail-rev" aria-hidden="true">
+        <div class="rail-track">
+          <span class="ex"><i style="--c:#f59e0b"></i>Rédiger tes newsletters</span>
+          <span class="ex"><i style="--c:#00c9ad"></i>Suivre tes factures</span>
+          <span class="ex"><i style="--c:#1d6bff"></i>Préparer tes réunions</span>
+          <span class="ex"><i style="--c:#ec4899"></i>Faire ta veille concurrence</span>
+          <span class="ex"><i style="--c:#8b5cf6"></i>Créer tes vidéos courtes</span>
+          <span class="ex"><i style="--c:#25c16f"></i>Qualifier tes prospects</span>
+          <span class="ex"><i style="--c:#1d6bff"></i>Former ton équipe</span>
         </div>
       </div>
     </section>
@@ -321,8 +333,9 @@
             </div>
           </div>
         </div>
+        <label class="f-q" for="tache">Qu’aimerais-tu confier à l’IA dans les 3 prochains mois ?</label>
         <div class="composer composer-form glow">
-          <textarea name="tache" rows="2" placeholder="Qu’aimerais-tu confier à l’IA dans les 3 prochains mois ?"></textarea>
+          <textarea id="tache" name="tache" rows="2" placeholder="Ex. : répondre à mes clients, faire mes devis…"></textarea>
           <button class="c-send" type="submit" aria-label="Ouvrir WhatsApp avec mon message"><svg viewBox="0 0 20 20"><path d="M10 15.5v-11M5.5 9 10 4.5 14.5 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>
         <label class="engage cercle-only"><input type="checkbox" name="engage"><i><svg><use href="#check"/></svg></i>Je m’engage à partager où j’en suis dans le Cercle.</label>
@@ -352,6 +365,6 @@
 
   <script src="./mascots.js?v=1"></script>
   <script src="./mascots-render.js?v=1"></script>
-  <script src="./v4.js?v=4"></script>
+  <script src="./v4.js?v=5"></script>
 </body>
 </html>

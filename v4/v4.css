@@ -369,3 +369,66 @@ svg { flex: none; }
 @media (max-width: 860px) {
   .faq-m.mz, .fl.mz:nth-child(n+3) { display: none; }
 }
+
+/* ---------- retouches mobile ---------- */
+.f-q { display: block; font-size: 14px; font-weight: 600; color: var(--ink2); margin: 0 4px 8px; }
+.composer-form { align-items: center; }
+.person h3 { white-space: nowrap; font-size: clamp(15px, 4.4vw, 19px); }
+@media (max-width: 860px) {
+  .composer-form textarea { font-size: 15.5px; min-height: 46px; }
+  .person div { padding: 10px 6px 4px; }
+}
+
+/* ---------- animations au scroll ---------- */
+.progress { position: fixed; z-index: 60; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #6ee7d8, var(--accent), #b9a4ff, #ff9ccc); transform-origin: left; transform: scaleX(var(--sp, 0)); }
+
+/* titres : mot à mot, flou qui se dissipe */
+.sec-head h2 .w { display: inline-block; opacity: 0; filter: blur(10px); transform: translateY(14px) scale(.96); }
+.sec-head h2.in .w { animation: word-in .7s var(--ease) both; animation-delay: calc(var(--i) * 55ms); }
+.sec-head h2.split.in { animation: none; opacity: 1; }
+@keyframes word-in { to { opacity: 1; filter: blur(0); transform: none; } }
+
+/* listes : lignes qui glissent */
+.free.in .free-r li { animation: row-slide .5s var(--ease) both; }
+.free.in .free-r li:nth-child(2) { animation-delay: .08s; } .free.in .free-r li:nth-child(3) { animation-delay: .16s; }
+.free.in .free-r li:nth-child(4) { animation-delay: .24s; } .free.in .free-r li:nth-child(5) { animation-delay: .32s; }
+@keyframes row-slide { from { opacity: 0; transform: translateY(-10px); filter: blur(2px); } }
+.faq.in details { animation: row-slide .5s var(--ease) both; }
+.faq.in details:nth-child(2) { animation-delay: .08s; } .faq.in details:nth-child(3) { animation-delay: .16s; } .faq.in details:nth-child(4) { animation-delay: .24s; }
+
+/* éléments qui « poppent » dans les cartes */
+.plan.in .plan-ic, .step.in .step-n, .card.in .p-brand > *, .bx.in .live { animation: cell-pop .5s var(--spring) both; animation-delay: calc(var(--rd, 0s) + .25s); }
+@keyframes cell-pop { from { opacity: 0; transform: scale(.5); } }
+.rv.in .free-k { animation: cell-pop .5s var(--spring) .2s both; }
+
+/* bordure lumineuse qui tourne autour de l'offre gratuite */
+@property --ba { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.free::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1.5px; pointer-events: none;
+  background: conic-gradient(from var(--ba), transparent 0deg, transparent 250deg, rgba(29,107,255,.25) 290deg, #6aa3ff 330deg, #b9a4ff 350deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: beam 5s linear infinite; }
+@keyframes beam { to { --ba: 360deg; } }
+
+/* deuxième rangée d'exemples, sens inverse */
+.rail-rev { margin-top: 10px; }
+.rail-rev .rail-track { animation-direction: reverse; animation-duration: 52s; }
+
+/* liés au défilement (navigateurs compatibles) */
+@supports (animation-timeline: view()) {
+  .who-card { animation: rise-scale linear both; animation-timeline: view(); animation-range: entry 0% cover 35%; }
+  @keyframes rise-scale { from { transform: scale(.9) translateY(40px); opacity: .4; } to { transform: none; opacity: 1; } }
+  .bx-art img, .step-art img, .who-art { animation: parallax linear both; animation-timeline: view(); animation-range: cover; }
+  @keyframes parallax { from { translate: 0 28px; } to { translate: 0 -28px; } }
+  .steps-line b { animation: none; left: 0; width: 100%; transform-origin: left; background: var(--accent);
+    animation: fill-line linear both; animation-timeline: view(); animation-range: cover 20% cover 60%; }
+  .steps-line { background: #dfe3ec; }
+  @keyframes fill-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .prev, .bx-art, .step-art { animation: tilt-in linear both; animation-timeline: view(); animation-range: entry 0% entry 100%; }
+  @keyframes tilt-in { from { transform: perspective(700px) rotateX(18deg) scale(.94); } to { transform: none; } }
+  .fl { translate: 0 calc(var(--py, 0) * 1px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sec-head h2 .w { opacity: 1; filter: none; transform: none; }
+  .who-card, .bx-art img, .step-art img, .who-art, .prev, .bx-art, .step-art { animation: none !important; }
+}
+.brand-name { white-space: nowrap; }
+@media (max-width: 400px) { .nav .brand-name em { display: none; } }

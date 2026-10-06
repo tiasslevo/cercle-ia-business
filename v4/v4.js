@@ -4,6 +4,26 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
+  /* ---------- titres découpés en mots ---------- */
+  $$('.sec-head h2').forEach((h) => {
+    const parts = h.innerHTML.split(/(<br\s*\/?>)/);
+    let i = 0;
+    h.innerHTML = parts.map((p) => /^<br/.test(p) ? p : p.split(/(\s+)/).map((w) => /^\s*$/.test(w) ? w : `<span class="w" style="--i:${i++}">${w}</span>`).join('')).join('');
+    h.classList.add('split');
+  });
+
+  /* ---------- barre de progression + parallaxe du hero ---------- */
+  const fls = $$('.fl');
+  let sr = 0;
+  const onScroll = () => {
+    sr = 0;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    document.documentElement.style.setProperty('--sp', (scrollY / max).toFixed(4));
+    if (scrollY < innerHeight * 1.2) fls.forEach((f, i) => f.style.setProperty('--py', (scrollY * (i % 2 ? -.22 : -.12)).toFixed(1)));
+  };
+  addEventListener('scroll', () => { if (!sr) sr = requestAnimationFrame(onScroll); }, { passive: true });
+  onScroll();
+
   /* ---------- reveal ---------- */
   const visible = new Set();
   const io = new IntersectionObserver((entries) => entries.forEach((e) => {
