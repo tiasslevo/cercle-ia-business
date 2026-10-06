@@ -9,20 +9,19 @@
   <link rel="icon" href="../brand/logos/favicon.svg?v=2" type="image/svg+xml">
   <link rel="preconnect" href="https://api.fontshare.com">
   <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./v4.css?v=3">
+  <link rel="stylesheet" href="./v4.css?v=5">
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <symbol id="seuil" viewBox="14 12 40 46">
       <path fill="none" stroke="currentColor" stroke-width="7.2" d="M18.10 54.00V30.00A16.40 16.40 0 0 1 50.90 30.00V54.00"/>
       <path fill="none" stroke="currentColor" stroke-width="1.28" d="M24.50 51.60V30.80A10.00 10.00 0 0 1 44.50 30.80V51.60"/>
-      <path class="sp" d="M34.50 28.40Q35.40 33.10 40.10 34.00Q35.40 34.90 34.50 39.60Q33.60 34.90 28.90 34.00Q33.60 33.10 34.50 28.40Z"/>
-      <path class="sp" d="M30.10 44.40H38.90L39.70 46.80H29.30Z"/>
-      <path class="sp" d="M27.70 47.60H41.30L42.10 50.00H26.90Z"/>
-      <path class="sp" d="M25.30 50.80H43.70L44.50 53.20H24.50Z"/>
+      <path d="M34.50 28.40Q35.40 33.10 40.10 34.00Q35.40 34.90 34.50 39.60Q33.60 34.90 28.90 34.00Q33.60 33.10 34.50 28.40Z"/>
+      <path d="M30.10 44.40H38.90L39.70 46.80H29.30Z"/>
+      <path d="M27.70 47.60H41.30L42.10 50.00H26.90Z"/>
+      <path d="M25.30 50.80H43.70L44.50 53.20H24.50Z"/>
     </symbol>
-    <symbol id="spark" viewBox="0 0 20 20"><path d="M10 1.5Q11 8.9 18.5 10Q11 11.1 10 18.5Q9 11.1 1.5 10Q9 8.9 10 1.5Z"/></symbol>
-    <symbol id="check" viewBox="0 0 16 16"><path pathLength="1" d="m4.2 8.3 2.5 2.5 5.1-5.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="check" viewBox="0 0 16 16"><path d="m4.2 8.3 2.5 2.5 5.1-5.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   </svg>
 
   <header class="nav">
@@ -32,7 +31,7 @@
     </a>
     <nav class="nav-links">
       <a href="#pour-qui">Pour qui</a>
-      <a href="#etapes">Comment entrer</a>
+      <a href="#apprendre">Ce que tu apprends</a>
       <a href="#offres">Aller plus loin</a>
     </nav>
     <a class="btn btn-primary btn-sm" href="#candidature" data-intent="cercle">Candidater</a>
@@ -41,90 +40,27 @@
   <main id="top">
     <!-- HERO -->
     <section class="hero">
-      <div class="halo" aria-hidden="true"></div>
-      <div class="glitter" aria-hidden="true">
-        <i style="--x:22%;--y:30%;--s:14px;--d:0s"></i><i style="--x:76%;--y:24%;--s:18px;--d:1.1s"></i>
-        <i style="--x:14%;--y:62%;--s:10px;--d:2s"></i><i style="--x:86%;--y:52%;--s:12px;--d:.6s"></i>
-        <i style="--x:66%;--y:12%;--s:9px;--d:1.6s"></i><i style="--x:31%;--y:14%;--s:8px;--d:2.4s"></i>
-      </div>
-      <div class="doodles" aria-hidden="true">
-        <span class="dd" data-dd="spark" style="--x:8%;--y:22%;--s:96px;--d:0s"></span>
-        <span class="dd" data-dd="bot" style="--x:83%;--y:14%;--s:100px;--d:.5s"></span>
-        <span class="dd" data-dd="bubble" style="--x:5%;--y:64%;--s:78px;--d:1s"></span>
-        <span class="dd" data-dd="orbit" style="--x:86%;--y:50%;--s:80px;--d:.25s"></span>
-        <span class="dd" data-dd="prompt" style="--x:90%;--y:86%;--s:60px;--d:.8s"></span>
+      <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="floaters" aria-hidden="true">
+        <span class="fl mz" data-m="m-spark" style="--x:7%;--y:20%;--s:118px;--d:0s"></span>
+        <span class="fl mz" data-m="m-fleur" style="--x:83%;--y:12%;--s:112px;--d:.5s"></span>
+        <span class="fl mz" data-m="m-nuage" style="--x:3%;--y:60%;--s:96px;--d:1s"></span>
+        <span class="fl mz" data-m="m-bulle" style="--x:87%;--y:54%;--s:96px;--d:.25s"></span>
       </div>
 
-      <h1 class="hero-title rv">Apprends à mettre l’IA<br>au travail dans <span class="flip" aria-live="polite"><span class="flip-word">ton restaurant</span></span></h1>
+      <h1 class="hero-title rv">Apprends à mettre l’IA<br>au travail dans <span class="flip" aria-live="polite"><span class="flip-word">ton restaurant</span><span class="flip-dots"></span></span></h1>
       <p class="hero-sub rv" style="--rd:.08s">Le cercle des entrepreneurs, dirigeants et managers qui créent leurs agents, leurs automatisations et leurs contenus. Avec Boris et Kévin, deux ingénieurs IA.</p>
       <div class="hero-ctas rv" style="--rd:.16s">
-        <a class="btn btn-primary btn-lg shine" href="#candidature" data-intent="cercle"><svg class="i-sp"><use href="#spark"/></svg>Rejoindre le Cercle</a>
+        <a class="btn btn-primary btn-lg" href="#candidature" data-intent="cercle">Rejoindre le Cercle</a>
         <a class="btn btn-ghost btn-lg" href="#candidature" data-intent="decouverte">Réserver un échange</a>
       </div>
       <p class="hero-note rv" style="--rd:.22s">Gratuit, sur candidature.</p>
       <ul class="hero-stack rv" style="--rd:.3s">
-        <li><svg><use href="#spark"/></svg>Groupe WhatsApp privé</li>
-        <li><svg><use href="#spark"/></svg>Sessions en direct</li>
-        <li><svg><use href="#spark"/></svg>Agents sur-mesure</li>
-        <li><svg><use href="#spark"/></svg>Suivi par Boris et Kévin</li>
+        <li><i style="--c:#25c16f"></i>Groupe WhatsApp privé</li>
+        <li><i style="--c:#ec4899"></i>Sessions en direct</li>
+        <li><i style="--c:#8b5cf6"></i>Agents sur-mesure</li>
+        <li><i style="--c:#1d6bff"></i>Automatisations</li>
       </ul>
-    </section>
-
-    <!-- RAIL : cas concrets -->
-    <section class="rail" aria-label="Exemples de tâches confiées à l’IA">
-      <div class="rail-track">
-        <article class="uc">
-          <p class="uc-tag">Avis Google</p>
-          <div class="uc-body uc-review">
-            <div class="rv-in"><span class="stars">★★★★★</span><p>« Accueil adorable, plats généreux. On reviendra ! »</p></div>
-            <div class="rv-out"><span class="ai"><svg><use href="#spark"/></svg>Réponse proposée</span><p>Merci Claire, toute l’équipe est ravie. À très vite !</p></div>
-          </div>
-        </article>
-        <article class="uc">
-          <p class="uc-tag">Relance des devis</p>
-          <div class="uc-body uc-rows">
-            <p><span>Devis · Martin</span><em><svg><use href="#check"/></svg>Relancé</em></p>
-            <p><span>Devis · Diallo</span><em><svg><use href="#check"/></svg>Relancé</em></p>
-            <p><span>Devis · Nguyen</span><em><svg><use href="#check"/></svg>Relancé</em></p>
-          </div>
-        </article>
-        <article class="uc">
-          <p class="uc-tag">Compte rendu de réunion</p>
-          <div class="uc-body uc-meet">
-            <div class="mic"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            <ul><li>Décision : lancer l’offre en mai</li><li>Kévin envoie le devis</li><li>Point mardi 10 h</li></ul>
-          </div>
-        </article>
-        <article class="uc">
-          <p class="uc-tag">Post LinkedIn</p>
-          <div class="uc-body uc-post">
-            <svg class="dash" viewBox="0 0 200 110" preserveAspectRatio="none"><rect x="1" y="1" width="198" height="108" rx="14" pathLength="100"/></svg>
-            <div class="post"><b>3 leçons de notre premier mois</b><i></i><i></i><i></i></div>
-          </div>
-        </article>
-        <article class="uc">
-          <p class="uc-tag">Tri des emails</p>
-          <div class="uc-body uc-mail">
-            <p><span>Demande de devis</span><em class="t1">Devis</em></p>
-            <p><span>Facture n° 2041</span><em class="t2">Compta</em></p>
-            <p><span>Problème de livraison</span><em class="t3">Urgent</em></p>
-          </div>
-        </article>
-        <article class="uc">
-          <p class="uc-tag">Visuel produit</p>
-          <div class="uc-body uc-img">
-            <div class="img-out"></div>
-            <i class="g g1"></i><i class="g g2"></i><i class="g g3"></i>
-          </div>
-        </article>
-        <article class="uc">
-          <p class="uc-tag">Prise de rendez-vous</p>
-          <div class="uc-body uc-slots">
-            <span>9:00</span><span>10:30</span><span class="pick">14:00</span><span>15:30</span><span>17:00</span><span>18:30</span>
-            <p class="ok"><svg><use href="#check"/></svg>Confirmé par SMS</p>
-          </div>
-        </article>
-      </div>
     </section>
 
     <!-- POUR QUI -->
@@ -141,17 +77,21 @@
           <i class="seg-ind"></i>
         </div>
         <div class="who-card">
-          <div class="who-text">
-            <div class="who-t is-on"><h3>Entrepreneurs &amp; indépendants</h3><p>Boutique, restaurant, cabinet, studio, prestation de services : tu portes ton activité et chaque heure compte.</p></div>
-            <div class="who-t"><h3>Dirigeants</h3><p>Tu pilotes une structure et tu veux des équipes plus rapides, des process automatisés et des décisions mieux informées.</p></div>
-            <div class="who-t"><h3>Cadres &amp; managers</h3><p>Tu veux intégrer l’IA dans ton travail et dans celui de ton équipe, avec des résultats que tu peux mesurer.</p></div>
+          <div class="who-art">
+            <img class="is-on" src="./img/qui-entrepreneur.webp" alt="">
+            <img src="./img/qui-dirigeant.webp" alt="">
+            <img src="./img/qui-cadre.webp" alt="">
           </div>
-          <div class="week">
-            <p class="week-h">Ta semaine</p>
-            <ul class="week-l" data-sets='[["Répondre aux messages clients","Faire les devis","Publier sur les réseaux"],["Préparer le reporting","Accueillir un nouveau salarié","Suivre la concurrence"],["Rédiger les comptes rendus","Synthétiser les documents","Préparer les réunions"]]'>
-              <li><span></span><em><svg><use href="#spark"/></svg>Confié à l’IA</em></li>
-              <li><span></span><em><svg><use href="#spark"/></svg>Confié à l’IA</em></li>
-              <li><span></span><em><svg><use href="#spark"/></svg>Confié à l’IA</em></li>
+          <div class="who-side">
+            <div class="who-text">
+              <div class="who-t is-on"><h3>Entrepreneurs &amp; indépendants</h3><p>Boutique, restaurant, cabinet, studio, prestation de services : tu portes ton activité et chaque heure compte.</p></div>
+              <div class="who-t"><h3>Dirigeants</h3><p>Tu pilotes une structure et tu veux des équipes plus rapides, des process automatisés et des décisions mieux informées.</p></div>
+              <div class="who-t"><h3>Cadres &amp; managers</h3><p>Tu veux intégrer l’IA dans ton travail et dans celui de ton équipe, avec des résultats que tu peux mesurer.</p></div>
+            </div>
+            <ul class="week" data-sets='[["Répondre aux messages clients","Faire les devis","Publier sur les réseaux"],["Préparer le reporting","Accueillir un nouveau salarié","Suivre la concurrence"],["Rédiger les comptes rendus","Synthétiser les documents","Préparer les réunions"]]'>
+              <li><span></span><em><svg><use href="#check"/></svg>Confié à l’IA</em></li>
+              <li><span></span><em><svg><use href="#check"/></svg>Confié à l’IA</em></li>
+              <li><span></span><em><svg><use href="#check"/></svg>Confié à l’IA</em></li>
             </ul>
           </div>
         </div>
@@ -161,9 +101,10 @@
     <!-- APPRENDRE -->
     <section class="sec sec-tint" id="apprendre">
       <div class="composer-wrap rv">
-        <div class="composer beam">
-          <span class="c-ic"><svg><use href="#spark"/></svg></span>
+        <div class="composer glow">
+          <span class="c-plus">+</span>
           <span class="c-text"><span class="c-typed"></span><span class="c-caret"></span></span>
+          <span class="c-model">Le Cercle</span>
           <span class="c-send"><svg viewBox="0 0 20 20"><path d="M10 15.5v-11M5.5 9 10 4.5 14.5 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </div>
       </div>
@@ -172,25 +113,26 @@
         <p class="rv" style="--rd:.08s">Chaque sujet part d’un vrai besoin de membre. Tu repars avec quelque chose qui tourne.</p>
       </div>
       <div class="grid4">
-        <article class="card rv" style="--rd:0s">
-          <div class="prev p-agent">
-            <div class="think"><svg class="comet" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" pathLength="100"/></svg><svg class="st st1"><use href="#spark"/></svg><svg class="st st2"><use href="#spark"/></svg><svg class="st st3"><use href="#spark"/></svg></div>
-            <p class="shim">Ton agent rédige la réponse…</p>
+        <article class="card rv">
+          <div class="prev p-think">
+            <p><i class="tk"></i><span>Lecture des nouveaux mails</span></p>
+            <p><i class="tk"></i><span>Tri des demandes de devis</span></p>
+            <p><i class="tk"></i><span>Rédaction des réponses</span></p>
           </div>
           <h3>Agents sur-mesure</h3>
           <p>Des assistants qui connaissent ton activité et font le travail répétitif à ta place.</p>
         </article>
         <article class="card rv" style="--rd:.07s">
           <div class="prev p-flow">
-            <span class="node">Formulaire</span><i class="wire"><b></b></i><span class="node">Devis</span><i class="wire"><b></b></i><span class="node gold">Envoyé</span>
+            <span class="node">Formulaire</span><i class="edge"></i><span class="node">Devis PDF</span><i class="edge"></i><span class="node">Email envoyé</span>
           </div>
           <h3>Automatisations</h3>
           <p>Les tâches qui s’enchaînent toutes seules, du formulaire jusqu’à l’envoi.</p>
         </article>
         <article class="card rv" style="--rd:.14s">
           <div class="prev p-gen">
-            <div class="gen"><b>Menu de la semaine</b><i></i><i></i></div>
-            <svg class="st st1"><use href="#spark"/></svg><svg class="st st2"><use href="#spark"/></svg>
+            <div class="gen-load"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="30"/></svg><span class="gen-n">3</span></div>
+            <div class="gen-out"><b>Menu de la semaine</b><i></i><i></i></div>
           </div>
           <h3>Contenus</h3>
           <p>Posts, visuels et vidéos produits plus vite, dans ton style.</p>
@@ -198,11 +140,26 @@
         <article class="card rv" style="--rd:.21s">
           <div class="prev p-brand">
             <span class="brand-tile big"><svg><use href="#seuil"/></svg></span>
-            <div class="sw"><i style="background:#0f1b33"></i><i style="background:#c9a35a"></i><i style="background:#f4efe4"></i></div>
+            <div class="sw"><i style="background:#1d6bff"></i><i style="background:#9cc4ff"></i><i style="background:#00c9ad"></i><i style="background:#0b0b0f"></i></div>
+            <div class="aa">Aa</div>
           </div>
           <h3>Image de marque</h3>
           <p>Logo, couleurs et supports cohérents, sans y passer des semaines.</p>
         </article>
+      </div>
+
+      <p class="rail-h rv">Par exemple, tu pourras confier à l’IA :</p>
+      <div class="rail">
+        <div class="rail-track">
+          <span class="ex"><i style="--c:#25c16f"></i>Répondre aux avis clients</span>
+          <span class="ex"><i style="--c:#1d6bff"></i>Relancer les devis sans réponse</span>
+          <span class="ex"><i style="--c:#8b5cf6"></i>Résumer une réunion</span>
+          <span class="ex"><i style="--c:#ec4899"></i>Écrire tes posts LinkedIn</span>
+          <span class="ex"><i style="--c:#f59e0b"></i>Trier tes emails</span>
+          <span class="ex"><i style="--c:#00c9ad"></i>Créer des visuels produits</span>
+          <span class="ex"><i style="--c:#1d6bff"></i>Gérer les prises de rendez-vous</span>
+          <span class="ex"><i style="--c:#8b5cf6"></i>Préparer tes devis</span>
+        </div>
       </div>
     </section>
 
@@ -213,98 +170,74 @@
       </div>
       <div class="bento">
         <article class="bx bx-wide rv">
-          <div class="crowd"><span class="dd" data-dd="spark"></span><span class="dd" data-dd="bubble"></span><span class="dd" data-dd="bot"></span><span class="dd" data-dd="orbit"></span><span class="dd" data-dd="prompt"></span></div>
+          <div class="bx-art"><img src="./img/q-communaute.webp" alt="" loading="lazy"></div>
           <h3>Une communauté qui avance ensemble</h3>
           <p>Des membres qui partagent leurs cas, leurs outils et leurs résultats.</p>
         </article>
         <article class="bx rv" style="--rd:.07s">
-          <span class="bx-ic live"><i></i>En direct</span>
+          <div class="bx-art"><img src="./img/q-live.webp" alt="" loading="lazy"><span class="live"><i></i>En direct</span></div>
           <h3>Des sessions privées sur vos vrais cas</h3>
           <p>On prend le cas réel d’un membre et on le résout ensemble, en direct.</p>
         </article>
         <article class="bx rv" style="--rd:.14s">
-          <span class="bx-ic"><img src="../img/boris.jpg" alt=""><img src="../img/kevin.jpg" alt=""></span>
+          <div class="bx-art"><img src="./img/q-point.webp" alt="" loading="lazy"></div>
           <h3>Un point régulier avec nous</h3>
           <p>Où tu en es, comment tu utilises l’IA, et ce que tu peux automatiser ensuite.</p>
         </article>
         <article class="bx rv" style="--rd:.07s">
-          <span class="bx-ic gold"><svg><use href="#spark"/></svg></span>
+          <div class="bx-art"><img src="./img/q-ressources.webp" alt="" loading="lazy"></div>
           <h3>Des ressources pro</h3>
           <p>Modèles, petits agents prêts à adapter, retours de terrain.</p>
         </article>
         <article class="bx rv" style="--rd:.14s">
-          <span class="bx-ic navy"><svg viewBox="0 0 20 20"><path d="m10 3 2.1 4.4 4.8.6-3.5 3.3.9 4.7L10 13.7 5.7 16l.9-4.7L3.1 8l4.8-.6z" fill="currentColor"/></svg></span>
+          <div class="bx-art"><img src="./img/q-acces.webp" alt="" loading="lazy"></div>
           <h3>Un accès privilégié</h3>
           <p>Créneaux réservés, tarif membre sur l’accompagnement, nouveautés en avant-première.</p>
         </article>
       </div>
     </section>
 
-    <!-- ÉTAPES : scène pilotée au scroll -->
-    <section class="journey" id="etapes">
-      <div class="j-sticky">
-        <div class="j-left">
-          <h2>Trois étapes<br>pour entrer</h2>
-          <p class="j-intro">Pas de lien d’entrée public : chaque membre est accueilli par Boris ou Kévin.</p>
-          <ol class="j-steps">
-            <li class="is-on"><span class="j-n">1</span><div><b>Tu candidates</b><p>Quelques questions sur ton activité et sur ce que tu veux confier à l’IA. Deux minutes.</p></div></li>
-            <li><span class="j-n">2</span><div><b>On échange</b><p>Boris ou Kévin te répond sur WhatsApp pour mieux comprendre ton besoin.</p></div></li>
-            <li><span class="j-n">3</span><div><b>Bienvenue dans le Cercle</b><p>Tu rejoins le groupe et tu avances avec les autres membres. On attend simplement de chacun qu’il soit actif.</p></div></li>
-          </ol>
-          <i class="j-bar"><b></b></i>
-        </div>
-        <div class="j-stage">
-          <!-- scène 1 -->
-          <div class="scene s1 is-on">
-            <div class="mini-form">
-              <p class="mf-h"><span class="brand-tile mini"><svg><use href="#seuil"/></svg></span>Candidature</p>
-              <label>Prénom et nom<span class="mf-in" data-type="Awa Diallo"></span></label>
-              <label>Ton activité<span class="mf-in" data-type="Restaurant, 8 salariés"></span></label>
-              <label>Ce que tu veux confier à l’IA<span class="mf-in tall" data-type="Les réservations et les réponses aux avis."></span></label>
-              <span class="mf-btn"><b>Envoyer sur WhatsApp</b><em><svg><use href="#check"/></svg>Envoyé</em></span>
-            </div>
-          </div>
-          <!-- scène 2 -->
-          <div class="scene s2">
-            <div class="phone">
-              <p class="ph-h"><img src="../img/boris.jpg" alt=""><span><b>Boris</b><small>en ligne</small></span></p>
-              <div class="ph-body">
-                <p class="bb in">Salut Awa, merci pour ta candidature !</p>
-                <p class="bb in">Tu veux commencer par les réservations ou par les avis ?</p>
-                <p class="bb out">Les réservations, on croule sous les appels.</p>
-                <p class="bb in">Parfait. On en parle 10 minutes demain ?</p>
-                <p class="typing"><i></i><i></i><i></i></p>
-              </div>
-            </div>
-          </div>
-          <!-- scène 3 -->
-          <div class="scene s3">
-            <div class="member">
-              <div class="metal"></div>
-              <span class="brand-tile mc"><svg><use href="#seuil"/></svg></span>
-              <p class="mc-k">Membre du Cercle</p>
-              <p class="mc-n">Awa Diallo</p>
-              <p class="mc-f"><span>Le Cercle IA Business</span><span>N° 0042</span></p>
-              <i class="g g1"></i><i class="g g2"></i><i class="g g3"></i>
-            </div>
-            <p class="toast"><span class="dd" data-dd="spark"></span>Tu as rejoint le groupe des membres</p>
-          </div>
-        </div>
+    <!-- ÉTAPES -->
+    <section class="sec sec-tint" id="etapes">
+      <div class="sec-head">
+        <h2 class="rv">Trois étapes pour entrer</h2>
+        <p class="rv" style="--rd:.08s">Pas de lien d’entrée public : chaque membre est accueilli par Boris ou Kévin.</p>
+      </div>
+      <div class="steps">
+        <i class="steps-line" aria-hidden="true"><b></b></i>
+        <article class="step rv">
+          <div class="step-art"><img src="./img/e-candidature.webp" alt="" loading="lazy"></div>
+          <span class="step-n">Étape 1</span>
+          <h3>Tu candidates</h3>
+          <p>Quelques questions sur ton activité et sur ce que tu veux confier à l’IA. Deux minutes.</p>
+        </article>
+        <article class="step rv" style="--rd:.12s">
+          <div class="step-art"><img src="./img/e-echange.webp" alt="" loading="lazy"></div>
+          <span class="step-n">Étape 2</span>
+          <h3>On échange</h3>
+          <p>Boris ou Kévin te répond sur WhatsApp pour mieux comprendre ton besoin.</p>
+        </article>
+        <article class="step rv" style="--rd:.24s">
+          <div class="step-art"><img src="./img/e-bienvenue.webp" alt="" loading="lazy"></div>
+          <span class="step-n">Étape 3</span>
+          <h3>Bienvenue dans le Cercle</h3>
+          <p>Tu rejoins le groupe et tu avances avec les autres membres. On attend simplement de chacun qu’il soit actif.</p>
+        </article>
       </div>
     </section>
 
     <!-- OFFRES -->
-    <section class="sec sec-tint" id="offres">
+    <section class="sec" id="offres">
       <div class="sec-head">
         <h2 class="rv">Le Cercle est gratuit.<br>Ton projet peut aller plus loin.</h2>
         <p class="rv" style="--rd:.08s">Quand tu veux qu’on avance avec toi, on t’accompagne.</p>
       </div>
-      <article class="free beam rv">
+      <article class="free rv">
         <div class="free-l">
-          <p class="free-k">Le Cercle</p>
-          <p class="flap" aria-label="Gratuit"><span>G</span><span>r</span><span>a</span><span>t</span><span>u</span><span>i</span><span>t</span></p>
-          <p class="free-s">Sur candidature. Seul engagement : partager où tu en es.</p>
-          <a class="btn btn-gold" href="#candidature" data-intent="cercle">Candidater</a>
+          <span class="free-k">Le Cercle</span>
+          <p class="free-p">Gratuit <small>sur candidature</small></p>
+          <p class="free-s">La communauté, le suivi et les sessions sur vos vrais cas.</p>
+          <a class="btn btn-primary" href="#candidature" data-intent="cercle">Candidater</a>
         </div>
         <ul class="free-r">
           <li><svg><use href="#check"/></svg>Le groupe WhatsApp des membres</li>
@@ -316,34 +249,38 @@
       </article>
       <div class="plans">
         <article class="plan rv">
-          <span class="plan-chip">Offert · 20 min</span>
+          <span class="plan-ic" style="--c:#00c9ad"><svg viewBox="0 0 20 20"><path d="M4 4.5h12v8H9l-4 3v-3H4z"/></svg></span>
           <h3>Échange découverte</h3>
+          <p class="price">Offert <small>20 min</small></p>
           <p>On écoute ton besoin et on voit ce que l’IA peut changer dans ton activité.</p>
-          <a class="plan-a" href="#candidature" data-intent="decouverte">Réserver <span>→</span></a>
+          <a class="btn btn-ghost" href="#candidature" data-intent="decouverte">Réserver</a>
         </article>
         <article class="plan rv" style="--rd:.07s">
-          <span class="plan-chip">Au mois</span>
+          <span class="plan-ic" style="--c:#ec4899"><svg viewBox="0 0 20 20"><path d="M3 6.5 10 3l7 3.5-7 3.5z"/><path d="M6 8v4.5c1 1 2.4 1.5 4 1.5s3-.5 4-1.5V8"/></svg></span>
           <h3>Accompagnement</h3>
+          <p class="price">Au mois</p>
           <p>Tu veux apprendre à le faire toi-même ? Des séances régulières sur ton propre projet.</p>
-          <a class="plan-a" href="#candidature" data-intent="decouverte">En parler <span>→</span></a>
+          <a class="btn btn-ghost" href="#candidature" data-intent="decouverte">En parler</a>
         </article>
         <article class="plan rv" style="--rd:.14s">
-          <span class="plan-chip">Sur devis</span>
+          <span class="plan-ic" style="--c:#8b5cf6"><svg viewBox="0 0 20 20"><path d="m12.5 3.5 4 4-8.5 8.5H4v-4z"/></svg></span>
           <h3>Mise en place sur-mesure</h3>
+          <p class="price">Sur devis</p>
           <p>On construit pour toi l’agent, l’automatisation ou l’outil dont ton activité a besoin, et on le fait évoluer.</p>
-          <a class="plan-a" href="#candidature" data-intent="decouverte">En parler <span>→</span></a>
+          <a class="btn btn-ghost" href="#candidature" data-intent="decouverte">En parler</a>
         </article>
         <article class="plan rv" style="--rd:.21s">
-          <span class="plan-chip">Sur demande</span>
+          <span class="plan-ic" style="--c:#f59e0b"><svg viewBox="0 0 20 20"><rect x="3.5" y="6" width="13" height="10" rx="2"/><path d="M7.5 6V4.5h5V6M3.5 10.5h13"/></svg></span>
           <h3>Entreprises</h3>
+          <p class="price">Sur demande</p>
           <p>Former vos équipes, ateliers par métier, accompagnement d’un référent IA interne.</p>
-          <a class="plan-a" href="#candidature" data-intent="decouverte">En parler <span>→</span></a>
+          <a class="btn btn-ghost" href="#candidature" data-intent="decouverte">En parler</a>
         </article>
       </div>
     </section>
 
     <!-- ÉQUIPE -->
-    <section class="sec sec-team" id="equipe">
+    <section class="sec sec-tint" id="equipe">
       <div class="team-wrap">
         <div class="sec-head left">
           <h2 class="rv">Deux ingénieurs IA<br>qui construisent</h2>
@@ -384,18 +321,20 @@
             </div>
           </div>
         </div>
-        <div class="composer composer-form beam">
+        <div class="composer composer-form glow">
           <textarea name="tache" rows="2" placeholder="Qu’aimerais-tu confier à l’IA dans les 3 prochains mois ?"></textarea>
           <button class="c-send" type="submit" aria-label="Ouvrir WhatsApp avec mon message"><svg viewBox="0 0 20 20"><path d="M10 15.5v-11M5.5 9 10 4.5 14.5 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         </div>
         <label class="engage cercle-only"><input type="checkbox" name="engage"><i><svg><use href="#check"/></svg></i>Je m’engage à partager où j’en suis dans le Cercle.</label>
         <p class="form-error" role="alert"></p>
-        <button class="btn btn-primary btn-wide shine" type="submit">Ouvrir WhatsApp avec mon message</button>
+        <button class="btn btn-primary btn-wide" type="submit">Ouvrir WhatsApp avec mon message</button>
       </form>
     </section>
 
     <!-- FAQ -->
     <section class="sec sec-faq" id="faq">
+      <span class="faq-m mz" data-m="m-penta" aria-hidden="true" style="--x:9%;--y:18%;--s:100px;--d:.2s"></span>
+      <span class="faq-m mz" data-m="m-bloc" aria-hidden="true" style="--x:85%;--y:50%;--s:96px;--d:.8s"></span>
       <div class="sec-head"><h2 class="rv">Avant de candidater</h2></div>
       <div class="faq rv" style="--rd:.08s">
         <details><summary>Le Cercle est-il payant ?</summary><p>Non. Le Cercle est gratuit, sur candidature. Seuls l’accompagnement individuel et les mises en place sur-mesure sont payants, avec un tarif membre.</p></details>
@@ -411,6 +350,8 @@
     <span class="foot-by">Par Boris Koulevo &amp; Kévin Tiassou · <a href="https://tiasslevo.github.io/parlons-ia/">Parlons IA</a></span>
   </footer>
 
-  <script src="./v4.js?v=3"></script>
+  <script src="./mascots.js?v=1"></script>
+  <script src="./mascots-render.js?v=1"></script>
+  <script src="./v4.js?v=4"></script>
 </body>
 </html>
