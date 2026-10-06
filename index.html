@@ -12,7 +12,7 @@
   <link rel="icon" href="./brand/logos/favicon.svg?v=2" type="image/svg+xml">
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=gambetta@300,400,500,600,301,401,501&f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./cercle.css?v=7">
+  <link rel="stylesheet" href="./cercle.css?v=10">
   <script>(function(){var q=location.search.indexOf('intro')>-1;try{if(!q&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!q&&sessionStorage.getItem('cercle-intro'))return;sessionStorage.setItem('cercle-intro','1');}catch(e){}document.documentElement.classList.add('intro-on');})();</script>
   <style>html.intro-on body,html.intro-run body{overflow:hidden}html.intro-on::after{content:"";position:fixed;inset:0;background:#F7F3EC;z-index:299}</style>
 </head>
@@ -294,6 +294,7 @@
   </main>
 
   <footer class="foot">
+    <div class="foot-logo3d" aria-hidden="true"><canvas></canvas></div>
     <div class="wrap">
       <p class="foot-big" data-reveal>Fais de l’IA<br>ton meilleur <i>associé.</i></p>
       <div class="foot-row">
@@ -308,5 +309,7 @@
 
   <script src="./globe-land.js?v=5"></script>
   <script src="./cercle.js?v=6"></script>
+  <script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
+  <script type="module" src="./footer-logo.js?v=1"></script>
 </body>
 </html>
