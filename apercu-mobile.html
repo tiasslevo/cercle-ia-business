@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Aperçu mobile · Le Cercle IA Business</title>
+  <style>
+    body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 24px; background: #E9E3D7; font: 500 14px system-ui, sans-serif; color: #141C2C; box-sizing: border-box; }
+    nav { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    nav button { font: inherit; padding: 9px 14px; border-radius: 999px; border: 1px solid #141C2C; background: transparent; cursor: pointer; }
+    nav button.on { background: #141C2C; color: #F7F3EC; }
+    .phone { width: 390px; height: 844px; max-height: calc(100vh - 110px); border: 12px solid #141C2C; border-radius: 46px; overflow: hidden; background: #fff; box-shadow: 0 30px 80px -30px rgba(20,28,44,.5); }
+    iframe { width: 100%; height: 100%; border: 0; display: block; }
+  </style>
+</head>
+<body>
+  <nav>
+    <button data-src="./index.html?intro" class="on">Version principale</button>
+    <button data-src="./iso/index.html?intro">Version isométrique</button>
+    <button data-src="./v3/">Version v3</button>
+  </nav>
+  <div class="phone"><iframe id="f" src="./index.html?intro" title="Aperçu mobile"></iframe></div>
+  <script>
+    document.querySelector('nav').addEventListener('click', (e) => {
+      const b = e.target.closest('button'); if (!b) return;
+      document.querySelectorAll('nav button').forEach((x) => x.classList.toggle('on', x === b));
+      document.getElementById('f').src = b.dataset.src;
+    });
+  </script>
+</body>
+</html>

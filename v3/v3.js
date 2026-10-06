@@ -14,8 +14,15 @@ const gauss = () => { let u = 0, v = 0; while (!u) u = rnd(); while (!v) v = rnd
 
 // ---------- formes ----------
 function brain() {
-  const B = window.BRAIN || [], n = B.length / 3, out = new Float32Array(N * 3);
-  for (let i = 0; i < N; i++) { const k = Math.floor(rnd() * n) * 3; out.set([B[k] + gauss() * 0.006, B[k + 1] + gauss() * 0.006, B[k + 2] + gauss() * 0.006], i * 3); }
+  // réseau de neurones : des nœuds en grappes, reliés par des synapses (points le long des liens)
+  const out = new Float32Array(N * 3), nodes = [];
+  for (let i = 0; i < 46; i++) { const th = Math.acos(2 * rnd() - 1), ph = rnd() * Math.PI * 2, r = 1.15 + rnd() * 0.45; nodes.push([Math.sin(th) * Math.cos(ph) * r * 1.25, Math.cos(th) * r, Math.sin(th) * Math.sin(ph) * r]); }
+  const links = [];
+  nodes.forEach((a, i) => { nodes.map((b, j) => [j, Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2])]).filter(([j]) => j > i).sort((x, y) => x[1] - y[1]).slice(0, 3).forEach(([j]) => links.push([i, j])); });
+  for (let i = 0; i < N; i++) {
+    if (rnd() < 0.35) { const n = nodes[Math.floor(rnd() * nodes.length)]; out.set([n[0] + gauss() * 0.06, n[1] + gauss() * 0.06, n[2] + gauss() * 0.06], i * 3); }
+    else { const [p, q] = links[Math.floor(rnd() * links.length)], t = rnd(), A = nodes[p], B = nodes[q]; out.set([A[0] + (B[0] - A[0]) * t + gauss() * 0.012, A[1] + (B[1] - A[1]) * t + gauss() * 0.012, A[2] + (B[2] - A[2]) * t + gauss() * 0.012], i * 3); }
+  }
   return out;
 }
 // points sur les faces d'une boîte (centre, tailles), répartis selon l'aire
