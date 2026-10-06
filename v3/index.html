@@ -9,7 +9,7 @@
   <link rel="icon" href="../brand/logos/favicon.svg?v=2" type="image/svg+xml">
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=gambetta@300,400,500,301,401&f[]=switzer@300,400,500,600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./v3.css?v=2">
+  <link rel="stylesheet" href="./v3.css?v=12">
 </head>
 <body>
   <canvas id="scene" aria-hidden="true"></canvas>
@@ -17,106 +17,128 @@
   <header class="top">
     <a href="#top" class="brand" aria-label="Le Cercle IA Business, retour en haut"><img src="../brand/logos/entete.svg?v=2" alt="Le Cercle IA Business" width="220" height="56"></a>
     <nav aria-label="Navigation">
+      <a href="#pourqui">Pour qui</a>
       <a href="#quotidien">Le Cercle</a>
-      <a href="#comment">Comment ça marche</a>
+      <a href="#comment">Entrer</a>
       <a href="#offres">Aller plus loin</a>
       <a href="#candidature" class="pill">Candidater</a>
     </nav>
   </header>
 
   <main id="top">
-    <!-- l'IA : le cerveau -->
-    <section class="sec hero" data-shape="0" data-x="1.55" data-mx="0" data-alpha="1">
-      <div class="wrap col-left">
-        <p class="kicker" data-reveal>Le Cercle IA Business</p>
-        <h1 data-reveal>Fais de l’IA ton meilleur <em>associé.</em></h1>
-        <p class="lead" data-reveal>Le cercle des entrepreneurs et des professionnels qui mettent l’IA au travail&nbsp;: agents, automatisations, outils sur-mesure et création de contenu.</p>
-        <div class="actions" data-reveal>
-          <a href="#candidature" class="pill pill-lg">Rejoindre gratuitement</a>
-          <a href="#candidature" class="pill pill-lg ghost" data-intent="echange">Réserver un échange</a>
+    <!-- 1. l'IA -->
+    <section class="sec hero" data-shape="0" data-x="2.05" data-y="0.2" data-s="1.05" data-mx="0" data-my="1.55" data-ms="0.6" data-alpha="1" data-spin="1">
+      <div class="hero-in wrap">
+        <p class="kicker" data-reveal>Le Cercle IA Business · gratuit, sur candidature</p>
+        <h1 data-reveal>Fais de l’IA<br>ton meilleur <em>associé.</em></h1>
+        <div class="hero-row" data-reveal>
+          <p class="lead">Le cercle des entrepreneurs et des professionnels qui mettent l’IA au travail&nbsp;: agents, automatisations, outils sur-mesure et création de contenu.</p>
+          <div class="actions">
+            <a href="#candidature" class="pill pill-lg">Rejoindre gratuitement</a>
+            <a href="#candidature" class="pill pill-lg ghost" data-intent="echange">Réserver un échange</a>
+          </div>
         </div>
-        <p class="note" data-reveal><b>Accès gratuit</b>, sur candidature.</p>
       </div>
-      <p class="scroll-hint" aria-hidden="true">Défiler</p>
+      <p class="scroll-hint" aria-hidden="true"><span></span>Défiler</p>
     </section>
 
-    <!-- les membres : le globe -->
-    <section class="sec" id="pourqui" data-shape="1" data-x="-1.6" data-mx="0" data-alpha="1">
-      <div class="wrap col-right">
-        <p class="kicker" data-reveal>01 · Pour qui</p>
-        <h2 data-reveal>Tu as une activité, des clients, une équipe ou des responsabilités.</h2>
-        <p class="body" data-reveal>Avec l’IA et des automatisations adaptées à ton métier, tu travailles plus vite, ton équipe produit plus vite et tu gagnes des heures chaque semaine.</p>
-        <ul class="trio">
-          <li data-reveal><b>Entrepreneurs &amp; indépendants</b><span>Boutique, restaurant, cabinet, studio, prestation de services&nbsp;: tu portes ton activité et chaque heure compte.</span></li>
-          <li data-reveal><b>Dirigeants</b><span>Tu pilotes une structure et tu veux des équipes plus rapides, des process automatisés et des décisions mieux informées.</span></li>
-          <li data-reveal><b>Cadres &amp; managers</b><span>Tu veux intégrer l’IA dans ton travail et dans celui de ton équipe, avec des résultats que tu peux mesurer.</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- la communauté : le nuage -->
-    <section class="sec" id="quotidien" data-shape="2" data-x="0" data-mx="0" data-alpha=".55">
-      <div class="wrap center">
-        <p class="kicker" data-reveal>02 · Le Cercle au quotidien</p>
-        <h2 data-reveal>Des membres qui avancent,<br><em>et un suivi personnalisé.</em></h2>
-        <ul class="grid5">
-          <li data-reveal><b>Une communauté qui avance ensemble</b><span>Des membres qui partagent leurs cas, leurs outils et leurs résultats.</span></li>
-          <li data-reveal><b>Un point régulier avec nous</b><span>Où tu en es, comment tu utilises l’IA, et ce que tu peux automatiser ensuite.</span></li>
-          <li data-reveal><b>Des sessions privées sur vos vrais cas</b><span>On prend le cas réel d’un membre et on le résout ensemble, en direct.</span></li>
-          <li data-reveal><b>Des ressources pro</b><span>Modèles, petits agents prêts à adapter, retours de terrain.</span></li>
-          <li data-reveal><b>Un accès privilégié</b><span>Créneaux réservés, tarif membre sur l’accompagnement, nouveautés en avant-première.</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- l'entrée : les marches -->
-    <section class="sec" id="comment" data-shape="3" data-x="1.6" data-mx="0" data-alpha="1">
-      <div class="wrap col-left">
-        <p class="kicker" data-reveal>03 · Comment ça marche</p>
-        <h2 data-reveal>Trois étapes <em>pour entrer.</em></h2>
-        <p class="body" data-reveal>Pas de lien d’entrée public&nbsp;: chaque membre est accueilli par Boris ou Kévin.</p>
-        <ol class="steps">
-          <li data-reveal><span>01</span><div><b>Tu candidates</b><p>Quelques questions sur ton activité et sur ce que tu veux confier à l’IA. Deux minutes.</p></div></li>
-          <li data-reveal><span>02</span><div><b>On échange</b><p>Boris ou Kévin te répond sur WhatsApp pour mieux comprendre ton besoin.</p></div></li>
-          <li data-reveal><span>03</span><div><b>Bienvenue dans le Cercle</b><p>Tu rejoins le groupe et tu avances avec les autres membres. On attend simplement de chacun qu’il soit actif.</p></div></li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- aller plus loin -->
-    <section class="sec" id="offres" data-shape="2" data-x="0" data-mx="0" data-alpha=".3">
+    <!-- 2. pour qui : trois objets en particules -->
+    <section class="sec trio-sec" id="pourqui" data-shape="1" data-x="0" data-y="0.3" data-s="1.05" data-mx="0" data-my="-0.2" data-ms="0.5" data-alpha="1" data-spin="0">
       <div class="wrap">
-        <p class="kicker" data-reveal>04 · Aller plus loin</p>
-        <h2 data-reveal>Quand tu veux qu’on avance <em>sur ton projet.</em></h2>
-        <div class="offers">
-          <article data-reveal><p class="meta">20 min · offert</p><h3>Échange découverte</h3><p>On écoute ton besoin et on voit ce que l’IA peut changer dans ton activité.</p><a href="#candidature" class="link" data-intent="echange">Réserver →</a></article>
-          <article data-reveal><p class="meta">Sur devis</p><h3>Mise en place sur-mesure</h3><p>On construit pour toi l’agent, l’automatisation ou l’outil dont ton activité a besoin, et on le fait évoluer.</p></article>
-          <article data-reveal><p class="meta">Au mois</p><h3>Accompagnement</h3><p>Tu veux apprendre à le faire toi-même&nbsp;? Des séances régulières sur ton propre projet.</p></article>
-          <article data-reveal><p class="meta">Sur demande</p><h3>Entreprises</h3><p>Former vos équipes, ateliers par métier, accompagnement d’un référent IA interne.</p></article>
+        <div class="trio-head">
+          <p class="kicker" data-reveal>Pour qui</p>
+          <h2 data-reveal>Tu as une activité, des clients, une équipe ou des responsabilités.</h2>
+          <p class="body" data-reveal>Avec l’IA et des automatisations adaptées à ton métier, tu travailles plus vite, ton équipe produit plus vite et tu gagnes des heures chaque semaine.</p>
+        </div>
+        <div class="trio">
+          <article data-reveal><span class="tag">La boutique</span><h3>Entrepreneurs &amp; indépendants</h3><p>Boutique, restaurant, cabinet, studio, prestation de services&nbsp;: tu portes ton activité et chaque heure compte.</p></article>
+          <article data-reveal><span class="tag">La tour</span><h3>Dirigeants</h3><p>Tu pilotes une structure et tu veux des équipes plus rapides, des process automatisés et des décisions mieux informées.</p></article>
+          <article data-reveal><span class="tag">L’équipe</span><h3>Cadres &amp; managers</h3><p>Tu veux intégrer l’IA dans ton travail et dans celui de ton équipe, avec des résultats que tu peux mesurer.</p></article>
         </div>
       </div>
     </section>
 
-    <!-- l'équipe -->
-    <section class="sec" id="equipe" data-shape="2" data-x="0" data-mx="0" data-alpha=".3">
-      <div class="wrap team">
+    <!-- 3. le Cercle : le globe -->
+    <section class="sec" id="quotidien" data-shape="2" data-x="-1.5" data-y="0" data-s="1" data-mx="0" data-my="0.9" data-ms="0.62" data-alpha="1" data-spin="1">
+      <div class="wrap split-right">
         <div>
-          <p class="kicker" data-reveal>05 · Qui anime le Cercle</p>
-          <h2 data-reveal>Deux ingénieurs IA <em>qui construisent.</em></h2>
-          <p class="body" data-reveal>Agents sur-mesure, automatisations, contenus et motion design&nbsp;: ce qu’on partage dans le Cercle, on l’utilise d’abord pour nous, chaque jour.</p>
+          <p class="kicker" data-reveal>Le Cercle au quotidien</p>
+          <h2 data-reveal>Des membres qui avancent,<br><em>et un suivi personnalisé.</em></h2>
+          <ol class="feats">
+            <li data-reveal><b>Une communauté qui avance ensemble</b><span>Des membres qui partagent leurs cas, leurs outils et leurs résultats.</span></li>
+            <li data-reveal><b>Un point régulier avec nous</b><span>Où tu en es, comment tu utilises l’IA, et ce que tu peux automatiser ensuite.</span></li>
+            <li data-reveal><b>Des sessions privées sur vos vrais cas</b><span>On prend le cas réel d’un membre et on le résout ensemble, en direct.</span></li>
+            <li data-reveal><b>Des ressources pro</b><span>Modèles, petits agents prêts à adapter, retours de terrain.</span></li>
+            <li data-reveal><b>Un accès privilégié</b><span>Créneaux réservés, tarif membre sur l’accompagnement, nouveautés en avant-première.</span></li>
+          </ol>
         </div>
+      </div>
+    </section>
+
+    <!-- 4. galerie qui défile en profondeur -->
+    <section class="gallery" id="galerie" data-shape="3" data-x="0" data-y="0" data-s="1" data-mx="0" data-my="0" data-ms="0.8" data-alpha=".35" data-spin="1">
+      <div class="g-sticky">
+        <p class="kicker g-kick">Dans le Cercle</p>
+        <div class="g-track">
+          <figure><img src="../img/scene-lounge.jpg" alt="Des membres du Cercle échangent par petits groupes" loading="lazy"><figcaption>Une communauté qui avance ensemble</figcaption></figure>
+          <figure><img src="../img/spot-point.jpg" alt="" loading="lazy"><figcaption>Un point régulier avec nous</figcaption></figure>
+          <figure><img src="../img/spot-live.jpg" alt="" loading="lazy"><figcaption>Des sessions privées sur vos vrais cas</figcaption></figure>
+          <figure><img src="../img/spot-ressources.jpg" alt="" loading="lazy"><figcaption>Des ressources pro</figcaption></figure>
+          <figure><img src="../img/spot-privilege.jpg" alt="" loading="lazy"><figcaption>Un accès privilégié</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. entrer : les marches se construisent -->
+    <section class="steps-sec" id="comment" data-shape="4" data-x="1.45" data-y="-0.1" data-s="1.05" data-mx="0" data-my="1.75" data-ms="0.5" data-alpha="1" data-spin="0">
+      <div class="s-sticky wrap">
+        <div class="s-text">
+          <p class="kicker">Comment ça marche</p>
+          <h2>Trois étapes <em>pour entrer.</em></h2>
+          <p class="body">Pas de lien d’entrée public&nbsp;: chaque membre est accueilli par Boris ou Kévin.</p>
+          <ol class="s-list">
+            <li><span>01</span><div><b>Tu candidates</b><p>Quelques questions sur ton activité et sur ce que tu veux confier à l’IA. Deux minutes.</p></div></li>
+            <li><span>02</span><div><b>On échange</b><p>Boris ou Kévin te répond sur WhatsApp pour mieux comprendre ton besoin.</p></div></li>
+            <li><span>03</span><div><b>Bienvenue dans le Cercle</b><p>Tu rejoins le groupe et tu avances avec les autres membres. On attend simplement de chacun qu’il soit actif.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. aller plus loin -->
+    <section class="sec offers-sec" id="offres" data-shape="3" data-x="0" data-y="0" data-s="1" data-mx="0" data-my="0" data-ms="0.8" data-alpha=".25" data-spin="1">
+      <div class="wrap">
+        <p class="kicker" data-reveal>Aller plus loin</p>
+        <h2 data-reveal>Quand tu veux qu’on avance <em>sur ton projet.</em></h2>
+        <div class="rows">
+          <a class="row" href="#candidature" data-intent="echange" data-reveal><span class="r-n">01</span><span class="r-t">Échange découverte</span><span class="r-d">On écoute ton besoin et on voit ce que l’IA peut changer dans ton activité.</span><span class="r-m">20 min · offert</span></a>
+          <a class="row" href="#candidature" data-reveal><span class="r-n">02</span><span class="r-t">Mise en place sur-mesure</span><span class="r-d">On construit pour toi l’agent, l’automatisation ou l’outil dont ton activité a besoin, et on le fait évoluer.</span><span class="r-m">Sur devis</span></a>
+          <a class="row" href="#candidature" data-reveal><span class="r-n">03</span><span class="r-t">Accompagnement</span><span class="r-d">Tu veux apprendre à le faire toi-même&nbsp;? Des séances régulières sur ton propre projet.</span><span class="r-m">Au mois</span></a>
+          <a class="row" href="#candidature" data-reveal><span class="r-n">04</span><span class="r-t">Entreprises</span><span class="r-d">Former vos équipes, ateliers par métier, accompagnement d’un référent IA interne.</span><span class="r-m">Sur demande</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. l'équipe -->
+    <section class="sec" id="equipe" data-shape="3" data-x="0" data-y="0" data-s="1" data-mx="0" data-my="0" data-ms="0.8" data-alpha=".22" data-spin="1">
+      <div class="wrap team">
         <div class="people">
           <figure data-reveal><img src="../img/boris.jpg?v=3" alt="Boris Koulevo"><figcaption><span>Ingénieur IA</span><b>Boris Koulevo</b></figcaption></figure>
           <figure data-reveal><img src="../img/kevin.jpg?v=3" alt="Kévin Tiassou"><figcaption><span>Ingénieur IA</span><b>Kévin Tiassou</b></figcaption></figure>
         </div>
+        <div>
+          <p class="kicker" data-reveal>Qui anime le Cercle</p>
+          <h2 data-reveal>Deux ingénieurs IA <em>qui construisent.</em></h2>
+          <p class="body" data-reveal>Agents sur-mesure, automatisations, contenus et motion design&nbsp;: ce qu’on partage dans le Cercle, on l’utilise d’abord pour nous, chaque jour.</p>
+        </div>
       </div>
     </section>
 
-    <!-- candidature -->
-    <section class="sec" id="candidature" data-shape="2" data-x="0" data-mx="0" data-alpha=".22">
+    <!-- 8. candidature -->
+    <section class="sec" id="candidature" data-shape="3" data-x="0" data-y="0" data-s="1" data-mx="0" data-my="0" data-ms="0.8" data-alpha=".18" data-spin="1">
       <div class="wrap apply">
         <div>
-          <p class="kicker" data-reveal>06 · Candidature</p>
+          <p class="kicker" data-reveal>Candidature</p>
           <h2 data-reveal>Rejoins <em>le Cercle.</em></h2>
           <p class="body" data-reveal>Réponds à ces quelques questions&nbsp;: ton message s’ouvre dans WhatsApp, prêt à être envoyé à Boris ou à Kévin.</p>
         </div>
@@ -147,10 +169,10 @@
       </div>
     </section>
 
-    <!-- questions -->
-    <section class="sec" id="faq" data-shape="2" data-x="0" data-mx="0" data-alpha=".22">
+    <!-- 9. questions -->
+    <section class="sec" id="faq" data-shape="3" data-x="0" data-y="0" data-s="1" data-mx="0" data-my="0" data-ms="0.8" data-alpha=".18" data-spin="1">
       <div class="wrap faq">
-        <div><p class="kicker" data-reveal>07 · Questions</p><h2 data-reveal>Avant de <em>candidater.</em></h2></div>
+        <div><p class="kicker" data-reveal>Questions</p><h2 data-reveal>Avant de <em>candidater.</em></h2></div>
         <div class="acc" data-reveal>
           <details><summary>Le Cercle est-il payant&nbsp;?</summary><div><p>Non. Le Cercle est gratuit, sur candidature. Seuls l’accompagnement individuel et les mises en place sur-mesure sont payants, avec un tarif membre.</p></div></details>
           <details><summary>Faut-il déjà s’y connaître en IA&nbsp;?</summary><div><p>Non. Ce qui compte, c’est d’avoir une activité ou des responsabilités, et l’envie de mettre l’IA en pratique.</p></div></details>
@@ -160,9 +182,9 @@
       </div>
     </section>
 
-    <!-- final : le logo se rassemble -->
-    <section class="sec final" data-shape="4" data-x="0" data-mx="0" data-alpha="1">
-      <div class="wrap center final-in">
+    <!-- 10. le logo se rassemble -->
+    <section class="sec final" data-shape="5" data-x="0" data-y="0.55" data-s="1" data-mx="0" data-my="0.75" data-ms="0.7" data-alpha="1" data-spin="0">
+      <div class="wrap final-in">
         <p class="final-title" data-reveal>Fais de l’IA ton meilleur <em>associé.</em></p>
         <a href="#candidature" class="pill pill-lg" data-reveal>Candidater</a>
       </div>
@@ -173,11 +195,13 @@
     <div class="wrap foot-row">
       <img src="../brand/logos/entete.svg?v=2" alt="Le Cercle IA Business" width="190" height="48">
       <span>Par Boris Koulevo &amp; Kévin Tiassou · <a href="https://tiasslevo.github.io/parlons-ia/">Parlons IA</a></span>
+      <small>Cerveau 3D : <a href="https://github.com/itayinbarr/brainproject">Brain Project</a>, d’après <a href="https://www.z-anatomy.com/">Z-Anatomy</a>, licence <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></small>
     </div>
   </footer>
 
   <script src="../globe-land.js?v=5"></script>
+  <script src="./brain-points.js?v=1"></script>
   <script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
-  <script type="module" src="./v3.js?v=6"></script>
+  <script type="module" src="./v3.js?v=13"></script>
 </body>
 </html>
