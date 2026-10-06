@@ -1,92 +1,74 @@
-// Le Cercle IA Business, v3 : une forme faite d'étincelles qui raconte la page au fil du scroll.
-// 0 cerveau (l'IA) · 1 boutique, tour et équipe (pour qui) · 2 globe (le Cercle) · 3 nuée (fond) · 4 marches (entrer) · 5 logo.
+// Le Cercle IA Business, v3. Trois moments en particules, le reste de la page respire.
+// 0 : un réseau de neurones qui dessine un cerveau · 1 : le globe en creux (océans en points) · 2 : le logo en 3D.
 import * as THREE from 'three';
 
 const doc = document.documentElement;
 doc.classList.add('js');
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const mobile = innerWidth < 760;
-const N = mobile ? 6500 : 11000;
-const INK = [0.078, 0.11, 0.172], INK2 = [0.31, 0.337, 0.392], GOLD = [0.725, 0.545, 0.243], GOLD2 = [0.86, 0.71, 0.45];
-
-let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+const N = mobile ? 9000 : 16000;
+const INK = [0.063, 0.09, 0.149], INK2 = [0.27, 0.3, 0.36], GOLD = [0.70, 0.52, 0.22], GOLD2 = [0.86, 0.71, 0.45];
+let seed = 5; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
 const gauss = () => { let u = 0, v = 0; while (!u) u = rnd(); while (!v) v = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+const SHAPE = { 0: 0, 2: 1, 5: 2 }; // data-shape du HTML → forme
 
-// ---------- formes ----------
-function brain() {
-  // réseau de neurones : des nœuds en grappes, reliés par des synapses (points le long des liens)
-  const out = new Float32Array(N * 3), nodes = [];
-  for (let i = 0; i < 46; i++) { const th = Math.acos(2 * rnd() - 1), ph = rnd() * Math.PI * 2, r = 1.15 + rnd() * 0.45; nodes.push([Math.sin(th) * Math.cos(ph) * r * 1.25, Math.cos(th) * r, Math.sin(th) * Math.sin(ph) * r]); }
-  const links = [];
-  nodes.forEach((a, i) => { nodes.map((b, j) => [j, Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2])]).filter(([j]) => j > i).sort((x, y) => x[1] - y[1]).slice(0, 3).forEach(([j]) => links.push([i, j])); });
+// ---------- 0. cerveau en réseau ----------
+// silhouette : deux hémisphères plissés, un cervelet, un tronc ; vue de trois quarts
+function brainSurface() {
+  let x, y, z; const part = rnd();
+  if (part < 0.86) {
+    const side = rnd() < 0.5 ? -1 : 1, th = Math.acos(2 * rnd() - 1), ph = rnd() * Math.PI * 2;
+    const r = 1 + 0.06 * Math.sin(9 * th + 2 * Math.sin(3 * ph)) * Math.sin(7 * ph);
+    x = Math.sin(th) * Math.cos(ph) * 0.66 * r; y = Math.cos(th) * 0.82 * r; z = Math.sin(th) * Math.sin(ph) * 1.18 * r;
+    if (x * side < 0) x *= 0.6;
+    x += side * 0.42;
+    if (y < -0.3) y = -0.3 + (y + 0.3) * 0.65;
+    if (z > 0.2 && y < 0) y -= 0.18 * (z - 0.2); // lobe temporal
+  } else if (part < 0.97) {
+    const th = Math.acos(2 * rnd() - 1), ph = rnd() * Math.PI * 2;
+    x = Math.sin(th) * Math.cos(ph) * 0.62; y = -0.62 + Math.cos(th) * 0.26; z = -0.62 + Math.sin(th) * Math.sin(ph) * 0.38;
+  } else {
+    const a = rnd() * Math.PI * 2, h = rnd(); x = Math.cos(a) * 0.12; y = -0.6 - h * 0.45; z = -0.3 + Math.sin(a) * 0.12;
+  }
+  const ca = Math.cos(0.42), sa = Math.sin(0.42), cb = Math.cos(-0.65), sb = Math.sin(-0.65);
+  const y1 = y * ca - z * sa, z1 = y * sa + z * ca;
+  return [(x * cb + z1 * sb) * 1.35, y1 * 1.35, (-x * sb + z1 * cb) * 1.35];
+}
+const NODES = Array.from({ length: mobile ? 170 : 240 }, brainSurface);
+const LINKS = [];
+NODES.forEach((a, i) => {
+  NODES.map((b, j) => [j, Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2])]).filter(([j]) => j !== i).sort((p, q) => p[1] - q[1]).slice(0, 3)
+    .forEach(([j]) => { if (!LINKS.some(([p, q]) => (p === j && q === i))) LINKS.push([i, j]); });
+});
+function brain(col) {
+  const out = new Float32Array(N * 3);
   for (let i = 0; i < N; i++) {
-    if (rnd() < 0.35) { const n = nodes[Math.floor(rnd() * nodes.length)]; out.set([n[0] + gauss() * 0.06, n[1] + gauss() * 0.06, n[2] + gauss() * 0.06], i * 3); }
-    else { const [p, q] = links[Math.floor(rnd() * links.length)], t = rnd(), A = nodes[p], B = nodes[q]; out.set([A[0] + (B[0] - A[0]) * t + gauss() * 0.012, A[1] + (B[1] - A[1]) * t + gauss() * 0.012, A[2] + (B[2] - A[2]) * t + gauss() * 0.012], i * 3); }
+    const r = rnd(); let p;
+    if (r < 0.3) { const n = NODES[Math.floor(rnd() * NODES.length)]; p = [n[0] + gauss() * 0.03, n[1] + gauss() * 0.03, n[2] + gauss() * 0.03]; col.set(rnd() < 0.3 ? GOLD : INK, i * 3); }
+    else if (r < 0.75) { const [a, b] = LINKS[Math.floor(rnd() * LINKS.length)], t = rnd(), A = NODES[a], B = NODES[b]; p = [A[0] + (B[0] - A[0]) * t, A[1] + (B[1] - A[1]) * t, A[2] + (B[2] - A[2]) * t]; col.set(INK2, i * 3); }
+    else { p = brainSurface(); col.set(rnd() < 0.2 ? GOLD2 : INK2, i * 3); }
+    out.set(p, i * 3);
   }
   return out;
 }
-// points sur les faces d'une boîte (centre, tailles), répartis selon l'aire
-function boxPts(out, from, count, cx, cy, cz, w, h, d) {
-  const A = [w * h, w * h, d * h, d * h, w * d, w * d], tot = A.reduce((a, b) => a + b, 0);
-  for (let i = 0; i < count; i++) {
-    let r = rnd() * tot, f = 0; while (r > A[f]) { r -= A[f]; f++; }
-    let x = (rnd() - 0.5) * w, y = (rnd() - 0.5) * h, z = (rnd() - 0.5) * d;
-    if (f === 0) z = d / 2; else if (f === 1) z = -d / 2; else if (f === 2) x = w / 2; else if (f === 3) x = -w / 2; else if (f === 4) y = h / 2; else y = -h / 2;
-    out.set([cx + x, cy + y, cz + z], (from + i) * 3);
-  }
-}
-function trio() {
-  const out = new Float32Array(N * 3), gap = mobile ? 1.55 : 2.25, parts = [];
-  // la boutique : murs, toit, store, vitrine
-  const s = -gap;
-  parts.push([0.22, s, -0.15, 0, 1.3, 0.9, 0.9], [0.06, s, 0.36, 0, 1.45, 0.08, 1.05], [0.05, s, 0.18, 0.47, 1.36, 0.06, 0.25], [0.04, s - 0.3, -0.25, 0.46, 0.38, 0.4, 0.02], [0.04, s + 0.3, -0.35, 0.46, 0.28, 0.6, 0.02]);
-  // la tour : immeuble et annexe
-  parts.push([0.24, 0.0 - 0.2, 0.1, 0, 0.62, 1.95, 0.62], [0.1, 0.42, -0.42, 0.05, 0.6, 0.85, 0.5]);
-  // l'équipe : trois postes autour d'un agent
-  const t = gap;
-  [[-0.45, 0.2], [0.45, 0.2], [0, -0.45]].forEach(([dx, dz]) => parts.push([0.07, t + dx, -0.5, dz, 0.5, 0.22, 0.34], [0.03, t + dx, -0.22, dz - 0.08, 0.32, 0.22, 0.03]));
-  parts.push([0.04, t, -0.45, -0.05, 0.16, 0.16, 0.16]);
-  const tot = parts.reduce((a, p) => a + p[0], 0); let from = 0;
-  parts.forEach((p, i) => { const c = i === parts.length - 1 ? N - from : Math.round(N * p[0] / tot); boxPts(out, from, c, p[1], p[2], p[3], p[4], p[5], p[6]); from += c; });
-  return out;
-}
-function globe() {
-  const out = new Float32Array(N * 3), L = window.GLOBE_LAND || [], R = 1.5, lon0 = -12 * Math.PI / 180, tilt = 0.3;
-  const land = []; for (let i = 0; i < L.length; i += 2) land.push([L[i] * Math.PI / 180, L[i + 1] * Math.PI / 180]);
+// ---------- 1. globe en creux : les océans en points, les continents vides ----------
+function globe(col) {
+  const out = new Float32Array(N * 3), L = window.GLOBE_LAND || [], R = 1.5, lon0 = -8, tilt = 0.32, step = 1.7, land = new Set();
+  for (let i = 0; i < L.length; i += 2) { const row = Math.round((L[i] + 58) / step), latR = -58 + row * step, n = Math.max(1, Math.round(360 * Math.cos(latR * Math.PI / 180) / step)); land.add(row + ':' + Math.floor((L[i + 1] + 180) / (360 / n))); }
+  const isLand = (la, lo) => { const row = Math.round((la + 58) / step); if (row < 0 || la > 80) return false; const latR = -58 + row * step, n = Math.max(1, Math.round(360 * Math.cos(latR * Math.PI / 180) / step)); return land.has(row + ':' + Math.floor(((lo + 540) % 360) / (360 / n))); };
+  const CITIES = [[48.85, 2.35], [50.85, 4.35], [45.5, -73.57], [33.57, -7.59], [14.7, -17.45], [5.36, -4.0], [6.13, 1.22], [4.05, 9.7], [-4.32, 15.3], [-1.29, 36.82]];
+  const put = (i, la, lo, r) => { const a = la * Math.PI / 180, b = (lo - lon0) * Math.PI / 180; const x = Math.cos(a) * Math.sin(b) * r, y = Math.sin(a) * r, z = Math.cos(a) * Math.cos(b) * r; out.set([x, y * Math.cos(tilt) - z * Math.sin(tilt), y * Math.sin(tilt) + z * Math.cos(tilt)], i * 3); };
   for (let i = 0; i < N; i++) {
-    let x, y, z;
-    if (rnd() < 0.95 && land.length) {
-      const [la, lo] = land[Math.floor(rnd() * land.length)], a = la + gauss() * 0.012, b = lo + gauss() * 0.012 - lon0;
-      x = Math.cos(a) * Math.sin(b) * R; y = Math.sin(a) * R; z = Math.cos(a) * Math.cos(b) * R;
-    } else {
-      const a = rnd() * Math.PI * 2, rr = R * 1.24; x = Math.cos(a) * rr; y = 0; z = Math.sin(a) * rr;
-      const yy = -z * Math.sin(0.5); z = z * Math.cos(0.5); y = yy;
-    }
-    out.set([x, y * Math.cos(tilt) - z * Math.sin(tilt), y * Math.sin(tilt) + z * Math.cos(tilt)], i * 3);
+    if (rnd() < 0.06) { const c = CITIES[Math.floor(rnd() * CITIES.length)]; put(i, c[0] + gauss() * 0.6, c[1] + gauss() * 0.6, R * 1.01); col.set(rnd() < 0.5 ? GOLD : GOLD2, i * 3); continue; }
+    let la, lo, k = 0;
+    do { la = Math.asin(2 * rnd() - 1) * 180 / Math.PI; lo = rnd() * 360 - 180; k++; } while (isLand(la, lo) && k < 40);
+    put(i, la, lo, R); col.set(rnd() < 0.85 ? INK2 : INK, i * 3);
   }
   return out;
 }
-function nuee() {
-  const out = new Float32Array(N * 3), hubs = Array.from({ length: 12 }, () => [gauss() * 2.6, gauss() * 1.3, gauss() * 1.3]);
-  for (let i = 0; i < N; i++) {
-    if (rnd() < 0.5) { const h = hubs[Math.floor(rnd() * hubs.length)]; out.set([h[0] + gauss() * 0.25, h[1] + gauss() * 0.25, h[2] + gauss() * 0.25], i * 3); }
-    else out.set([(rnd() - 0.5) * 9, (rnd() - 0.5) * 5, (rnd() - 0.5) * 3.5], i * 3);
-  }
-  return out;
-}
-function stairs(group) {
-  // les trois marches du logo (de plus en plus étroites), chaque point connaît sa marche
-  const out = new Float32Array(N * 3), W = [2.5, 1.9, 1.3], h = 0.34, d = 1.15;
-  for (let i = 0; i < N; i++) {
-    const k = i < N * 0.42 ? 0 : i < N * 0.74 ? 1 : 2, w = W[k], y0 = -0.8 + k * (h + 0.07);
-    let x = (rnd() - 0.5) * w, y = y0 + rnd() * h, z = (rnd() - 0.5) * d; const f = rnd();
-    if (f < 0.4) y = y0 + h; else if (f < 0.72) z = d / 2; else if (f < 0.86) x = (rnd() < 0.5 ? -1 : 1) * w / 2; else z = -d / 2;
-    out.set([x, y, z], i * 3); group[i] = k;
-  }
-  return out;
-}
-async function logo() {
-  const pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
+// ---------- 2. le logo ----------
+async function logo(col) {
+  const pos = new Float32Array(N * 3);
   const txt = await (await fetch('../brand/logos/seuil-grotesque.svg')).text();
   const svg = new DOMParser().parseFromString(txt, 'image/svg+xml').documentElement;
   svg.querySelectorAll('[data-part="word"],[data-part="tag"]').forEach((e) => e.remove());
@@ -106,7 +88,7 @@ async function logo() {
     pos.set([(p[0] - w / 2) * sc + gauss() * 0.006, -(p[1] - S / 2) * sc + gauss() * 0.006, (rnd() - 0.5) * 0.36], i * 3);
     col.set(p[2] ? (rnd() < 0.5 ? GOLD : GOLD2) : INK, i * 3);
   }
-  return { pos, col };
+  return pos;
 }
 
 // ---------- scène ----------
@@ -118,79 +100,77 @@ camera.position.set(0, 0, 8);
 const group = new THREE.Group(); scene.add(group);
 const size = () => { renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); };
 size(); addEventListener('resize', size);
-
 if (!reduce) { doc.classList.add('intro-play'); setTimeout(() => doc.classList.remove('intro-play'), 3300); }
 
 (async () => {
-  const L = await logo(), grp = new Float32Array(N);
-  const shapes = [brain(), trio(), globe(), nuee(), stairs(grp), L.pos];
+  const c0 = new Float32Array(N * 3), c1 = new Float32Array(N * 3), c2 = new Float32Array(N * 3);
+  const shapes = [brain(c0), globe(c1), await logo(c2)];
   const geo = new THREE.BufferGeometry();
   shapes.forEach((s, i) => geo.setAttribute('p' + i, new THREE.BufferAttribute(s, 3)));
+  [c0, c1, c2].forEach((c, i) => geo.setAttribute('c' + i, new THREE.BufferAttribute(c, 3)));
   geo.setAttribute('position', new THREE.BufferAttribute(shapes[0].slice(), 3));
-  const base = new Float32Array(N * 3), rand = new Float32Array(N), sz = new Float32Array(N), rot = new Float32Array(N);
-  for (let i = 0; i < N; i++) {
-    const r = rnd(); base.set(r < 0.62 ? INK : r < 0.74 ? INK2 : r < 0.93 ? GOLD : GOLD2, i * 3);
-    rand[i] = rnd(); sz[i] = 0.75 + rnd() * 0.85 + (rnd() < 0.03 ? 0.9 : 0); rot[i] = rnd() * 6.283;
-  }
-  geo.setAttribute('cBase', new THREE.BufferAttribute(base, 3));
-  geo.setAttribute('cLogo', new THREE.BufferAttribute(L.col, 3));
+  const rand = new Float32Array(N), sz = new Float32Array(N), rot = new Float32Array(N);
+  for (let i = 0; i < N; i++) { rand[i] = rnd(); sz[i] = 0.7 + rnd() * 0.7; rot[i] = rnd() * 6.283; }
   geo.setAttribute('aRand', new THREE.BufferAttribute(rand, 1));
   geo.setAttribute('aSize', new THREE.BufferAttribute(sz, 1));
   geo.setAttribute('aRot', new THREE.BufferAttribute(rot, 1));
-  geo.setAttribute('aGroup', new THREE.BufferAttribute(grp, 1));
-
-  const uni = { uA: { value: 5 }, uB: { value: 0 }, uT: { value: 0 }, uTime: { value: 0 }, uPix: { value: renderer.getPixelRatio() * (mobile ? 3.6 : 4.6) }, uAlpha: { value: 1 }, uStep: { value: 0 } };
+  const uni = { uA: { value: 2 }, uB: { value: 0 }, uT: { value: 0 }, uTime: { value: 0 }, uPix: { value: renderer.getPixelRatio() * (mobile ? 2.4 : 2.8) }, uAlpha: { value: 1 } };
   const mat = new THREE.ShaderMaterial({
     uniforms: uni, transparent: true, depthWrite: false,
     vertexShader: `
-      attribute vec3 p0; attribute vec3 p1; attribute vec3 p2; attribute vec3 p3; attribute vec3 p4; attribute vec3 p5;
-      attribute vec3 cBase; attribute vec3 cLogo; attribute float aRand; attribute float aSize; attribute float aRot; attribute float aGroup;
-      uniform float uA; uniform float uB; uniform float uT; uniform float uTime; uniform float uPix; uniform float uAlpha; uniform float uStep;
+      attribute vec3 p0; attribute vec3 p1; attribute vec3 p2; attribute vec3 c0; attribute vec3 c1; attribute vec3 c2;
+      attribute float aRand; attribute float aSize; attribute float aRot;
+      uniform float uA; uniform float uB; uniform float uT; uniform float uTime; uniform float uPix; uniform float uAlpha;
       varying vec3 vColor; varying float vAlpha; varying float vRot;
-      vec3 shp(float i) {
-        if (i < .5) return p0; if (i < 1.5) return p1; if (i < 2.5) return p2; if (i < 3.5) return p3;
-        if (i < 4.5) { float on = smoothstep(0., 1., clamp(uStep - aGroup - aRand * .3, 0., 1.)); return mix(p3 * .22 + vec3(.0, .9, 0.), p4, on); }
-        return p5;
-      }
+      vec3 P(float i) { return i < .5 ? p0 : (i < 1.5 ? p1 : p2); }
+      vec3 C(float i) { return i < .5 ? c0 : (i < 1.5 ? c1 : c2); }
       void main() {
         float f = smoothstep(0., 1., clamp((uT - aRand * .35) / .65, 0., 1.));
-        vec3 pos = mix(shp(uA), shp(uB), f);
+        vec3 pos = mix(P(uA), P(uB), f);
         vec3 dir = normalize(vec3(sin(aRand * 91.7), cos(aRand * 57.3), sin(aRand * 33.1 + 1.)) + 1e-3);
-        pos += dir * sin(3.14159 * f) * (.55 + aRand * 1.1);
-        pos += .01 * vec3(sin(uTime * .7 + aRand * 40.), cos(uTime * .6 + aRand * 30.), sin(uTime * .5 + aRand * 20.));
-        float lg = (uB > 4.5 ? f : 0.) + (uA > 4.5 ? 1. - f : 0.);
-        vColor = mix(cBase, cLogo, lg);
+        pos += dir * sin(3.14159 * f) * (.5 + aRand);
+        pos += .008 * vec3(sin(uTime * .7 + aRand * 40.), cos(uTime * .6 + aRand * 30.), sin(uTime * .5 + aRand * 20.));
+        vColor = mix(C(uA), C(uB), f);
         vec4 mv = modelViewMatrix * vec4(pos, 1.);
         gl_Position = projectionMatrix * mv;
         gl_PointSize = aSize * uPix * (6.5 / -mv.z);
-        vAlpha = uAlpha * (.18 + .82 * smoothstep(-9.8, -6.9, mv.z));
-        vRot = aRot + uTime * (.2 + aRand * .4);
+        // face arrière : discrète pour le cerveau et le logo, invisible pour le globe (les continents se lisent en creux)
+        float gw = (uA > .5 && uA < 1.5 ? 1. - f : 0.) + (uB > .5 && uB < 1.5 ? f : 0.);
+        float back = mix(.12, 0., gw), z0 = mix(-9.6, -8.05, gw), z1 = mix(-6.8, -7.7, gw);
+        vAlpha = uAlpha * (back + (1. - back) * smoothstep(z0, z1, mv.z));
+        vRot = aRot + uTime * (.15 + aRand * .3);
       }`,
     fragmentShader: `
       varying vec3 vColor; varying float vAlpha; varying float vRot;
       void main() {
-        // étincelle à quatre branches (astroïde), comme celle du logo
-        vec2 p = (gl_PointCoord - .5) * 2.;
-        float c = cos(vRot), s = sin(vRot); p = mat2(c, -s, s, c) * p;
-        float d = pow(abs(p.x), .68) + pow(abs(p.y), .68);
+        vec2 p = (gl_PointCoord - .5) * 2.; float c = cos(vRot), s = sin(vRot); p = mat2(c, -s, s, c) * p;
+        float d = pow(abs(p.x), .7) + pow(abs(p.y), .7);
         if (d > 1.) discard;
-        gl_FragColor = vec4(vColor, vAlpha * (1. - smoothstep(.75, 1., d)));
+        gl_FragColor = vec4(vColor, vAlpha * (1. - smoothstep(.7, 1., d)));
       }`,
   });
   group.add(new THREE.Points(geo, mat));
 
+  // les liaisons du réseau (lignes fines) et les impulsions qui les parcourent
+  const lp = new Float32Array(LINKS.length * 6); LINKS.forEach(([a, b], i) => { lp.set(NODES[a], i * 6); lp.set(NODES[b], i * 6 + 3); });
+  const lgeo = new THREE.BufferGeometry(); lgeo.setAttribute('position', new THREE.BufferAttribute(lp, 3));
+  const lmat = new THREE.LineBasicMaterial({ color: 0x353C4A, transparent: true, opacity: 0.22, depthWrite: false });
+  const lines = new THREE.LineSegments(lgeo, lmat); group.add(lines);
+  const PN = mobile ? 70 : 120, pulse = Array.from({ length: PN }, () => ({ l: Math.floor(rnd() * LINKS.length), t: rnd(), v: 0.25 + rnd() * 0.5 }));
+  const pgeo = new THREE.BufferGeometry(), pp = new Float32Array(PN * 3); pgeo.setAttribute('position', new THREE.BufferAttribute(pp, 3));
+  const pmat = new THREE.PointsMaterial({ color: 0xB98B3E, size: mobile ? 0.05 : 0.055, transparent: true, opacity: 0.9, depthWrite: false });
+  const pulses = new THREE.Points(pgeo, pmat); group.add(pulses);
+
   // ---------- pilotage ----------
   const secs = [...document.querySelectorAll('[data-shape]')].map((el) => {
     const g = (k, m) => +el.dataset[mobile ? m : k];
-    return { el, shape: +el.dataset.shape, x: g('x', 'mx'), y: g('y', 'my'), s: g('s', 'ms'), alpha: +el.dataset.alpha, spin: +el.dataset.spin };
+    return { el, shape: SHAPE[+el.dataset.shape], x: g('x', 'mx'), y: g('y', 'my'), s: g('s', 'ms'), alpha: +el.dataset.alpha, spin: +el.dataset.spin };
   });
   const ease = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-  const stepsSec = document.getElementById('comment'), stepItems = [...stepsSec.querySelectorAll('.s-list li')];
   let mx = 0, my = 0; addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
-  const t0 = performance.now(), INTRO = reduce ? 0 : 2800;
-  const cur = { x: secs[0].x, y: secs[0].y, s: secs[0].s, spin: 1 }; let rotY = 0;
+  const t0 = performance.now(), INTRO = reduce ? 0 : 2800, cur = { x: 0, y: 0, s: 0.8, spin: 0, a: 1 }; let rotY = 0, last = t0;
   const state = () => {
-    const vh = innerHeight, c = scrollY + vh * 0.5, z = vh * 0.32;
+    const vh = innerHeight, c = scrollY + vh * 0.5, z = vh * 0.3;
     const box = secs.map((s) => ({ top: s.el.offsetTop, bot: s.el.offsetTop + s.el.offsetHeight }));
     let i = box.findIndex((b) => c >= b.top && c < b.bot); if (i < 0) i = c < box[0].top ? 0 : secs.length - 1;
     if (i < secs.length - 1 && c > box[i].bot - z) return { a: secs[i], b: secs[i + 1], t: (c - (box[i].bot - z)) / (2 * z) };
@@ -198,40 +178,43 @@ if (!reduce) { doc.classList.add('intro-play'); setTimeout(() => doc.classList.r
     return { a: secs[i], b: secs[i], t: 0 };
   };
   const frame = (now) => {
-    const time = (now - t0) / 1000; uni.uTime.value = time;
-    const st = state(), k = ease(Math.max(0, Math.min(1, st.t)));
+    const time = (now - t0) / 1000, dt = Math.min(0.05, (now - last) / 1000); last = now; uni.uTime.value = time;
+    const st = state(), tt = Math.max(0, Math.min(1, st.t)), k = ease(tt);
     const ik = INTRO ? Math.min(1, Math.max(0, (now - t0 - 500) / INTRO)) : 1, intro = ik < 1 && scrollY < 40;
-    if (intro) { uni.uA.value = 5; uni.uB.value = st.a.shape; uni.uT.value = ease(ik); }
-    else if (st.a.shape === st.b.shape) { uni.uA.value = st.a.shape; uni.uB.value = st.a.shape; uni.uT.value = 0; }
-    else { uni.uA.value = st.a.shape; uni.uB.value = st.b.shape; uni.uT.value = Math.max(0, Math.min(1, st.t)); }
-    // marches : progression dans la section épinglée
-    const sr = stepsSec.getBoundingClientRect(), sp = Math.max(0, Math.min(1, -sr.top / (sr.height - innerHeight)));
-    uni.uStep.value = Math.min(3, sp * 3.6);
-    stepItems.forEach((li, n) => li.classList.toggle('on', uni.uStep.value > n + 0.35));
-    const tg = intro ? { x: st.a.x * ease(ik), y: st.a.y * ease(ik), s: 0.85 + (st.a.s - 0.85) * ease(ik) } : { x: st.a.x + (st.b.x - st.a.x) * k, y: st.a.y + (st.b.y - st.a.y) * k, s: st.a.s + (st.b.s - st.a.s) * k };
-    const spin = intro ? 0 : st.a.spin + (st.b.spin - st.a.spin) * k;
-    cur.x += (tg.x - cur.x) * 0.08; cur.y += (tg.y - cur.y) * 0.08; cur.s += (tg.s - cur.s) * 0.08; cur.spin += (spin - cur.spin) * 0.05;
+    let A, B, T;
+    if (intro) { A = 2; B = st.a.shape; T = ease(ik); }
+    else if (st.a.shape === st.b.shape) { A = B = st.a.shape; T = 0; }
+    else { A = st.a.shape; B = st.b.shape; T = tt; }
+    uni.uA.value = A; uni.uB.value = B; uni.uT.value = T;
+    const tg = intro ? { x: secs[0].x * ease(ik), y: secs[0].y * ease(ik), s: 0.8 + (secs[0].s - 0.8) * ease(ik), spin: 0, a: 1 }
+      : { x: st.a.x + (st.b.x - st.a.x) * k, y: st.a.y + (st.b.y - st.a.y) * k, s: st.a.s + (st.b.s - st.a.s) * k, spin: st.a.spin + (st.b.spin - st.a.spin) * k, a: st.a.alpha + (st.b.alpha - st.a.alpha) * k };
+    cur.x += (tg.x - cur.x) * 0.08; cur.y += (tg.y - cur.y) * 0.08; cur.s += (tg.s - cur.s) * 0.08; cur.spin += (tg.spin - cur.spin) * 0.05; cur.a += (tg.a - cur.a) * 0.1;
     group.position.set(cur.x, cur.y, 0); group.scale.setScalar(cur.s);
-    uni.uAlpha.value = (intro ? 1 : st.a.alpha + (st.b.alpha - st.a.alpha) * k) * (mobile ? 0.75 : 1);
-    rotY += 0.0024;
-    const free = rotY + mx * 0.6, front = Math.sin(time * 0.55) * 0.3 + mx * 0.45;
+    uni.uAlpha.value = cur.a * (mobile ? 0.8 : 1);
+    // poids du cerveau dans la forme actuelle : les lignes et les impulsions n'existent que pour lui
+    const wb = (A === 0 ? 1 - T : 0) + (B === 0 ? T : 0) - (A === 0 && B === 0 ? 1 : 0) * 0 ;
+    const brainW = A === 0 && B === 0 ? 1 : wb;
+    lmat.opacity = 0.22 * brainW * cur.a; pmat.opacity = 0.9 * brainW * cur.a;
+    pulse.forEach((q, i) => { q.t += q.v * dt; if (q.t > 1) { q.t = 0; q.l = Math.floor(rnd() * LINKS.length); } const [a, b] = LINKS[q.l], P0 = NODES[a], P1 = NODES[b]; pp.set([P0[0] + (P1[0] - P0[0]) * q.t, P0[1] + (P1[1] - P0[1]) * q.t, P0[2] + (P1[2] - P0[2]) * q.t], i * 3); });
+    pgeo.attributes.position.needsUpdate = true;
+    rotY += 0.0022;
+    const free = rotY + mx * 0.5, front = Math.sin(time * 0.55) * 0.3 + mx * 0.4;
     group.rotation.y = free * cur.spin + front * (1 - cur.spin);
-    group.rotation.x = (-my * 0.25 + 0.04) * (1 - cur.spin) + (-my * 0.3) * cur.spin;
+    group.rotation.x = (-my * 0.22 + 0.04) * (1 - cur.spin) + (-my * 0.25) * cur.spin;
     renderer.render(scene, camera);
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);
 })();
 
-// ---------- galerie épinglée : défilement horizontal en profondeur ----------
-const gal = document.getElementById('galerie'), track = gal.querySelector('.g-track'), figs = [...track.querySelectorAll('figure')];
-const galTick = () => {
-  const r = gal.getBoundingClientRect(), p = Math.max(0, Math.min(1, -r.top / (r.height - innerHeight)));
-  const span = track.scrollWidth - innerWidth;
-  track.style.transform = `translateX(${-p * span}px)`;
-  figs.forEach((f) => { const b = f.getBoundingClientRect(), d = (b.left + b.width / 2 - innerWidth / 2) / innerWidth; f.style.transform = `rotateY(${-d * 22}deg) translateZ(${-Math.abs(d) * 160}px)`; });
+// ---------- les trois étapes : la ligne se remplit au scroll ----------
+const path = document.querySelector('[data-path]'), fill = path.querySelector('.path-line span'), stepEls = [...path.querySelectorAll('li:not(.path-line)')];
+const pathTick = () => {
+  const r = path.getBoundingClientRect(), p = Math.max(0, Math.min(1, (innerHeight * 0.75 - r.top) / (r.height + innerHeight * 0.2)));
+  fill.style.transform = mobile ? `scaleY(${p})` : `scaleX(${p})`;
+  stepEls.forEach((li, i) => li.classList.toggle('lit', p > i / 3 + 0.05));
 };
-addEventListener('scroll', () => requestAnimationFrame(galTick), { passive: true }); galTick();
+addEventListener('scroll', () => requestAnimationFrame(pathTick), { passive: true }); pathTick();
 
 // ---------- interface ----------
 const top = document.querySelector('.top');
@@ -252,7 +235,7 @@ const sync = () => { const c = form.intent.value === 'cercle'; form.querySelecto
 form.querySelectorAll('input[name="intent"]').forEach((r) => r.addEventListener('change', sync));
 document.querySelectorAll('[data-intent]').forEach((a) => a.addEventListener('click', () => { const r = form.querySelector(`input[name="intent"][value="${a.dataset.intent}"]`); if (r) { r.checked = true; sync(); } }));
 sync();
-form.querySelectorAll('select').forEach((s) => { const paint = () => (s.style.color = s.value ? '' : '#8A8E97'); s.addEventListener('change', paint); paint(); });
+form.querySelectorAll('select').forEach((s) => { const paint = () => (s.style.color = s.value ? '' : '#6B707C'); s.addEventListener('change', paint); paint(); });
 form.addEventListener('submit', (ev) => {
   ev.preventDefault();
   const v = (n) => (form[n] && form[n].value ? form[n].value.trim() : ''), cercle = form.intent.value === 'cercle';
