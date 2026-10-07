@@ -1,315 +1,379 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Le Cercle IA Business</title>
-  <meta name="description" content="Le cercle des entrepreneurs et des professionnels qui utilisent l'IA pour grandir : contenus, image, outils, agents. Gratuit, sur candidature, animé par Boris Koulevo et Kévin Tiassou.">
-  <meta name="theme-color" content="#F7F3EC">
-  <meta property="og:title" content="Le Cercle IA Business">
-  <meta property="og:description" content="Fais de l'IA ton meilleur associé. Le cercle des entrepreneurs et des professionnels qui utilisent l'IA pour grandir.">
-  <meta property="og:image" content="https://tiasslevo.github.io/cercle-ia-business/img/hero-desktop.jpg">
+  <meta name="description" content="Le Cercle IA Business : pour celles et ceux qui portent un business ou une équipe et veulent que l'IA leur fasse gagner des heures chaque semaine. Gratuit, sur candidature.">
   <link rel="icon" href="./brand/logos/favicon.svg?v=2" type="image/svg+xml">
-  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-  <link href="https://api.fontshare.com/v2/css?f[]=gambetta@300,400,500,600,301,401,501&f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./cercle.css?v=10">
-  <script>(function(){var q=location.search.indexOf('intro')>-1;try{if(!q&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!q&&sessionStorage.getItem('cercle-intro'))return;sessionStorage.setItem('cercle-intro','1');}catch(e){}document.documentElement.classList.add('intro-on');})();</script>
-  <style>html.intro-on body,html.intro-run body{overflow:hidden}html.intro-on::after{content:"";position:fixed;inset:0;background:#F7F3EC;z-index:299}</style>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./v4/v4.css?v=7">
+  <script>(function(){var q=location.search.indexOf('intro')>-1;try{if(!q&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;if(!q&&sessionStorage.getItem('cercle-intro-v4'))return;sessionStorage.setItem('cercle-intro-v4','1');}catch(e){}document.documentElement.classList.add('intro-on');})();</script>
+  <style>html.intro-on body,html.intro-run body{overflow:hidden}html.intro-on::after{content:"";position:fixed;inset:0;background:#fff;z-index:299}</style>
 </head>
 <body>
-  <div class="progress" aria-hidden="true"><span></span></div>
-  <div class="grain" aria-hidden="true"></div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="seuil" viewBox="14 12 40 46">
+      <path fill="none" stroke="currentColor" stroke-width="7.2" d="M18.10 54.00V30.00A16.40 16.40 0 0 1 50.90 30.00V54.00"/>
+      <path fill="none" stroke="currentColor" stroke-width="1.28" d="M24.50 51.60V30.80A10.00 10.00 0 0 1 44.50 30.80V51.60"/>
+      <path d="M34.50 28.40Q35.40 33.10 40.10 34.00Q35.40 34.90 34.50 39.60Q33.60 34.90 28.90 34.00Q33.60 33.10 34.50 28.40Z"/>
+      <path d="M30.10 44.40H38.90L39.70 46.80H29.30Z"/>
+      <path d="M27.70 47.60H41.30L42.10 50.00H26.90Z"/>
+      <path d="M25.30 50.80H43.70L44.50 53.20H24.50Z"/>
+    </symbol>
+    <symbol id="check" viewBox="0 0 16 16"><path d="m4.2 8.3 2.5 2.5 5.1-5.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
 
-  <header class="top">
-    <a href="#top" class="brand" aria-label="Le Cercle IA Business, retour en haut"><img class="brand-logo" src="./brand/logos/entete.svg?v=2" alt="Le Cercle IA Business" width="220" height="56"></a>
-    <nav aria-label="Navigation">
-      <a href="#dedans">Le Cercle</a>
-      <a href="#comment">Comment ça marche</a>
-      <a href="#travailler">Aller plus loin</a>
-      <a href="#candidature" class="btn btn-ink btn-sm" data-magnetic>Candidater</a>
+  <i class="progress" aria-hidden="true"></i>
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="Le Cercle IA Business">
+      <span class="brand-tile"><svg><use href="#seuil"/></svg></span>
+      <span class="brand-name">Le Cercle <em>IA Business</em></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#pour-qui">Pour qui</a>
+      <a href="#apprendre">Ce que tu apprends</a>
+      <a href="#offres">Aller plus loin</a>
     </nav>
+    <a class="btn btn-primary btn-sm" href="#candidature" data-intent="cercle">Candidater</a>
   </header>
 
   <main id="top">
-    <!-- ================= HÉROS ================= -->
+    <!-- HERO -->
     <section class="hero">
-            <div class="wrap hero-grid">
-        <div class="hero-copy">
-          <h1 class="split" data-split>Fais de l’IA ton meilleur <i>associé.</i></h1>
-          <p class="lead" data-reveal style="--d:.5s">Le cercle des entrepreneurs et des professionnels qui mettent l’IA au travail&nbsp;: agents, automatisations, outils sur-mesure et création de contenu.</p>
-          <div class="actions" data-reveal style="--d:.62s">
-            <a href="#candidature" class="btn btn-ink" data-magnetic>Rejoindre gratuitement <svg class="arr" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-            <a href="#candidature" class="btn btn-line" data-intent="echange">Réserver un échange</a>
+      <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="floaters" aria-hidden="true">
+        <span class="fl mz" data-m="m-spark" style="--x:7%;--y:20%;--s:118px;--d:0s"></span>
+        <span class="fl mz" data-m="m-fleur" style="--x:83%;--y:12%;--s:112px;--d:.5s"></span>
+        <span class="fl mz" data-m="m-nuage" style="--x:3%;--y:60%;--s:96px;--d:1s"></span>
+        <span class="fl mz" data-m="m-bulle" style="--x:87%;--y:54%;--s:96px;--d:.25s"></span>
+      </div>
+
+      <h1 class="hero-title rv">Apprends à mettre l’IA<br>au travail dans <span class="flip" aria-live="polite"><span class="flip-word">ton restaurant</span><span class="flip-dots"></span></span></h1>
+      <p class="hero-sub rv" style="--rd:.08s">Tu portes un business ou une équipe et tes semaines sont trop courtes. Avec Boris et Kévin, deux ingénieurs IA, tu apprends à confier à l’IA ce qui te prend des heures chaque semaine.</p>
+      <div class="hero-ctas rv" style="--rd:.16s">
+        <a class="btn btn-primary btn-lg" href="#candidature" data-intent="cercle">Rejoindre le Cercle</a>
+        <a class="btn btn-ghost btn-lg" href="#candidature" data-intent="decouverte">Réserver un échange</a>
+      </div>
+      <p class="hero-note rv" style="--rd:.22s">Gratuit, sur candidature.</p>
+      <ul class="hero-stack rv" style="--rd:.3s">
+        <li><i style="--c:#25c16f"></i>Groupe WhatsApp privé</li>
+        <li><i style="--c:#ec4899"></i>Sessions en direct</li>
+        <li><i style="--c:#8b5cf6"></i>Agents sur-mesure</li>
+        <li><i style="--c:#1d6bff"></i>Automatisations</li>
+      </ul>
+    </section>
+
+    <!-- POUR QUI -->
+    <section class="sec" id="pour-qui">
+      <div class="sec-head">
+        <h2 class="rv">Tu portes un business<br>ou une équipe</h2>
+        <p class="rv" style="--rd:.08s">Messages, devis, documents, réunions, communication, suivi : une grande partie de ta semaine peut être confiée à l’IA. Tu récupères ce temps pour ce qui compte vraiment.</p>
+      </div>
+      <div class="who rv" style="--rd:.14s">
+        <div class="seg" role="tablist">
+          <button role="tab" aria-selected="true" data-who="0">Entrepreneurs</button>
+          <button role="tab" aria-selected="false" data-who="1">Dirigeants</button>
+          <button role="tab" aria-selected="false" data-who="2">Cadres &amp; managers</button>
+          <i class="seg-ind"></i>
+        </div>
+        <div class="who-card">
+          <div class="who-art">
+            <img class="is-on" src="./v4/img/qui-entrepreneur.webp" alt="">
+            <img src="./v4/img/qui-dirigeant.webp" alt="">
+            <img src="./v4/img/qui-cadre.webp" alt="">
           </div>
-          <p class="free-note" data-reveal style="--d:.75s"><b>Accès gratuit</b>, sur candidature.</p>
-        </div>
-
-        <div class="hero-visual" data-reveal="zoom" style="--d:.15s">
-          <canvas class="globe" aria-label="Globe en points : les membres du Cercle reliés entre l’Afrique, l’Europe et l’Amérique" role="img"></canvas>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= BANDEAU ================= -->
-    <div class="band" aria-hidden="true">
-      <div class="band-track">
-        <span>Agents sur-mesure</span><span>Automatisation</span><span>Contenus</span><span>Image de marque</span><span>Relation client</span><span>Veille</span><span>Outils métier</span>
-        <span>Agents sur-mesure</span><span>Automatisation</span><span>Contenus</span><span>Image de marque</span><span>Relation client</span><span>Veille</span><span>Outils métier</span>
-      </div>
-    </div>
-
-    <!-- ================= POUR QUI ================= -->
-    <section class="who" id="pourqui">
-      <div class="wrap">
-        <p class="label" data-reveal><b>01</b>Pour qui</p>
-        <p class="statement" data-scrub>Tu as une activité, des clients, une équipe ou des responsabilités. Avec l’IA et des automatisations adaptées à ton métier, tu travailles plus vite, ton équipe produit plus vite et tu gagnes des heures chaque semaine.</p>
-
-        <div class="profiles">
-          <article class="profile" data-reveal>
-            <span class="p-num">i.</span>
-            <div class="p-txt"><h3>Entrepreneurs &amp; indépendants</h3><p>Boutique, restaurant, cabinet, studio, prestation de services&nbsp;: tu portes ton activité et chaque heure compte.</p></div>
-            <svg class="illu" viewBox="0 0 160 120" aria-hidden="true">
-              <path class="g" d="M10 108H150"/>
-              <path d="M30 108V52H130V108"/>
-              <path class="gold" d="M24 52 30 34H130L136 52"/>
-              <path class="gold" d="M24 52q7 9 14 0q7 9 14 0q7 9 14 0q7 9 14 0q7 9 14 0q7 9 14 0q7 9 14 0q7 9 14 0"/>
-              <path class="g" d="M44 34 38 52M58 34 52 52M72 34 66 52M86 34 80 52M100 34 94 52M114 34 108 52M126 34 122 52"/>
-              <path d="M70 108V74H90V108"/>
-              <circle cx="85.5" cy="92" r="1.6"/>
-              <rect x="38" y="68" width="22" height="24" rx="1.5"/><path class="g" d="M49 68V92M38 80H60"/>
-              <rect x="100" y="68" width="22" height="24" rx="1.5"/><path class="g" d="M111 68V92M100 80H122"/>
-              <g class="swing"><path d="M130 60H150"/><path class="g" d="M138 60V66M148 60V66"/><rect class="gold" x="134" y="66" width="18" height="12" rx="1.5"/></g>
-            </svg>
-          </article>
-          <article class="profile" data-reveal>
-            <span class="p-num">ii.</span>
-            <div class="p-txt"><h3>Dirigeants</h3><p>Tu pilotes une structure et tu veux des équipes plus rapides, des process automatisés et des décisions mieux informées.</p></div>
-            <svg class="illu" viewBox="0 0 160 120" aria-hidden="true">
-              <circle cx="80" cy="60" r="48"/>
-              <circle class="g" cx="80" cy="60" r="39" stroke-dasharray="1.5 5.6"/>
-              <path class="g" d="M80 8v8M80 104v8M28 60h8M124 60h8M43 23l5 5M117 97l-5-5M117 23l-5 5M43 97l5-5"/>
-              <g class="needle"><path class="gold fill-gold" d="M80 24 87 60H73Z"/><path d="M80 96 87 60H73Z"/></g>
-              <circle cx="80" cy="60" r="3.4" class="fill-ink"/>
-            </svg>
-          </article>
-          <article class="profile" data-reveal>
-            <span class="p-num">iii.</span>
-            <div class="p-txt"><h3>Cadres &amp; managers</h3><p>Tu veux intégrer l’IA dans ton travail et dans celui de ton équipe, avec des résultats que tu peux mesurer.</p></div>
-            <svg class="illu" viewBox="0 0 160 120" aria-hidden="true">
-              <rect class="gold" x="60" y="12" width="40" height="22" rx="4"/><path class="g" d="M68 21h24M68 26h14"/>
-              <path class="g" d="M80 34V56M30 56H130M30 56V82M80 56V82M130 56V82"/>
-              <rect x="10" y="82" width="40" height="22" rx="4"/><path class="g" d="M18 91h24M18 96h14"/>
-              <rect x="60" y="82" width="40" height="22" rx="4"/><path class="g" d="M68 91h24M68 96h14"/>
-              <rect x="110" y="82" width="40" height="22" rx="4"/><path class="g" d="M118 91h24M118 96h14"/>
-              <circle r="2.6" class="fill-gold"><animateMotion dur="3.6s" repeatCount="indefinite" path="M80 34V56H30V82"/></circle>
-              <circle r="2.6" class="fill-gold"><animateMotion dur="3.6s" begin="1.2s" repeatCount="indefinite" path="M80 34V82"/></circle>
-              <circle r="2.6" class="fill-gold"><animateMotion dur="3.6s" begin="2.4s" repeatCount="indefinite" path="M80 34V56H130V82"/></circle>
-            </svg>
-          </article>
+          <div class="who-side">
+            <div class="who-text">
+              <div class="who-t is-on"><h3>Entrepreneurs &amp; indépendants</h3><p>Boutique, restaurant, cabinet, studio ou prestation de services : tu fais tourner ton activité, souvent seul, et chaque heure compte.</p></div>
+              <div class="who-t"><h3>Dirigeants</h3><p>Tu pilotes une structure. Tu veux que tes équipes aillent plus vite et que les tâches répétitives se fassent toutes seules.</p></div>
+              <div class="who-t"><h3>Cadres &amp; managers</h3><p>Tu as des objectifs et une équipe à suivre. Tu veux que l’IA t’aide, toi et ton équipe, à produire plus en moins de temps.</p></div>
+            </div>
+            <ul class="week" data-sets='[["Répondre aux messages clients","Faire les devis","Publier sur les réseaux"],["Préparer le reporting","Accueillir un nouveau salarié","Suivre la concurrence"],["Rédiger les comptes rendus","Synthétiser les documents","Préparer les réunions"]]'>
+              <li><span></span><em><svg><use href="#check"/></svg>Confié à l’IA</em></li>
+              <li><span></span><em><svg><use href="#check"/></svg>Confié à l’IA</em></li>
+              <li><span></span><em><svg><use href="#check"/></svg>Confié à l’IA</em></li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ================= DANS LE CERCLE ================= -->
-    <section class="inside textured" id="dedans">
-      <div class="wrap">
-        <div class="head">
-          <p class="label" data-reveal><b>02</b>Le Cercle au quotidien</p>
-          <h2 data-reveal>Des membres qui avancent,<br><i>et un suivi personnalisé.</i></h2>
+    <!-- APPRENDRE -->
+    <section class="sec sec-tint" id="apprendre">
+      <div class="composer-wrap rv">
+        <div class="composer glow">
+          <span class="c-plus">+</span>
+          <span class="c-text"><span class="c-typed"></span><span class="c-caret"></span></span>
+          <span class="c-model">Le Cercle</span>
+          <span class="c-send"><svg viewBox="0 0 20 20"><path d="M10 15.5v-11M5.5 9 10 4.5 14.5 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </div>
-        <div class="bento">
-          <article class="tile tile-xl" data-reveal data-spot>
-            <img src="./img/scene-lounge.jpg" alt="Des membres du Cercle échangent par petits groupes" loading="lazy">
-            <div class="tile-txt"><h3>Une communauté qui avance ensemble</h3><p>Des membres qui partagent leurs cas, leurs outils et leurs résultats.</p></div>
-          </article>
-          <article class="tile" data-reveal data-spot style="--d:.08s">
-            <img src="./img/spot-point.jpg" alt="" loading="lazy">
-            <div class="tile-txt"><h3>Un point régulier avec nous</h3><p>Où tu en es, comment tu utilises l’IA, et ce que tu peux automatiser ensuite.</p></div>
-          </article>
-          <article class="tile" data-reveal data-spot style="--d:.16s">
-            <img src="./img/spot-live.jpg" alt="" loading="lazy">
-            <div class="tile-txt"><h3>Des sessions privées sur vos vrais cas</h3><p>On prend le cas réel d’un membre et on le résout ensemble, en direct.</p></div>
-          </article>
-          <article class="tile" data-reveal data-spot style="--d:.08s">
-            <img src="./img/spot-ressources.jpg" alt="" loading="lazy">
-            <div class="tile-txt"><h3>Des ressources pro</h3><p>Modèles, petits agents prêts à adapter, retours de terrain.</p></div>
-          </article>
-          <article class="tile" data-reveal data-spot style="--d:.16s">
-            <img src="./img/spot-privilege.jpg" alt="" loading="lazy">
-            <div class="tile-txt"><h3>Un accès privilégié</h3><p>Créneaux réservés, tarif membre sur l’accompagnement, nouveautés en avant-première.</p></div>
-          </article>
-        </div>
+      </div>
+      <div class="sec-head">
+        <h2 class="rv">Ce que tu apprends à faire</h2>
+        <p class="rv" style="--rd:.08s">Quatre domaines où l’IA te rend des heures chaque semaine. Chaque sujet part d’un vrai besoin de membre, et tu repars avec quelque chose qui tourne.</p>
+      </div>
+      <div class="grid4">
+        <article class="card rv">
+          <div class="prev p-brand">
+            <span class="brand-tile big"><svg><use href="#seuil"/></svg></span>
+            <div class="sw"><i style="background:#1d6bff"></i><i style="background:#9cc4ff"></i><i style="background:#00c9ad"></i><i style="background:#0b0b0f"></i></div>
+            <div class="aa">Aa</div>
+          </div>
+          <h3>Communiquer</h3>
+          <p>Posts, visuels, réponses aux clients et image de marque cohérente, dans ton style.</p>
+        </article>
+        <article class="card rv" style="--rd:.07s">
+          <div class="prev p-gen">
+            <div class="gen-load"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="30"/></svg><span class="gen-n">3</span></div>
+            <div class="gen-out"><b>Rapport du mois</b><i></i><i></i></div>
+          </div>
+          <h3>Produire</h3>
+          <p>Devis, rapports, présentations et documents prêts en quelques minutes.</p>
+        </article>
+        <article class="card rv" style="--rd:.14s">
+          <div class="prev p-think">
+            <p><i class="tk"></i><span>Tri des emails du jour</span></p>
+            <p><i class="tk"></i><span>Résumé de la réunion</span></p>
+            <p><i class="tk"></i><span>Tâches envoyées à l’équipe</span></p>
+          </div>
+          <h3>Organiser</h3>
+          <p>Tes emails triés, tes réunions résumées, le suivi de ton équipe préparé pour toi.</p>
+        </article>
+        <article class="card rv" style="--rd:.21s">
+          <div class="prev p-flow">
+            <span class="node">Formulaire</span><i class="edge"></i><span class="node">Devis PDF</span><i class="edge"></i><span class="node">Email envoyé</span>
+          </div>
+          <h3>Automatiser</h3>
+          <p>Des agents et des automatisations qui font le travail répétitif à ta place, du formulaire jusqu’à l’envoi.</p>
+        </article>
+      </div>
 
+      <p class="rail-h rv">Par exemple, tu pourras confier à l’IA :</p>
+      <div class="rail">
+        <div class="rail-track">
+          <span class="ex"><i style="--c:#25c16f"></i>Répondre aux avis clients</span>
+          <span class="ex"><i style="--c:#1d6bff"></i>Relancer les devis sans réponse</span>
+          <span class="ex"><i style="--c:#8b5cf6"></i>Résumer une réunion</span>
+          <span class="ex"><i style="--c:#ec4899"></i>Écrire tes posts LinkedIn</span>
+          <span class="ex"><i style="--c:#f59e0b"></i>Trier tes emails</span>
+          <span class="ex"><i style="--c:#00c9ad"></i>Créer des visuels produits</span>
+          <span class="ex"><i style="--c:#1d6bff"></i>Gérer les prises de rendez-vous</span>
+          <span class="ex"><i style="--c:#8b5cf6"></i>Préparer tes devis</span>
+        </div>
+      </div>
+      <div class="rail rail-rev" aria-hidden="true">
+        <div class="rail-track">
+          <span class="ex"><i style="--c:#f59e0b"></i>Rédiger tes newsletters</span>
+          <span class="ex"><i style="--c:#00c9ad"></i>Suivre tes factures</span>
+          <span class="ex"><i style="--c:#1d6bff"></i>Préparer tes réunions</span>
+          <span class="ex"><i style="--c:#ec4899"></i>Faire ta veille concurrence</span>
+          <span class="ex"><i style="--c:#8b5cf6"></i>Créer tes vidéos courtes</span>
+          <span class="ex"><i style="--c:#25c16f"></i>Qualifier tes prospects</span>
+          <span class="ex"><i style="--c:#1d6bff"></i>Former ton équipe</span>
         </div>
       </div>
     </section>
 
-    <!-- ================= COMMENT ÇA MARCHE ================= -->
-    <section class="how" id="comment">
-      <div class="wrap how-grid">
-        <div class="how-side">
-          <p class="label" data-reveal><b>03</b>Comment ça marche</p>
-          <h2 data-reveal>Trois étapes<br><i>pour entrer.</i></h2>
-          <p class="muted" data-reveal>Pas de lien d’entrée public&nbsp;: chaque membre est accueilli par Boris ou Kévin.</p>
+    <!-- AU QUOTIDIEN -->
+    <section class="sec" id="quotidien">
+      <div class="sec-head">
+        <h2 class="rv">Des membres qui gagnent du temps,<br>et un suivi personnalisé</h2>
+      </div>
+      <div class="bento">
+        <article class="bx bx-wide rv">
+          <div class="bx-art"><img src="./v4/img/q-communaute.webp" alt="" loading="lazy"></div>
+          <h3>Une communauté qui avance ensemble</h3>
+          <p>Des membres qui partagent leurs cas, leurs outils et leurs résultats.</p>
+        </article>
+        <article class="bx rv" style="--rd:.07s">
+          <div class="bx-art"><img src="./v4/img/q-live.webp" alt="" loading="lazy"><span class="live"><i></i>En direct</span></div>
+          <h3>Des sessions privées sur vos vrais cas</h3>
+          <p>On prend le cas réel d’un membre et on le résout ensemble, en direct.</p>
+        </article>
+        <article class="bx rv" style="--rd:.14s">
+          <div class="bx-art"><img src="./v4/img/q-point.webp" alt="" loading="lazy"></div>
+          <h3>Un point régulier avec nous</h3>
+          <p>Où tu en es, comment tu utilises l’IA, et ce que tu peux automatiser ensuite.</p>
+        </article>
+        <article class="bx rv" style="--rd:.07s">
+          <div class="bx-art"><img src="./v4/img/q-ressources.webp" alt="" loading="lazy"></div>
+          <h3>Des ressources pro</h3>
+          <p>Modèles, petits agents prêts à adapter, retours de terrain.</p>
+        </article>
+        <article class="bx rv" style="--rd:.14s">
+          <div class="bx-art"><img src="./v4/img/q-acces.webp" alt="" loading="lazy"></div>
+          <h3>Un accès privilégié</h3>
+          <p>Créneaux réservés, tarif membre sur l’accompagnement, nouveautés en avant-première.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ÉTAPES -->
+    <section class="sec sec-tint" id="etapes">
+      <div class="sec-head">
+        <h2 class="rv">Trois étapes pour entrer</h2>
+        <p class="rv" style="--rd:.08s">Pas de lien d’entrée public : chaque membre est accueilli par Boris ou Kévin.</p>
+      </div>
+      <div class="steps">
+        <i class="steps-line" aria-hidden="true"><b></b></i>
+        <article class="step rv">
+          <div class="step-art"><img src="./v4/img/e-candidature.webp" alt="" loading="lazy"></div>
+          <span class="step-n">Étape 1</span>
+          <h3>Tu candidates</h3>
+          <p>Quelques questions sur ton activité, ton équipe et ce qui te prend le plus de temps. Deux minutes.</p>
+        </article>
+        <article class="step rv" style="--rd:.12s">
+          <div class="step-art"><img src="./v4/img/e-echange.webp" alt="" loading="lazy"></div>
+          <span class="step-n">Étape 2</span>
+          <h3>On échange</h3>
+          <p>Boris ou Kévin te répond sur WhatsApp pour mieux comprendre ton besoin.</p>
+        </article>
+        <article class="step rv" style="--rd:.24s">
+          <div class="step-art"><img src="./v4/img/e-bienvenue.webp" alt="" loading="lazy"></div>
+          <span class="step-n">Étape 3</span>
+          <h3>Bienvenue dans le Cercle</h3>
+          <p>Tu rejoins le groupe et tu avances avec les autres membres. On attend simplement de chacun qu’il soit actif.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- OFFRES -->
+    <section class="sec" id="offres">
+      <div class="sec-head">
+        <h2 class="rv">Le Cercle est gratuit.<br>Ton projet peut aller plus loin.</h2>
+        <p class="rv" style="--rd:.08s">Quand tu veux aller plus vite, on avance avec toi sur ton propre business.</p>
+      </div>
+      <article class="free rv">
+        <div class="free-l">
+          <span class="free-k">Le Cercle</span>
+          <p class="free-p">Gratuit <small>sur candidature</small></p>
+          <p class="free-s">La communauté, le suivi et les sessions sur vos vrais cas.</p>
+          <a class="btn btn-primary" href="#candidature" data-intent="cercle">Candidater</a>
         </div>
-        <div class="steps" data-steps>
-          <svg class="path" preserveAspectRatio="none" aria-hidden="true"><path class="path-bg"/><path class="path-fg"/></svg>
-          <article class="step" data-reveal>
-            <span class="node"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V6.5A1.5 1.5 0 0 1 6.5 5h11A1.5 1.5 0 0 1 19 6.5v8A1.5 1.5 0 0 1 17.5 16H9l-4 3Z"/><path d="M9 9.5h6M9 12.5h4"/></svg></span>
-            <p class="s-num">Étape 01</p>
-            <h3>Tu candidates</h3>
-            <p>Quelques questions sur ton activité et sur ce que tu veux confier à l’IA. Deux minutes.</p>
-          </article>
-          <article class="step" data-reveal>
-            <span class="node"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="3.2"/><circle cx="16.5" cy="10.5" r="2.6"/><path d="M3.5 19c.6-3 2.8-4.8 5.5-4.8s4.9 1.8 5.5 4.8M14.6 15.3c2.6-.4 4.9 1 5.6 3.7"/></svg></span>
-            <p class="s-num">Étape 02</p>
-            <h3>On échange</h3>
-            <p>Boris ou Kévin te répond sur WhatsApp pour mieux comprendre ton besoin.</p>
-          </article>
-          <article class="step" data-reveal>
-            <span class="node"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="4.5" r="1.8" class="fill"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg></span>
-            <p class="s-num">Étape 03</p>
-            <h3>Bienvenue dans le Cercle</h3>
-            <p>Tu rejoins le groupe et tu avances avec les autres membres. On attend simplement de chacun qu’il soit actif.</p>
-          </article>
+        <ul class="free-r">
+          <li><svg><use href="#check"/></svg>Le groupe WhatsApp des membres</li>
+          <li><svg><use href="#check"/></svg>Un point régulier avec Boris ou Kévin</li>
+          <li><svg><use href="#check"/></svg>Des sessions privées en direct</li>
+          <li><svg><use href="#check"/></svg>Modèles et petits agents prêts à adapter</li>
+          <li><svg><use href="#check"/></svg>Tarif membre sur l’accompagnement</li>
+        </ul>
+      </article>
+      <div class="plans">
+        <article class="plan rv">
+          <span class="plan-ic" style="--c:#00c9ad"><svg viewBox="0 0 20 20"><path d="M4 4.5h12v8H9l-4 3v-3H4z"/></svg></span>
+          <h3>Échange découverte</h3>
+          <p class="price">Offert <small>20 min</small></p>
+          <p>On regarde ensemble ce qui te prend le plus de temps et ce que l’IA peut en reprendre.</p>
+          <a class="btn btn-ghost" href="#candidature" data-intent="decouverte">Réserver</a>
+        </article>
+        <article class="plan rv" style="--rd:.07s">
+          <span class="plan-ic" style="--c:#ec4899"><svg viewBox="0 0 20 20"><path d="M3 6.5 10 3l7 3.5-7 3.5z"/><path d="M6 8v4.5c1 1 2.4 1.5 4 1.5s3-.5 4-1.5V8"/></svg></span>
+          <h3>Accompagnement</h3>
+          <p class="price">Au mois</p>
+          <p>Tu veux apprendre à le faire toi-même ? Des séances régulières sur ton propre projet.</p>
+          <a class="btn btn-ghost" href="#candidature" data-intent="decouverte">En parler</a>
+        </article>
+        <article class="plan rv" style="--rd:.14s">
+          <span class="plan-ic" style="--c:#8b5cf6"><svg viewBox="0 0 20 20"><path d="m12.5 3.5 4 4-8.5 8.5H4v-4z"/></svg></span>
+          <h3>Mise en place sur-mesure</h3>
+          <p class="price">Sur devis</p>
+          <p>On construit pour toi l’agent, l’automatisation ou l’outil dont ton activité a besoin, et on le fait évoluer.</p>
+          <a class="btn btn-ghost" href="#candidature" data-intent="decouverte">En parler</a>
+        </article>
+        <article class="plan rv" style="--rd:.21s">
+          <span class="plan-ic" style="--c:#f59e0b"><svg viewBox="0 0 20 20"><rect x="3.5" y="6" width="13" height="10" rx="2"/><path d="M7.5 6V4.5h5V6M3.5 10.5h13"/></svg></span>
+          <h3>Entreprises</h3>
+          <p class="price">Sur demande</p>
+          <p>Former vos équipes, ateliers par métier, accompagnement d’un référent IA interne.</p>
+          <a class="btn btn-ghost" href="#candidature" data-intent="decouverte">En parler</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ÉQUIPE -->
+    <section class="sec sec-tint" id="equipe">
+      <div class="team-wrap">
+        <div class="sec-head left">
+          <h2 class="rv">Deux ingénieurs IA<br>qui construisent</h2>
+          <p class="rv" style="--rd:.08s">Agents, automatisations, documents et contenus : ce qu’on partage dans le Cercle, on l’utilise d’abord pour nous, chaque jour, pour gagner du temps.</p>
+        </div>
+        <div class="team">
+          <article class="person rv"><img src="./img/boris.jpg" alt="Boris Koulevo" loading="lazy"><div><h3>Boris Koulevo</h3><p>Ingénieur IA</p></div></article>
+          <article class="person rv" style="--rd:.08s"><img src="./img/kevin.jpg" alt="Kévin Tiassou" loading="lazy"><div><h3>Kévin Tiassou</h3><p>Ingénieur IA</p></div></article>
         </div>
       </div>
     </section>
 
-    <!-- ================= ALLER PLUS LOIN ================= -->
-    <section class="offers" id="travailler">
-      <div class="wrap">
-        <div class="head light">
-          <p class="label" data-reveal><b>04</b>Aller plus loin</p>
-          <h2 data-reveal>Quand tu veux qu’on avance<br><i>sur ton projet.</i></h2>
-        </div>
-        <div class="offer-grid">
-          <article class="offer" data-reveal data-spot>
-            <svg class="o-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 34V13a3 3 0 0 1 3-3h26a3 3 0 0 1 3 3v15a3 3 0 0 1-3 3H15l-7 6Z"/><path class="ln" d="M16 18h16M16 24h10"/></svg>
-            <p class="o-meta">20 min · offert</p>
-            <h3>Échange découverte</h3>
-            <p>On écoute ton besoin et on voit ce que l’IA peut changer dans ton activité.</p>
-            <a href="#candidature" class="link" data-intent="echange">Réserver <svg class="arr" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-          </article>
-          <article class="offer" data-reveal data-spot style="--d:.08s">
-            <svg class="o-ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="9" width="34" height="26" rx="3"/><path class="ln" d="M7 16h34"/><path d="M17 41h14M24 35v6"/><path class="ln" d="M15 25l4 3-4 3M23 31h8"/></svg>
-            <p class="o-meta">Sur devis</p>
-            <h3>Mise en place sur-mesure</h3>
-            <p>On construit pour toi l’agent, l’automatisation ou l’outil dont ton activité a besoin, et on le fait évoluer.</p>
-          </article>
-          <article class="offer" data-reveal data-spot style="--d:.16s">
-            <svg class="o-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 40h8v-8h8v-8h8v-8h8"/><circle class="ln" cx="40" cy="10" r="3"/></svg>
-            <p class="o-meta">Au mois</p>
-            <h3>Accompagnement</h3>
-            <p>Tu veux apprendre à le faire toi-même&nbsp;? Des séances régulières sur ton propre projet.</p>
-          </article>
-          <article class="offer" data-reveal data-spot style="--d:.24s">
-            <svg class="o-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 41h36M9 41V19M39 41V19M6 19h36L24 8Z"/><path class="ln" d="M16 24v12M24 24v12M32 24v12"/></svg>
-            <p class="o-meta">Sur demande</p>
-            <h3>Entreprises</h3>
-            <p>Former vos équipes, ateliers par métier, accompagnement d’un référent IA interne.</p>
-          </article>
-        </div>
+    <!-- CANDIDATURE -->
+    <section class="sec" id="candidature">
+      <div class="sec-head">
+        <h2 class="rv">Rejoins le Cercle</h2>
+        <p class="rv" style="--rd:.08s">Ton message s’ouvre dans WhatsApp, prêt à être envoyé à Boris ou à Kévin.</p>
       </div>
-    </section>
-
-    <!-- ================= QUI ================= -->
-    <section class="team" id="qui">
-      <div class="wrap team-grid">
-        <div>
-          <p class="label" data-reveal><b>05</b>Qui anime le Cercle</p>
-          <h2 data-reveal>Deux ingénieurs IA<br><i>qui construisent.</i></h2>
-          <p class="muted" data-reveal>Agents sur-mesure, automatisations, contenus et motion design&nbsp;: ce qu’on partage dans le Cercle, on l’utilise d’abord pour nous, chaque jour.</p>
+      <form class="form rv" id="form" novalidate>
+        <div class="seg seg-form" role="radiogroup" aria-label="Tu veux">
+          <label><input type="radio" name="intent" value="cercle" checked><span>Rejoindre le Cercle</span></label>
+          <label><input type="radio" name="intent" value="decouverte"><span>Échange découverte</span></label>
+          <i class="seg-ind"></i>
         </div>
-        <div class="people">
-          <figure data-reveal><div class="portrait"><img src="./img/boris.jpg?v=3" alt="Boris Koulevo"></div><figcaption><b>Boris Koulevo</b><span>Ingénieur IA</span></figcaption></figure>
-          <figure data-reveal style="--d:.12s"><div class="portrait"><img src="./img/kevin.jpg?v=3" alt="Kévin Tiassou"></div><figcaption><b>Kévin Tiassou</b><span>Ingénieur IA</span></figcaption></figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= CANDIDATURE ================= -->
-    <section class="apply textured" id="candidature">
-      <div class="wrap apply-grid">
-        <div class="apply-side">
-          <p class="label" data-reveal><b>06</b>Candidature</p>
-          <h2 data-reveal>Rejoins<br><i>le Cercle.</i></h2>
-          <p class="muted" data-reveal>Réponds à ces quelques questions&nbsp;: ton message s’ouvre dans WhatsApp, prêt à être envoyé à Boris ou à Kévin.</p>
-          <figure class="apply-img" data-reveal><img src="./img/scene-mains.jpg" alt="" loading="lazy"></figure>
-        </div>
-        <form id="form" class="form" data-reveal novalidate>
-          <div class="field">
-            <span class="f-label">Tu veux</span>
-            <div class="tabs" role="radiogroup">
-              <label><input type="radio" name="intent" value="cercle" checked><span>Rejoindre le Cercle</span></label>
-              <label><input type="radio" name="intent" value="echange"><span>Échange découverte</span></label>
+        <div class="fields">
+          <label class="f"><span>Prénom et nom</span><input name="nom" autocomplete="name"></label>
+          <label class="f"><span>Aujourd’hui, tu es plutôt</span>
+            <select name="profil"><option value="">Choisir</option><option>Entrepreneur ou indépendant</option><option>Dirigeant</option><option>Cadre ou manager</option><option>Salarié</option><option>Étudiant</option></select></label>
+          <label class="f"><span>Ton activité ou ton rôle</span><input name="activite"></label>
+          <label class="f cercle-only"><span>Personnes avec toi</span>
+            <select name="equipe"><option value="">Choisir</option><option>Je travaille seul</option><option>2 à 5</option><option>6 à 20</option><option>Plus de 20</option></select></label>
+          <label class="f cercle-only"><span>Déjà investi en IA ? <small>(outil, formation, prestataire)</small></span>
+            <select name="invest"><option value="">Choisir</option><option>Oui</option><option>Non</option></select></label>
+          <div class="f"><span>Envoyer à</span>
+            <div class="to">
+              <label><input type="radio" name="to" value="boris" checked><img src="./img/boris.jpg" alt=""><b>Boris</b></label>
+              <label><input type="radio" name="to" value="kevin"><img src="./img/kevin.jpg" alt=""><b>Kévin</b></label>
             </div>
           </div>
-          <label class="field"><span class="f-label">Prénom et nom</span><input name="nom" autocomplete="name" required></label>
-          <label class="field"><span class="f-label">Aujourd’hui, tu es plutôt</span><select name="profil" required>
-            <option value="" selected disabled>Choisir</option>
-            <option>Entrepreneur ou indépendant</option><option>Dirigeant</option><option>Cadre ou manager</option><option>Salarié</option><option>Étudiant</option>
-          </select></label>
-          <label class="field"><span class="f-label">Ton activité ou ton rôle</span><textarea name="activite" rows="2" placeholder="En quelques mots" required></textarea></label>
-          <div class="row-2">
-            <label class="field"><span class="f-label">Personnes avec toi</span><select name="equipe">
-              <option value="" selected disabled>Choisir</option>
-              <option>Je travaille seul</option><option>2 à 5</option><option>6 à 20</option><option>Plus de 20</option>
-            </select></label>
-            <label class="field"><span class="f-label">Déjà investi en IA&nbsp;?</span><select name="invest">
-              <option value="" selected disabled>Choisir</option>
-              <option>Oui</option><option>Non</option>
-            </select><span class="f-help">Outil, formation ou prestataire</span></label>
-          </div>
-          <label class="field"><span class="f-label">Qu’aimerais-tu confier à l’IA dans les 3 prochains mois&nbsp;?</span><textarea name="tache" rows="2" required></textarea></label>
-          <label class="check cercle-only"><input type="checkbox" name="engage"><span>Je m’engage à partager où j’en suis dans le Cercle.</span></label>
-          <div class="field">
-            <span class="f-label">Envoyer à</span>
-            <div class="tabs" role="radiogroup">
-              <label><input type="radio" name="to" value="boris" checked><span>Boris</span></label>
-              <label><input type="radio" name="to" value="kevin"><span>Kévin</span></label>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-ink wide">Ouvrir WhatsApp avec mon message <svg class="arr" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-          <p class="form-error" role="alert"></p>
-        </form>
-      </div>
+        </div>
+        <label class="f-q" for="tache">Qu’est-ce qui te prend le plus de temps chaque semaine ?</label>
+        <div class="composer composer-form glow">
+          <textarea id="tache" name="tache" rows="2" placeholder="Ex. : répondre aux clients, faire les devis, préparer les réunions…"></textarea>
+          <button class="c-send" type="submit" aria-label="Ouvrir WhatsApp avec mon message"><svg viewBox="0 0 20 20"><path d="M10 15.5v-11M5.5 9 10 4.5 14.5 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <label class="engage cercle-only"><input type="checkbox" name="engage"><i><svg><use href="#check"/></svg></i>Je m’engage à partager où j’en suis dans le Cercle.</label>
+        <p class="form-error" role="alert"></p>
+        <button class="btn btn-primary btn-wide" type="submit">Ouvrir WhatsApp avec mon message</button>
+      </form>
     </section>
 
-    <!-- ================= QUESTIONS ================= -->
-    <section class="faq" id="faq">
-      <div class="wrap faq-grid">
-        <div>
-          <p class="label" data-reveal><b>07</b>Questions</p>
-          <h2 data-reveal>Avant de<br><i>candidater.</i></h2>
-        </div>
-        <div class="acc" data-reveal>
-          <details><summary>Le Cercle est-il payant&nbsp;?</summary><div><p>Non. Le Cercle est gratuit, sur candidature. Seuls l’accompagnement individuel et les mises en place sur-mesure sont payants, avec un tarif membre.</p></div></details>
-          <details><summary>Faut-il déjà s’y connaître en IA&nbsp;?</summary><div><p>Non. Ce qui compte, c’est d’avoir une activité ou des responsabilités, et l’envie de mettre l’IA en pratique.</p></div></details>
-          <details><summary>Et si je débute dans la vie pro ou que je suis étudiant&nbsp;?</summary><div><p>La communauté <a href="https://tiasslevo.github.io/parlons-ia/">Parlons IA</a> est faite pour toi&nbsp;: ressources, masterclass et entraide.</p></div></details>
-          <details><summary>Où se passe le Cercle&nbsp;?</summary><div><p>Sur WhatsApp, avec des sessions en direct réservées aux membres.</p></div></details>
-        </div>
+    <!-- FAQ -->
+    <section class="sec sec-faq" id="faq">
+      <span class="faq-m mz" data-m="m-penta" aria-hidden="true" style="--x:9%;--y:18%;--s:100px;--d:.2s"></span>
+      <span class="faq-m mz" data-m="m-bloc" aria-hidden="true" style="--x:85%;--y:50%;--s:96px;--d:.8s"></span>
+      <div class="sec-head"><h2 class="rv">Avant de candidater</h2></div>
+      <div class="faq rv" style="--rd:.08s">
+        <details><summary>Le Cercle est-il payant ?</summary><p>Non. Le Cercle est gratuit, sur candidature. Seuls l’accompagnement individuel et les mises en place sur-mesure sont payants, avec un tarif membre.</p></details>
+        <details><summary>Faut-il déjà s’y connaître en IA ?</summary><p>Non. Ce qui compte, c’est de porter un business ou une équipe, et de vouloir que l’IA te fasse gagner du temps dans ton vrai travail.</p></details>
+        <details><summary>Et si je débute dans la vie pro ou que je suis étudiant ?</summary><p>La communauté <a href="https://tiasslevo.github.io/parlons-ia/">Parlons IA</a> est faite pour toi : ressources, masterclass et entraide.</p></details>
+        <details><summary>Où se passe le Cercle ?</summary><p>Sur WhatsApp, avec des sessions en direct réservées aux membres.</p></details>
       </div>
     </section>
   </main>
 
-  <footer class="foot">
-    <div class="foot-logo3d" aria-hidden="true"><canvas></canvas></div>
-    <div class="wrap">
-      <p class="foot-big" data-reveal>Fais de l’IA<br>ton meilleur <i>associé.</i></p>
-      <div class="foot-row">
-        <img class="brand-logo foot-logo" src="./brand/logos/entete-clair.svg?v=2" alt="Le Cercle IA Business" width="190" height="48">
-        <span>Par Boris Koulevo &amp; Kévin Tiassou · <a href="https://tiasslevo.github.io/parlons-ia/">Parlons IA</a></span>
-        <a href="#candidature" class="btn btn-gold btn-sm">Candidater</a>
-      </div>
+  <footer class="foot foot-dark">
+    <div class="foot-logo3d" aria-hidden="true" data-c1="#ffffff" data-c2="#c9d3e6" data-a1="#1d6bff" data-a2="#9cc4ff"><canvas></canvas></div>
+    <p class="foot-big">Gagne des heures<br>chaque semaine <em>avec l’IA.</em></p>
+    <div class="foot-row">
+      <a class="brand" href="#top"><span class="brand-tile"><svg><use href="#seuil"/></svg></span><span class="brand-name">Le Cercle <em>IA Business</em></span></a>
+      <span class="foot-by">Par Boris Koulevo &amp; Kévin Tiassou · <a href="https://tiasslevo.github.io/parlons-ia/">Parlons IA</a></span>
+      <a class="btn btn-primary btn-sm" href="#candidature" data-intent="cercle">Candidater</a>
     </div>
   </footer>
 
-  <script src="./site-intro.js?v=5" data-base="./"></script>
-
-  <script src="./globe-land.js?v=5"></script>
-  <script src="./cercle.js?v=6"></script>
+  <script src="./v4/intro.js?v=1" data-base="./"></script>
+  <script src="./v4/mascots.js?v=1"></script>
+  <script src="./v4/mascots-render.js?v=1"></script>
+  <script src="./v4/v4.js?v=6"></script>
   <script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
-  <script type="module" src="./footer-logo.js?v=1"></script>
+  <script type="module" src="./footer-logo.js?v=2"></script>
 </body>
 </html>

@@ -8,7 +8,10 @@ if (box) {
   const base = new URL('.', import.meta.url).href;
   let seed = 9; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
   const gauss = () => { let u = 0, v = 0; while (!u) u = rnd(); while (!v) v = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
-  const IVORY = [0.953, 0.925, 0.867], IVORY2 = [0.78, 0.76, 0.72], GOLD = [0.79, 0.63, 0.35], GOLD2 = [0.91, 0.83, 0.63];
+  // couleurs : par défaut ivoire et or ; la page peut les fixer (data-c1, data-c2, data-a1, data-a2)
+  const hex = (h, d) => (h ? [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255) : d);
+  const ds = box.dataset;
+  const IVORY = hex(ds.c1, [0.953, 0.925, 0.867]), IVORY2 = hex(ds.c2, [0.78, 0.76, 0.72]), GOLD = hex(ds.a1, [0.79, 0.63, 0.35]), GOLD2 = hex(ds.a2, [0.91, 0.83, 0.63]);
 
   (async () => {
     // échantillonne le symbole du logo
